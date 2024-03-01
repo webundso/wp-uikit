@@ -1,0 +1,20 @@
+/*--------------------------------------------------------------*/
+/* All SASS Variables */
+/*--------------------------------------------------------------*/
+
+
+/*** Colors ***/
+$weiss: #fff;
+$black: #000;
+$rot: red;
+
+$trans: transparent;
+
+$main-font-family: Times;
+$bold-font-family: Arial;
+
+//*** overwrite UIKit defaults ***//
+
+$global-color: $rot;
+$global-link-color: #DA7D02;
+$global-font-family: $bold-font-family;

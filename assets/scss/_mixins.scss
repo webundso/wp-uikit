@@ -1,0 +1,334 @@
+/******************************************************************/
+/* Stylesheet: Mixins & Constants Stylesheet*/
+/******************************************************************/
+
+/*********************
+TOOLS
+*********************/
+
+/** Border for element position **/
+@mixin dev-border($color:red) {
+  border: 1px solid $color;
+}
+// @include dev-border;
+
+/*********************
+COLORS
+*********************/
+
+@mixin background-opacity($color, $opacity: 0.3) {
+  background: $color; /* The Fallback */
+  background: rgba($color, $opacity);
+}
+// @include background-opacity(#333, 0.5);
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity = $opacity-ie); //IE8
+}
+// @include opacity(.4);
+
+/*********************
+FONTS
+*********************/
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url($file-name + '.eot');
+    src: url($file-name + '.eot?#iefix')  format('embedded-opentype'),
+    url($file-name + '.woff') format('woff'),
+    url($file-name + '.ttf')  format('truetype'),
+    url($file-name + '.svg##{$font-name}')  format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+// @include font-face("MyFont", "path/to/MyFont", $style: normal, $weight: normal);
+
+/*********************
+REM UMWANDLUNG
+*********************/
+
+$rem-baseline: 16px !default;
+$rem-fallback: false !default;
+$rem-px-only: false !default;
+
+@function rem-separator($list, $separator: false) {
+  @if $separator == "comma" or $separator == "space" {
+    @return append($list, null, $separator);
+  }   
+  @if function-exists("list-separator") == true {
+    @return list-separator($list);
+  }
+  // list-separator polyfill by Hugo Giraudel (https://sass-compatibility.github.io/#list_separator_function)
+  $test-list: ();
+  @each $item in $list {
+    $test-list: append($test-list, $item, space);
+  }
+  @return if($test-list == $list, space, comma);
+}
+
+@mixin rem-baseline($zoom: 100%) {
+  font-size: $zoom / 16px * $rem-baseline;
+}
+
+@function rem-convert($to, $values...) {
+  $result: ();
+  $separator: rem-separator($values);
+  
+  @each $value in $values {
+    @if type-of($value) == "number" and unit($value) == "rem" and $to == "px" {
+      $result: append($result, $value / 1rem * $rem-baseline, $separator);
+    } @else if type-of($value) == "number" and unit($value) == "px" and $to == "rem" {
+      $result: append($result, $value / $rem-baseline * 1rem, $separator);
+    } @else if type-of($value) == "list" {
+      $value-separator: rem-separator($value);
+      $value: rem-convert($to, $value...);
+      $value: rem-separator($value, $value-separator);
+      $result: append($result, $value, $separator);
+    } @else {
+      $result: append($result, $value, $separator);
+    }
+  }
+
+  @return if(length($result) == 1, nth($result, 1), $result);
+}
+
+@function rem($values...) {
+  @if $rem-px-only {
+    @return rem-convert(px, $values...);
+  } @else {
+    @return rem-convert(rem, $values...);
+  }
+}
+
+@mixin rem($properties, $values...) {
+  @if type-of($properties) == "map" {
+    @each $property in map-keys($properties) {
+      @include rem($property, map-get($properties, $property));
+    }
+  } @else {
+    @each $property in $properties {
+      @if $rem-fallback or $rem-px-only {
+        #{$property}: rem-convert(px, $values...);
+      }
+      @if not $rem-px-only {
+        #{$property}: rem-convert(rem, $values...);
+      }
+    }
+  }
+}
+/*
+.demo {
+  font-size: rem(24px); // Simple
+  padding: rem(5px 10px); // Multiple values
+  border-bottom: rem(1px solid black); // Multiple mixed values
+  box-shadow: rem(0 0 2px #ccc, inset 0 0 5px #eee); // Comma-separated values
+  text-shadow: rem(1px 1px) #eee, rem(-1px) 0 #eee; // Alternate use
+}
+*/
+
+/*********************
+ BREAKPOINTS (UIKit defaults)
+ Affects device widths of 640px and larger. Affects device widths of 960px and larger. Affects device widths of 1200px and larger.
+ .uk-margin-remove-left@xl Affects device widths of 1600px and larger.
+*********************/
+
+@mixin bp-xlarge { // > 1600px
+  @media only screen and (min-width: 74.9375em) {
+    @content;
+  }
+}
+  
+@mixin bp-large { // > 1200px
+  @media only screen and (min-width: 74.9375em) {
+    @content;
+  }
+}
+
+@mixin bp-medium { // > 960px
+  @media only screen and (max-width: 63.9375em) {
+    @content;
+  }
+}
+
+@mixin bp-small { // 640px
+  @media only screen and (max-width: 39.9375em) {
+    @content;
+  }
+}
+
+/*
+.sidebar {
+  width: 60%;
+  float: left;
+  margin: 0 2% 0 0;
+  @include bp-small {
+    width: 100%;
+    float: none;
+    margin: 0;
+  }
+}	
+*/
+
+/*********************
+Margin/Padding
+*********************/
+
+$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 100);
+$sides: (
+  "": "all",
+  "t": "top",
+  "b": "bottom",
+  "l": "left",
+  "r": "right",
+);
+
+@each $space in $spaceamounts {
+  @each $prefix, $value in $sides {
+    $property: if($prefix == '', '', -#{$value});
+    .m#{$prefix}#{$space} {
+      margin#{$property}: #{$space}px;
+    }
+    .p#{$prefix}#{$space} {
+      padding#{$property}: #{$space}px;
+    }
+  }
+}
+// Bsp mt40 = margin-top 40
+
+/*********************
+CSS3 GRADIENTS
+*********************/
+
+@mixin css-gradient($from: #dfdfdf, $to: #f8f8f8) {
+	background-color: $to;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+	background-image: -webkit-linear-gradient(top, $from, $to);
+	background-image: -moz-linear-gradient(top, $from, $to);
+	background-image: -o-linear-gradient(top, $from, $to);
+	background-image: linear-gradient(to bottom, $from, $to);
+}
+/* @include css-gradient(#dfdfdf,#f8f8f8); */
+
+/*********************
+Border Radius
+*********************/
+
+@mixin border-radius($top-left:10px, $top-right:null, $bottom-right:null, $bottom-left:null){
+  -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+     -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+      -ms-border-radius: $top-left $top-right $bottom-right $bottom-left;
+          border-radius: $top-left $top-right $bottom-right $bottom-left;  
+}
+// @include border-radius(1em);
+// @include border-radius(25px,5px,25px,5px);
+
+/*********************
+BOX SHADOW
+*********************/
+
+@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
+  -webkit-box-shadow:$top $left $blur $color #{$inset};
+  -moz-box-shadow:$top $left $blur $color #{$inset};
+  box-shadow:$top $left $blur $color #{$inset};
+}
+// @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5));
+
+/*********************
+List reset
+*********************/
+@mixin list-reset {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+// @include list-reset;
+
+/*********************
+ Prefix Property
+*********************/
+
+$prefixes: "webkit", "moz", "ms", "o", "none";
+@mixin prefix($property, $arguments) {
+ @each $prefix in $prefixes {
+   @if $prefix == "none" {
+     #{$property}: $arguments;
+   } @else {
+     -#{$prefix}-#{$property}: $arguments;
+   } 
+ }
+}
+// @include prefix(opacity, 0.7);
+
+/*********************
+Centering hor/vert
+*********************/
+@mixin center($position) {
+  position: absolute;
+  
+  @if $position == 'vertical' {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @else if $position == 'horizontal' {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+  }
+  @else if $position == 'both' {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+/*
+.foo {
+    @include center(both);
+  }
+  .foo-parent {
+    position: relative;
+  }
+*/
+
+/*********************
+Fluid Typografie 
+https://css-tricks.com/snippets/css/fluid-typography/
+*********************/
+
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+      }
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+/*
+$min_width: 320px;
+$max_width: 1200px;
+$min_font: 16px;
+$max_font: 24px;
+
+@include fluid-type($min_width, $max_width, $min_font, $max_font);
+*/
