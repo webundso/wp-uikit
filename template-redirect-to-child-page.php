@@ -1,6 +1,7 @@
 <?php
 /*
 =================================================================
+Template Name: Redirect to Child
 Filename: template-redirect-to-child-page.php
 Description: redirects to first subpage
 Author: Noël Girstmair | webundso GmbH

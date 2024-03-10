@@ -1,6 +1,7 @@
 <?php
 /*
 =================================================================
+Template Name: Full width
 Filename: template-full-width.php
 Description: Full width template
 Author: Noël Girstmair | webundso GmbH
