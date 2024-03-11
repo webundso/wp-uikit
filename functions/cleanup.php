@@ -89,7 +89,7 @@ function im_setup() {
 	add_filter('xmlrpc_enabled', '__return_false');
 	
 	// Disable REST API (users, etc)
-  // add_filter( 'rest_authentication_errors', 'wp_snippet_disable_rest_api' );
+	// add_filter( 'rest_authentication_errors', 'wp_snippet_disable_rest_api' );
 	//  function wp_snippet_disable_rest_api( $access ) {
 	// 		return new WP_Error( 'rest_disabled', __('The WordPress REST API has been disabled.'), array( 'status' => rest_authorization_required_code()));
 	//  }
@@ -120,6 +120,12 @@ function im_setup() {
 	}
 	add_action( 'widgets_init', 'wpturbo_disable_standard_widgets' );
 	
+	// remove Block Templates (Page-Templates)
+	function wus_remove_tmpl() {
+		remove_theme_support('block-templates');
+		remove_theme_support('widgets-block-editor');
+	}
+	add_action('after_setup_theme', 'wus_remove_tmpl' );
 
 	// Disable Emojis
 

@@ -2,6 +2,13 @@
   "$schema": "https://schemas.wp.org/trunk/theme.json",
   "version":2,
   "settings": {
+    "appearanceTools": false,
+    "border": {
+      "color": false,
+      "radius": false,
+      "style": false,
+      "width": false
+    },
     "layout": {
       "contentSize": "840px",
       "wideSize": "1100px"
@@ -34,23 +41,37 @@
           }
         ]
     },
-    "border": {
-      "color": false,
-      "radius": false,
-      "style": false,
-      "width": false
-    },
-    "typography": {
-      "customFontSize": false,
-      "fontStyle": false,
-      "fontWeight": false,
-      "letterSpacing": false,
-      "lineHeight": false,
-      "textDecoration": false,
-      "textTransform": false,
-      "dropCap": false,
-      "fontSizes": [],
-      "fontFamilies": []
-    }
+   "dimensions": {
+     "minHeight": false
+   },
+   "position": {
+     "sticky": false
+   },
+   "spacing": {
+     "blockGap": null,
+     "margin": false,
+     "padding": false,
+     "units": [],
+     "customSpacingSize": false,
+     "spacingScale": []
+   },
+   "shadow": {
+     "defaultPresets": false
+   },
+   "typography": {
+     "customFontSize": false,
+     "dropCap": false,
+     "fontStyle": false,
+     "fontWeight": false,
+     "fluid": false,
+     "letterSpacing": false,
+     "lineHeight": false,
+     "textDecoration": false,
+     "textTransform": false,
+     "writingMode": false,
+     "fontSizes": [],
+     "fontFamilies": []
+   },
+   "useRootPaddingAwareAlignments": false
   }
 }
