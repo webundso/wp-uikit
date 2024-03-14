@@ -10,7 +10,7 @@ Last changes: 27.2.2024
 
 // Adds site styles to the Gutenberg editor
 
-add_action('enqueue_block_assets', 'enqueue_my_block_styles');
+add_action('admin_head', 'enqueue_my_block_styles');
 function enqueue_my_block_styles() {
   wp_enqueue_style('my-block-style', get_template_directory_uri() . '/assets/styles/gutenberg.css' );
 }
