@@ -7,6 +7,18 @@ Last changes: 9.2.2024
 =================================================================
 */
 
+// Top top
+window.addEventListener('scroll', function() {
+	var toTopLink = document.getElementById('toTopLink');
+	if (window.scrollY > 50) {
+	// Wenn mehr als 100px gescrollt wurde, zeige den "To Top" Link an
+		toTopLink.classList.add('visible');
+	} else {
+	// Ansonsten verstecke den "To Top" Link
+		toTopLink.classList.remove('visible');
+	}
+});
+
 // Hamburger Icon change
 
 UIkit.util.on('#offcanvas-nav-primary', 'show', function () {
@@ -24,6 +36,16 @@ document.getElementById('offcanvas-nav-primary').addEventListener('hide', functi
 	iconClose.classList.add('uk-hidden');
 });
 
+// Toggle Icon
+function toggleIconRotation(toggleLink, blockId) {
+	var icon = document.querySelector('#toggleIcon_' + blockId);
+	var iconClasses = icon.getAttribute('uk-icon');
+		if (iconClasses.indexOf('chevron-right') !== -1) {
+				icon.setAttribute('uk-icon', 'icon: chevron-down; ratio: 1.5');
+		} else {
+				icon.setAttribute('uk-icon', 'icon: chevron-right; ratio: 1.5');
+		}
+}
 
 
 // Testen:
