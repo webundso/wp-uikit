@@ -34,7 +34,7 @@ $hellgrau: #e6e3e3;
 }
 
 .editor-styles-wrapper {
-	font-family: $mainFont !important;
+	font-family: $main-font-family !important;
 	font-size: rem(18px) !important;
 	color: $black !important;
 }
@@ -73,7 +73,7 @@ $hellgrau: #e6e3e3;
 
 .block-editor-block-list__layout{
 	h1, h2, h3, h4, h5, h6 {
-		font-family: $mainFont;
+		font-family: $main-font-family;
 	}
 	
 	h1 {
