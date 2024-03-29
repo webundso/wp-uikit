@@ -278,6 +278,4 @@ function urbi_primary_mobile_ex_in_navbar_menu() {
     }
 */
 
-?>
-
 

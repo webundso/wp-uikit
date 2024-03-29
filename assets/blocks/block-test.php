@@ -1,12 +1,12 @@
 <?php
-/**
- * Team Member block
- *
- * @package      ClientName
- * @author       NGI webundso GmbH
- * @since        1.0.0
- * @license      GPL-2.0+
-**/
+=================================================================
+Filename: block-xxx.php
+Description: Block 
+Client: 
+Author: Noël Girstmair | webundso GmbH
+Last changes: 27.2.2024
+=================================================================
+*/
 
 $name = get_field( 'name' );
 $title = get_field( 'title' );
