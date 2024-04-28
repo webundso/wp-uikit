@@ -51,7 +51,7 @@
      "blockGap": null,
      "margin": false,
      "padding": false,
-     "units": [],
+     "units": ["px", "em", "rem", "%", "vw", "vh"],
      "customSpacingSize": false,
      "spacingScale": []
    },

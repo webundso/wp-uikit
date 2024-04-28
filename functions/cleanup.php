@@ -19,10 +19,11 @@ function im_setup() {
 		// UIKit
 		wp_register_script('uikit', get_template_directory_uri() . '/uikit/dist/js/uikit.min.js', false, '2.0.0', true );
 		wp_register_script('uikit-icons', get_template_directory_uri() . '/uikit/dist/js/uikit-icons.min.js', false, '2.0.0', true );
+		wp_register_script('jquery', get_template_directory_uri() . '/assets/js/jquery.min.js', false, '2.0.0', true );
 		
 		wp_enqueue_script( 'uikit' );
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'uikit-icons' );
-
 		// Custom
 		wp_register_script( 'wus-script', get_template_directory_uri() . '/assets/js/scripts.js', false, '1.2', true );
 		wp_enqueue_script( 'wus-script' );
