@@ -332,3 +332,22 @@ $max_font: 24px;
 
 @include fluid-type($min_width, $max_width, $min_font, $max_font);
 */
+
+// Mixin Transition
+@mixin transition($transition) {
+   -moz-transition: $transition;
+   -o-transition: $transition;
+   -ms-transition: $transition;
+   -webkit-transition: $transition;
+   transition: $transition;
+}
+// @include transition(all 0.3s 0s ease);
+
+// placeholder
+@mixin placeholder {
+    &.placeholder { @content; }
+    &:-moz-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; }
+}
