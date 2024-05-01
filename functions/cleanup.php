@@ -60,6 +60,9 @@ function im_setup() {
 	if ( function_exists( 'add_image_size' ) ):
 		add_image_size( 'large', 800, 600 );
 	endif;
+	
+	// Title Tag
+	add_theme_support( 'title-tag' );
 
 
 
