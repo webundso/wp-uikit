@@ -189,10 +189,10 @@ $sides: (
   @each $prefix, $value in $sides {
     $property: if($prefix == '', '', -#{$value});
     .m#{$prefix}#{$space} {
-      margin#{$property}: #{$space}px;
+      margin#{$property}: #{$space}px !important;
     }
     .p#{$prefix}#{$space} {
-      padding#{$property}: #{$space}px;
+      padding#{$property}: #{$space}px !important;
     }
   }
 }

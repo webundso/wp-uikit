@@ -98,6 +98,11 @@ $hellgrau: #e6e3e3;
 	}
 }
 
+.wp-block-spacer {
+	background: $hellgrau;
+	border: 2px dotted $braun;
+	margin-bottom: 10px;
+}
 
 // ACF Blöcke 
 .acf-block-component{
