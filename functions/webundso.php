@@ -85,3 +85,18 @@ function my_toolbars( $toolbars )
     // return $toolbars - IMPORTANT!
     return $toolbars;
   }
+  
+  // Ajax Call
+  function my_load_post_content() {
+      // if (isset($_POST['post_id'])) {
+         // $post_id = intval($_POST['post_id']);
+          $post_id = 9;
+          $post = get_post($post_id);
+          if ($post) {
+              echo apply_filters('the_content', $post->post_content);
+          }
+    //  }
+      wp_die(); // All AJAX handlers should die when finished
+  }
+  add_action('wp_ajax_load_post_content', 'my_load_post_content');
+  add_action('wp_ajax_nopriv_load_post_content', 'my_load_post_content');

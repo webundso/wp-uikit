@@ -32,6 +32,17 @@ function im_setup() {
 
 	}
 	add_action( 'wp_enqueue_scripts', 'wus_js' );
+	
+	// Ajax Scripts
+	function my_enqueue_scripts() {
+			wp_enqueue_script('jquery');
+			wp_enqueue_script('my-ajax-script', get_template_directory_uri() . '/assets/js/wus-ajax.js', array('jquery'), null, true );
+	
+			wp_localize_script('my-ajax-script', 'my_ajax_obj', array(
+					'ajax_url' => admin_url('admin-ajax.php')
+			));
+	}
+	add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
 	// Register Feed Links, Post Formats, Custom Thumbnails, HTML5
 	if ( function_exists( 'add_theme_support' ) ):
