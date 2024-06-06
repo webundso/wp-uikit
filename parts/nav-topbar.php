@@ -10,7 +10,7 @@ Last changes: 9.2.2024
 ?>
 <div class="uk-container">
 	
-	<nav class="uk-navbar-container" uk-navbar>
+	<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
 		<div class="uk-navbar-left">
 			<a class="uk-navbar-item uk-logo" href="/">webundso Template</a>
 		</div>
