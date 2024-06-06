@@ -6,7 +6,7 @@ Stylesheet: Gutenberg (im Backend)
 *************************************************/
 
 //  @import 'mixins';
-// @import 'variables';
+ @import 'variables';
 
 $hellgrau: #e6e3e3;
 
@@ -16,7 +16,7 @@ $hellgrau: #e6e3e3;
 
 // Seitentitel
 .editor-post-title {
-	font-family: $mainFont;
+	font-family: $main-font-family;
 //	color: $rot;
 }
 
@@ -100,7 +100,7 @@ $hellgrau: #e6e3e3;
 
 .wp-block-spacer {
 	background: $hellgrau;
-	border: 2px dotted $braun;
+	border: 2px dotted $black;
 	margin-bottom: 10px;
 }
 
