@@ -4,7 +4,7 @@
 Filename: nav-topbar.php
 Description: Topbar, logo left, menu right
 Author: Noël Girstmair | webundso GmbH
-Last changes: 9.2.2024
+Last changes: 20.6.2024
 =================================================================
 */
 ?>
@@ -15,7 +15,7 @@ Last changes: 9.2.2024
 			<a class="uk-navbar-item uk-logo" href="/">webundso Template</a>
 		</div>
 		<div class="uk-navbar-right">
-			<?php  	__urbi_navbar_walker_print_menu_location('main-nav');  ?>
+			<?php  	wus_topnav('main-nav');  ?>
 		</div>
 	</nav>
 	

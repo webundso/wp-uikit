@@ -4,7 +4,7 @@
 Filename: footer.php
 Description: Page footer
 Author: Noël Girstmair | webundso GmbH
-Last changes: 5.2.2024
+Last changes: 20.6.2024
 =================================================================
 */
 ?>
@@ -16,7 +16,7 @@ Last changes: 5.2.2024
 			
 			<div class="uk-panel">
 				<h3>Footer Menu </h3>
-				<?php  __urbi_nav_walker_print_menu_location('footer-menu'); ?>
+				<?php  wus_footernav('footer-nav'); ?>
 			</div>
 			
 			<div class="uk-panel">

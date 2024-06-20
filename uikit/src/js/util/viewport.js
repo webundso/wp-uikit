@@ -84,9 +84,8 @@ export function scrollIntoView(element, { offset: offsetBy = 0 } = {}) {
                     diff =
                         offset(targetEl).top +
                         (isScrollingElement ? 0 : element.scrollTop) -
-                        targetTop;
-                    const coverEl = getCoveringElement(targetEl);
-                    diff -= coverEl ? offset(coverEl).height : 0;
+                        targetTop -
+                        dimensions(getCoveringElement(targetEl)).height;
                 }
 
                 element.scrollTop = scroll + (top + diff) * percent;
@@ -184,7 +183,7 @@ export function offsetViewport(scrollElement) {
     ]) {
         if (isWindow(viewportElement)) {
             // iOS 12 returns <body> as scrollingElement
-            viewportElement = scrollElement.ownerDocument;
+            viewportElement = viewportElement.document;
         } else {
             rect[start] += toFloat(css(viewportElement, `border-${start}-width`));
         }
@@ -199,9 +198,10 @@ export function offsetViewport(scrollElement) {
 
 export function getCoveringElement(target) {
     const { left, width, top } = dimensions(target);
-    for (const topPosition of [0, top]) {
-        const coverEl = target.ownerDocument.elementsFromPoint(left + width / 2, topPosition).find(
-            (el) =>
+    for (const position of top ? [0, top] : [0]) {
+        let coverEl;
+        for (const el of toWindow(target).document.elementsFromPoint(left + width / 2, position)) {
+            if (
                 !el.contains(target) &&
                 // If e.g. Offcanvas is not yet closed
                 !hasClass(el, 'uk-togglable-leave') &&
@@ -213,8 +213,12 @@ export function getCoveringElement(target) {
                                 (parent) => !parent.contains(el) && !hasPosition(parent, 'static'),
                             ),
                     ) < zIndex(el)) ||
-                    (hasPosition(el, 'sticky') && parent(el).contains(target))),
-        );
+                    (hasPosition(el, 'sticky') && parent(el).contains(target))) &&
+                (!coverEl || dimensions(coverEl).height < dimensions(el).height)
+            ) {
+                coverEl = el;
+            }
+        }
         if (coverEl) {
             return coverEl;
         }

@@ -94,14 +94,14 @@ export default {
                         left < width / 2 &&
                         left +
                             slideWidth +
-                            dimensions(this.slides[getIndex(+i + 1, this.slides)]).width / 2 >
+                            dimensions(this.slides[getIndex(i + 1, this.slides)]).width / 2 >
                             width / 2
                     ) {
-                        sets.push(+i);
+                        sets.push(i);
                         left = width / 2 - slideWidth / 2;
                     }
                 } else if (left === 0) {
-                    sets.push(Math.min(+i, this.maxIndex));
+                    sets.push(Math.min(i, this.maxIndex));
                 }
 
                 left += slideWidth;
@@ -129,7 +129,7 @@ export default {
     },
 
     observe: resize({
-        target: ({ slides }) => slides,
+        target: ({ slides, $el }) => [$el, ...slides],
     }),
 
     update: {
@@ -145,6 +145,10 @@ export default {
             }
 
             this.reorder();
+            if (!this.parallax) {
+                this._translate(1);
+            }
+
             this.updateActiveClasses();
         },
 
@@ -219,7 +223,7 @@ export default {
                 ),
             );
 
-            if (!this.center) {
+            if (!this.center || !this.length) {
                 return;
             }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * The off-canvas menu uses the Off-Canvas Component
- *
- * For more info: http://webundso_wp.com/docs/off-canvas-menu/
- */
+/*
+=================================================================
+Filename: nav-offcanvas-topbar.php
+Description: Topbar, logo left, menu Offcanvas width Toggle
+Author: Noël Girstmair | webundso GmbH
+Last changes: 20.6.2024
+=================================================================
+*/
 ?>
 
 <div class="uk-container">
@@ -20,15 +23,11 @@
 	</nav>
 </div>
 
-			<?php  // 	__urbi_navbar_walker_print_menu_location('main-nav');  ?>
-
-
-
 <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
 		<div class="uk-offcanvas-bar uk-flex uk-flex-column">
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 
-			<?php   	__urbi_nav_walker_print_menu_location('offcanvas-nav');  ?>
+			<?php wus_offcanvas_nav('offcanvas-nav');  ?>
 
 		</div>
 </div>

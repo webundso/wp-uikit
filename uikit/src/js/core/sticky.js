@@ -6,6 +6,7 @@ import {
     before,
     clamp,
     css,
+    dimensions,
     height as getHeight,
     offset as getOffset,
     hasClass,
@@ -16,7 +17,6 @@ import {
     isVisible,
     noop,
     offsetPosition,
-    once,
     parent,
     query,
     remove,
@@ -97,32 +97,28 @@ export default {
     },
 
     observe: [
-        viewport({
-            handler() {
-                if (toPx('100vh', 'height') !== this._data.viewport) {
-                    this.$emit('resize');
-                }
-            },
-        }),
+        viewport(),
         scroll({ target: () => document.scrollingElement }),
         resize({
-            target: () => document.scrollingElement,
-            options: { box: 'content-box' },
+            target: ({ $el }) => [$el, parent($el), document.scrollingElement],
+            handler(entries) {
+                this.$emit(
+                    this._data.resized && entries.some(({ target }) => target === parent(this.$el))
+                        ? 'update'
+                        : 'resize',
+                );
+                this._data.resized = true;
+            },
         }),
-        resize({ target: ({ $el }) => $el }),
     ],
 
     events: [
         {
             name: 'load hashchange popstate',
 
-            el() {
-                return window;
-            },
+            el: () => window,
 
-            filter() {
-                return this.targetOffset !== false;
-            },
+            filter: ({ targetOffset }) => targetOffset !== false,
 
             handler() {
                 const { scrollingElement } = document;
@@ -136,45 +132,35 @@ export default {
                     const elOffset = getOffset(this.$el);
 
                     if (this.isFixed && intersectRect(targetOffset, elOffset)) {
-                        scrollingElement.scrollTop =
+                        scrollingElement.scrollTop = Math.ceil(
                             targetOffset.top -
-                            elOffset.height -
-                            toPx(this.targetOffset, 'height', this.placeholder) -
-                            toPx(this.offset, 'height', this.placeholder);
+                                elOffset.height -
+                                toPx(this.targetOffset, 'height', this.placeholder) -
+                                toPx(this.offset, 'height', this.placeholder),
+                        );
                     }
                 });
-            },
-        },
-        {
-            name: 'transitionstart',
-
-            handler() {
-                this.transitionInProgress = once(
-                    this.$el,
-                    'transitionend transitioncancel',
-                    () => (this.transitionInProgress = null),
-                );
             },
         },
     ],
 
     update: [
         {
-            read({ height, width, margin, sticky }) {
-                this.inactive = !this.matchMedia || !isVisible(this.$el);
+            read({ height, width, margin, sticky }, types) {
+                this.inactive = !this.matchMedia || !isVisible(this.$el) || !this.$el.offsetHeight;
 
                 if (this.inactive) {
                     return;
                 }
 
-                const hide = this.isFixed && !this.transitionInProgress;
+                const hide = this.isFixed && types.has('update');
                 if (hide) {
                     preventTransition(this.target);
                     this.hide();
                 }
 
                 if (!this.active) {
-                    ({ height, width } = getOffset(this.$el));
+                    ({ height, width } = dimensions(this.$el));
                     margin = css(this.$el, 'margin');
                 }
 
@@ -202,7 +188,7 @@ export default {
 
                 const overflow = this.overflowFlip ? 0 : Math.max(0, height + offset - viewport);
                 const topOffset = getOffset(referenceElement).top;
-                const elHeight = getOffset(this.$el).height;
+                const elHeight = dimensions(this.$el).height;
 
                 const start =
                     (this.start === false
@@ -242,6 +228,7 @@ export default {
                     top: offsetPosition(referenceElement)[0],
                     sticky,
                     viewport,
+                    maxScrollHeight,
                 };
             },
 
@@ -286,8 +273,9 @@ export default {
                 elHeight,
                 height,
                 sticky,
+                maxScrollHeight,
             }) {
-                const scroll = document.scrollingElement.scrollTop;
+                const scroll = Math.min(document.scrollingElement.scrollTop, maxScrollHeight);
                 const dir = prevScroll <= scroll ? 'down' : 'up';
                 const referenceElement = this.isFixed ? this.placeholder : this.$el;
 
@@ -489,7 +477,10 @@ function reset(el) {
     css(el, { position: '', top: '', marginTop: '', width: '' });
 }
 
-function preventTransition(el) {
-    addClass(el, 'uk-transition-disable');
-    requestAnimationFrame(() => removeClass(el, 'uk-transition-disable'));
+const clsTransitionDisable = 'uk-transition-disable';
+function preventTransition(element) {
+    if (!hasClass(element, clsTransitionDisable)) {
+        addClass(element, clsTransitionDisable);
+        requestAnimationFrame(() => removeClass(element, clsTransitionDisable));
+    }
 }

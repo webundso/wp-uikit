@@ -1,17 +1,11 @@
-import { hasOwn, includes, isArray, isFunction, isString } from 'uikit-util';
+import { hasOwn, includes, isArray, isFunction, isString, toNodes } from 'uikit-util';
 import { registerComputed } from './computed';
 import { registerWatch } from './watch';
 
 export function initObservers(instance) {
     instance._observers = [];
     for (const observer of instance.$options.observe || []) {
-        if (hasOwn(observer, 'handler')) {
-            registerObservable(instance, observer);
-        } else {
-            for (const observable of observer) {
-                registerObservable(instance, observable);
-            }
-        }
+        registerObservable(instance, observer);
     }
 }
 
@@ -34,7 +28,10 @@ function registerObservable(instance, observable) {
 
     const key = `_observe${instance._observers.length}`;
     if (isFunction(target) && !hasOwn(instance, key)) {
-        registerComputed(instance, key, () => target.call(instance, instance));
+        registerComputed(instance, key, () => {
+            const targets = target.call(instance, instance);
+            return isArray(targets) ? toNodes(targets) : targets;
+        });
     }
 
     handler = isString(handler) ? instance[handler] : handler.bind(instance);
@@ -46,21 +43,33 @@ function registerObservable(instance, observable) {
     const targets = hasOwn(instance, key) ? instance[key] : target;
     const observer = observe(targets, handler, options, args);
 
-    if (isFunction(target) && isArray(instance[key]) && observer.unobserve) {
-        registerWatch(instance, { handler: updateTargets(observer), immediate: false }, key);
+    if (isFunction(target) && isArray(instance[key])) {
+        registerWatch(
+            instance,
+            { handler: updateTargets(observer, options), immediate: false },
+            key,
+        );
     }
 
     registerObserver(instance, observer);
 }
 
-function updateTargets(observer) {
+function updateTargets(observer, options) {
     return (targets, prev) => {
         for (const target of prev) {
-            !includes(targets, target) && observer.unobserve(target);
+            if (!includes(targets, target)) {
+                if (observer.unobserve) {
+                    observer.unobserve(target);
+                } else if (observer.observe) {
+                    observer.disconnect();
+                }
+            }
         }
 
         for (const target of targets) {
-            !includes(prev, target) && observer.observe(target);
+            if (!includes(prev, target) || !observer.unobserve) {
+                observer.observe(target, options);
+            }
         }
     };
 }
