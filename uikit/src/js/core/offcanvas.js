@@ -95,14 +95,13 @@ export default {
 
             handler() {
                 if (this.mode === 'reveal' && !hasClass(parent(this.panel), this.clsMode)) {
-                    wrapAll(this.panel, '<div>');
-                    addClass(parent(this.panel), this.clsMode);
+                    addClass(wrapAll(this.panel, '<div>'), this.clsMode);
                 }
 
                 const { body, scrollingElement } = document;
 
                 addClass(body, this.clsContainer, this.clsFlip);
-                css(body, 'touch-action', 'pan-y pinch-zoom');
+                css(body, 'touchAction', 'pan-y pinch-zoom');
                 css(this.$el, 'display', 'block');
                 css(this.panel, 'maxWidth', scrollingElement.clientWidth);
                 addClass(this.$el, this.clsOverlay);
@@ -126,7 +125,7 @@ export default {
 
             handler() {
                 removeClass(document.body, this.clsContainerAnimation);
-                css(document.body, 'touch-action', '');
+                css(document.body, 'touchAction', '');
             },
         },
 
@@ -138,7 +137,7 @@ export default {
             handler() {
                 this.clsContainerAnimation && resumeUserScale();
 
-                if (this.mode === 'reveal') {
+                if (this.mode === 'reveal' && hasClass(parent(this.panel), this.clsMode)) {
                     unwrap(this.panel);
                 }
 

@@ -65,12 +65,12 @@ export function initComputedUpdates(instance) {
         () => callUpdate(instance, 'computed'),
         mutationOptions,
     );
-}
 
-export function disconnectComputedUpdates(instance) {
-    instance._computedObserver?.disconnect();
-    delete instance._computedObserver;
-    resetComputed(instance);
+    instance._disconnect.push(() => {
+        instance._computedObserver.disconnect();
+        instance._computedObserver = null;
+        resetComputed(instance);
+    });
 }
 
 function resetComputed(instance) {
