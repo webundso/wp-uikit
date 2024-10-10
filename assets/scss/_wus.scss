@@ -40,6 +40,29 @@
 
 /***-- Typography --------------------------------------------***/
 
+strong {
+	font-weight: 700 !important;
+}
+
+$a-tags: 'a, a:active, a:hover, a:visited';
+$a-tags-hover: 'a:active, a:hover';
+ 
+#{$a-tags} {
+	color: $black;
+	text-decoration: none;
+}
+#{$a-tags-hover} {
+	color: $black;
+	text-decoration: underline;
+}
+
+h1 {
+	
+}
+h2{
+	
+}
+
 p, ul li {
 	-webkit-hyphens: auto;
 	-webkit-hyphenate-limit-chars: auto 3;
