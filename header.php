@@ -15,13 +15,12 @@ Last changes: 5.2.2024
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 		
-		<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_directory'); ?>/assets/images/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="<?php bloginfo('template_directory'); ?>/assets/images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="<?php bloginfo('template_directory'); ?>/assets/images/favicon-16x16.png">
-		<link rel="manifest" href="<?php bloginfo('template_directory'); ?>/assets/images/site.webmanifest">
-		<link rel="mask-icon" href="<?php bloginfo('template_directory'); ?>/assets/images/safari-pinned-tab.svg" color="#003350">
-		<meta name="msapplication-TileColor" content="#2b5797">
-		<meta name="theme-color" content="#ffffff">
+		<link rel="icon" type="image/png" href="<?php bloginfo('template_directory'); ?>/assets/images/favicon-48x48.png" sizes="48x48" />
+		<link rel="icon" type="image/svg+xml" href="<?php bloginfo('template_directory'); ?>/assets/images/favicon.svg" />
+		<link rel="shortcut icon" href="<?php bloginfo('template_directory'); ?>/assets/images/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_directory'); ?>/assets/images/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="aime ta ville" />
+		<link rel="manifest" href="<?php bloginfo('template_directory'); ?>/assets/images/site.webmanifest" />
 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />

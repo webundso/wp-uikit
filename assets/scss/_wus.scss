@@ -13,11 +13,41 @@
 
 /***-- Footer ------------------------------------------------***/
 
+.footer-to-top {
+		background-color: rgba($weiss, 0.75); 
+		display: none;
+		z-index: 999;
+		position: fixed;
+		right: 20px;
+		bottom: 20px;
+		width: 50px;
+		height: 50px;
+		text-align: center;
+		vertical-align: middle;
+		padding: 8px 10px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box; 
+		-webkit-border-radius: 50%;
+		border-radius: 50%;
+		.uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) {
+			stroke: $petrol !important;
+		}
+}
 
 /***-- Menu --------------------------------------------------***/
 
 
 /***-- Typography --------------------------------------------***/
 
+p, ul li {
+	-webkit-hyphens: auto;
+	-webkit-hyphenate-limit-chars: auto 3;
+	-webkit-hyphenate-limit-lines: 4;
+	-ms-hyphens: auto;
+	-ms-hyphenate-limit-chars: auto 3;
+	-ms-hyphenate-limit-lines: 4;
+	hyphens: auto;
+}
 
 /***-- Blocks ------------------------------------------------***/
