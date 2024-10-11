@@ -37,7 +37,7 @@ Last changes: 20.6.2024
 </footer> 
 		
 <!-- to top -->
-<a href="#" class="footer-to-top" uk-scroll><span uk-icon="icon: chevron-up; ratio: 1.5"></span></a>		
+<a href="#" class="footer-to-top" uk-scroll><span uk-icon="icon: chevron-up; ratio: 2"></span></a>		
 <?php wp_footer(); ?>
 		
 	
