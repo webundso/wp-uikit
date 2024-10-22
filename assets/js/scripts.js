@@ -8,16 +8,10 @@ Last changes: 9.2.2024
 */
 
 jQuery( document ).ready(function($) {
- 
-	//megamenu
-	UIkit.util.on('.uk-navbar', 'beforeshow', function () {
-			$('.megamenu-wrap').show();
-			$('.menu-item-has-children').addClass('is-open');
-	});
-	UIkit.util.on('.uk-navbar', 'beforehide', function () {
-			$('.megamenu-wrap').hide();
-			$('.menu-item-has-children').removeClass('is-open');
-	});
+
+	//  target _blank external links & pdf
+	$('a[href^="http://"], a[href^="https://"').not('a[href*="' + location.hostname + '"]').attr('target', '_blank').addClass('linkIcon-external'); 
+	$('a[href$=".pdf"]').addClass('linkIcon-pdf').attr('target', '_blank');
 	
 	
 	// to top
