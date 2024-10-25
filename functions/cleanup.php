@@ -36,11 +36,11 @@ function im_setup() {
 	// Ajax Scripts
 	function my_enqueue_scripts() {
 			wp_enqueue_script('jquery');
-			wp_enqueue_script('my-ajax-script', get_template_directory_uri() . '/assets/js/wus-ajax.js', array('jquery'), null, true );
-	
-			wp_localize_script('my-ajax-script', 'my_ajax_obj', array(
-					'ajax_url' => admin_url('admin-ajax.php')
-			));
+	// 		wp_enqueue_script('my-ajax-script', get_template_directory_uri() . '/assets/js/wus-ajax.js', array('jquery'), null, true );
+	// 
+	// 		wp_localize_script('my-ajax-script', 'my_ajax_obj', array(
+	// 				'ajax_url' => admin_url('admin-ajax.php')
+	// 		));
 	}
 	add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
@@ -101,7 +101,7 @@ function im_setup() {
 
 
 	// Disable XMLRPC
-	add_filter('xmlrpc_enabled', '__return_false');
+	// add_filter('xmlrpc_enabled', '__return_false');
 	
 	// Disable REST API (users, etc)
 	// add_filter( 'rest_authentication_errors', 'wp_snippet_disable_rest_api' );

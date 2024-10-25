@@ -1,4 +1,5 @@
 <?php
+/*
 =================================================================
 Filename: block-xxx.php
 Description: Block 

@@ -101,7 +101,11 @@ class UikitWalker extends \Walker_Nav_Menu {
     // Prüfe ob das Menu item ein Platzhalter Link ist.
     if ( $item->url && '#' !== $item->url ) {
       // Das Menu Item ist ein echter Link, behalte die Standard Ausgabe bei.
-      $output .= '<a href="' . $item->url . '">';
+     $attributes  = !empty($item->attr_title) ? ' title="'  . esc_attr($item->attr_title) . '"' : '';
+     $attributes .= !empty($item->target)     ? ' target="' . esc_attr($item->target    ) . '"' : '';
+     $attributes .= !empty($item->xfn)        ? ' rel="'    . esc_attr($item->xfn       ) . '"' : '';
+     $attributes .= !empty($item->url)        ? ' href="'   . esc_attr($item->url       ) . '"' : '';
+     $output .= '<a ' . $attributes .' href="' . $item->url . '">';
     } else {
       // Das Menu Item ist ein "Platzhalter-Link", ändere <a> zu <span>
       $output .= '<span class="uk-navbar-item">';
@@ -159,8 +163,11 @@ class UikitWalkerAkk extends \Walker_Nav_Menu {
     $output .= "<li id='menu-id-". $item->ID ."' class='" .  implode( ' ', $item->classes ) . "'>";
     // Prüfe ob das Menu item ein Platzhalter Link ist.
     if ( $item->url && '#' !== $item->url ) {
-      // Das Menu Item ist ein echter Link, behalte die Standard Ausgabe bei.
-      $output .= '<a href="' . $item->url . '">';
+      $attributes  = !empty($item->attr_title) ? ' title="'  . esc_attr($item->attr_title) . '"' : '';
+      $attributes .= !empty($item->target)     ? ' target="' . esc_attr($item->target    ) . '"' : '';
+      $attributes .= !empty($item->xfn)        ? ' rel="'    . esc_attr($item->xfn       ) . '"' : '';
+      $attributes .= !empty($item->url)        ? ' href="'   . esc_attr($item->url       ) . '"' : '';
+      $output .= '<a ' . $attributes .' href="' . $item->url . '">';
     } else {
       // Das Menu Item ist ein "Platzhalter-Link", ändere <a> zu <span>
       $output .= '<span class="uk-navbar-item">';
