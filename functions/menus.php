@@ -163,11 +163,8 @@ class UikitWalkerAkk extends \Walker_Nav_Menu {
     $output .= "<li id='menu-id-". $item->ID ."' class='" .  implode( ' ', $item->classes ) . "'>";
     // Prüfe ob das Menu item ein Platzhalter Link ist.
     if ( $item->url && '#' !== $item->url ) {
-      $attributes  = !empty($item->attr_title) ? ' title="'  . esc_attr($item->attr_title) . '"' : '';
-      $attributes .= !empty($item->target)     ? ' target="' . esc_attr($item->target    ) . '"' : '';
-      $attributes .= !empty($item->xfn)        ? ' rel="'    . esc_attr($item->xfn       ) . '"' : '';
-      $attributes .= !empty($item->url)        ? ' href="'   . esc_attr($item->url       ) . '"' : '';
-      $output .= '<a ' . $attributes .' href="' . $item->url . '">';
+      // Das Menu Item ist ein echter Link, behalte die Standard Ausgabe bei.
+      $output .= '<a href="' . $item->url . '">';
     } else {
       // Das Menu Item ist ein "Platzhalter-Link", ändere <a> zu <span>
       $output .= '<span class="uk-navbar-item">';
@@ -200,7 +197,7 @@ class UikitWalkerAkk extends \Walker_Nav_Menu {
     // $depth 1 = Das erste Submenu
     if ( 1 === $depth ) {
       // Ersetze das ul.submenu mit neuen Klassen 'uk-nav uk-navbar-dropdown-nav'
-      $output = preg_replace('<ul class="sub-menu">', 'ul class="uk-nav-sub" ', $output, 1);
+      $output = preg_replace('<ul class="sub-menu">', 'ul class="uk-nav-sub" uk-nav="collapsible: true" ', $output, 1);
     }   
   }
   function end_lvl( &$output, $depth = 0, $args = [] ) {
@@ -208,4 +205,45 @@ class UikitWalkerAkk extends \Walker_Nav_Menu {
     $output .= '</ul>';
   }
   
+}
+
+class Megamenu_Walker extends Walker_Nav_Menu {
+  function start_lvl(&$output, $depth = 0, $args = array()) {
+    if ($depth === 0) {
+        $output .= '<div class="uk-navbar-dropdown" uk-drop="stretch: x;boundary: window; boundary-align: false; pos: bottom-justify; mode: hover; delay-hide: 0; duration: 500"><div class="uk-container"><div class="uk-grid-divider uk-navbar-dropdown-grid uk-child-width-expand@s" uk-grid>';
+    } else {
+        $output .= '<ul class="uk-nav uk-navbar-dropdown-nav sub-menu">';
+    }
+  }
+
+  function end_lvl(&$output, $depth = 0, $args = array()) {
+    if ($depth === 0) {
+      $output .= '</div></div></div>';
+    } else {
+      $output .= '</ul>';
+    }
+  }
+
+  function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
+    if( in_array('current-menu-item', $item->classes) ) {
+      $item->classes[] = 'uk-active ';
+    }
+    if ($depth === 0) {
+      $output .= '<li id="menu-id-'. $item->ID .'" class="' .  implode( ' ', $item->classes ) . '">';
+      $output .= '<a href="' . esc_url($item->url) . '">' . esc_html($item->title) . '</a>';
+    } elseif ($depth === 1) {
+      $output .= '<div><ul class="uk-nav">';
+      $output .= '<li id="menu-id-'. $item->ID .'" class="' .  implode( ' ', $item->classes ) . '"><a href="' . esc_html($item->url) . '">' . esc_html($item->title) . '</a>';
+    } elseif ($depth === 2) {
+      $output .= '<li id="menu-id-'. $item->ID .'" class="' .  implode( ' ', $item->classes ) . '"><a href="' . esc_url($item->url) . '">' . esc_html($item->title) . '</a></li>';
+    }
+  }
+
+  function end_el(&$output, $item, $depth = 0, $args = array()) {
+    if ($depth === 0) {
+      $output .= '</li>';
+    } elseif ($depth === 1) {
+      $output .= '</li></ul></div>';
+    }
+  }
 }
