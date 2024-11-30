@@ -32,6 +32,12 @@ Last changes: 5.2.2024
 	</head>
 			
 	<body <?php body_class(); ?>>
+		
+		<div class="mobileTrigger uk-hidden@m" id="menuToggle" uk-toggle="target: #offcanvas-mobile">
+			<span class="top"></span>
+			<span class="middle"></span>
+			<span class="bottom"></span>
+		</div>
 
 		<header class="header" role="banner">
 					

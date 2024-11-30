@@ -10,11 +10,25 @@ $rot: red;
 
 $trans: transparent;
 
+// @include font-face("Source Serif", "../fonts/source-serif-4-v8-latin-700", 700, normal, ttf woff2);
+
 $main-font-family: Times;
 $bold-font-family: Arial;
 
 //*** overwrite UIKit defaults ***//
 
-$global-color: $rot;
-$global-link-color: #DA7D02;
-$global-font-family: $bold-font-family;
+// $global-color: $black;
+// $global-link-color: $dunkelbraun;
+// $global-link-hover-color: $dunkelgruen;
+// $global-font-family: $main-font-family;
+// $container-max-width: 1024px;
+// $base-h1-font-size: rem(36px);
+// $base-h2-font-size: rem(26px) !important;
+// $base-h3-font-size: rem(22px) !important;
+// $navbar-nav-item-height: auto;
+// $grid-divider-border: $dunkelbraun;
+// $lightbox-background: rgba($weiss, 0.9);
+// $lightbox-toolbar-background: $dunkelbraun;
+// $lightbox-toolbar-color: $weiss;
+// $lightbox-button-background: $hellbraun;
+// $offcanvas-bar-background: $hellbraun;

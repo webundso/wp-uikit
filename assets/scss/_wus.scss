@@ -7,6 +7,58 @@
 
 /***-- Header ------------------------------------------------***/
 
+	.mobileTrigger {
+		position: absolute;
+		left: 15px;
+		top: 15px;
+		height: 45px;
+		width: 50px;
+		cursor: pointer;
+		z-index: 500;
+		background: rgba($hellbraun, .6);
+		transition: opacity .25s ease;	
+		@include bp-small {	
+			right: 10px;
+		}	  
+		&:hover {
+		// opacity: .7;
+		}		  
+		&.active {
+			.top {
+				transform: translateY(12px) translateX(0) rotate(45deg);
+				background: $black;
+			}
+			.middle {
+				opacity: 0;
+				background: $black;
+			}
+			
+			.bottom {
+				transform: translateY(-12px) translateX(0) rotate(-45deg);
+				background: $black;
+			}
+		}
+		
+		span {
+		background: $black;
+		border: none;
+		height: 2px;
+		width: calc(100% - 10px);
+		position: absolute;
+		top: 10px;
+		left: 5px;
+		transition:  all .35s ease;
+		cursor: pointer;
+			
+			&:nth-of-type(2) {
+				top: 22px;
+			}
+			
+			&:nth-of-type(3) {
+				top: 34px;
+			}
+		}
+}
 
 /***-- Layout ------------------------------------------------***/
 
@@ -37,6 +89,114 @@
 
 /***-- Menu --------------------------------------------------***/
 
+//ofcanvas
+.uk-offcanvas-bar {
+	#offcanvas-nav {
+		li {
+			overflow: hidden;
+			margin-top: 5px !important;
+			a {
+				color: $black;
+				font-weight: 700;
+				float: left;
+			}
+			.uk-accordion-toggle {
+				margin-left: 0px;
+				margin-top: 3px;
+				border: 0;
+				background: $trans;
+				&:before {
+					width: 0;
+					margin: 0;
+				}
+				span {
+					svg {
+						polyline {
+							stroke-width: 2.5;
+						}
+					}
+					&.up {
+						transform: rotate(180deg);
+					}
+				}
+			}
+			.uk-nav-sub {
+			// @include transition(all 0.3s 0s ease);
+				clear: both;
+				li {
+					a{
+						font-weight: 400;
+						padding: 3px 0;
+						clear: both;
+					}
+					.uk-accordion-toggle {
+						span {
+							svg {
+								polyline {
+									stroke-width: 1.5;
+								}
+							}	
+						}
+					}
+				}
+			}
+			&.uk-open {
+				> a {
+					span {
+						svg {
+							rotate: 180deg;
+						}
+					}
+				}
+			}
+			&.uk-active {
+				a {
+					color: $black;
+				}
+				.uk-accordion-toggle {
+					span {
+						svg {
+							polyline {
+								stroke: $black;
+							}
+						}	
+					}
+				}
+				.uk-nav-sub {
+					li {
+						a {
+							color: $black;
+						}
+						.uk-accordion-toggle {
+							span {
+								svg {
+									polyline {
+										stroke: $black;
+									}
+								}	
+							}
+						}
+						&.is-active {
+							a {
+								color: $dunkelbraun;
+							}
+							.uk-accordion-toggle {
+								span {
+									svg {
+										polyline {
+											stroke: $black;
+										}
+									}	
+								}
+							}
+						}
+					}	
+					
+				}
+			}
+		}
+	} 
+}
 
 /***-- Typography --------------------------------------------***/
 

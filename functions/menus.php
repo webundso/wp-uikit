@@ -52,15 +52,15 @@ function wus_offcanvas_nav($menu_location) {
     wp_nav_menu( array(
       'container'           => false,
       'menu_id'             => $menu_location,
-      'menu_class'          => '',
-      'items_wrap'          => '<ul id="%1$s" class="%2$s" uk-nav>%3$s</ul>',
+      'menu_class'          => 'uk-nav uk-nav-default uk-accordion',
       'theme_location'      => $menu_location,
-      'depth'               => 3,
+      'depth'               => 4,
       'walker'              => new \UikitWalkerAkk(),
       'show_dropdown_icon'  =>  true
     ) );
   }
 }
+
 
 #-----------------------------------------------------------------#
 # Footer-Menu
@@ -149,62 +149,75 @@ class UikitWalker extends \Walker_Nav_Menu {
 }
 
 
-class UikitWalkerAkk extends \Walker_Nav_Menu {
-
-  function start_el( &$output, $item, $depth = 0, $args=[], $id = 0 ) {
-    // Fügt .uk-active Class auf Current Menu Item ein.
-    if( in_array('current-menu-item', $item->classes) ) {
-      $item->classes[] = 'uk-active ';
-    }
-    if($args->walker->has_children){
-       $item->classes[] = 'uk-parent ';
-    }
-    // Fügt das Top Level Menu Item ein.
-    $output .= "<li id='menu-id-". $item->ID ."' class='" .  implode( ' ', $item->classes ) . "'>";
-    // Prüfe ob das Menu item ein Platzhalter Link ist.
-    if ( $item->url && '#' !== $item->url ) {
-      // Das Menu Item ist ein echter Link, behalte die Standard Ausgabe bei.
-      $output .= '<a href="' . $item->url . '">';
-    } else {
-      // Das Menu Item ist ein "Platzhalter-Link", ändere <a> zu <span>
-      $output .= '<span class="uk-navbar-item">';
-    }
-    // Fügt den Titel erneut in das Menu Item ein.
-    $output .= $item->title;
-    // Prüfe ob das Menu item ein Platzhalter Link ist.
-    if ( $item->url && '#' !== $item->url ) {
-      // Prüfe ob das Menu Item ein Submenu hat und ob wir ein Dropdown Icon anzeigen möchten.
-      if ( $args->walker->has_children && $args->show_dropdown_icon ) {
-        // Fügt ein UiKit3 Icon nach dem Menu Titel ein.
-        $output .= '<span data-uk-icon="icon:chevron-down"></span>';
-      }
-      // Das Menu Item ist ein echter Link, schließe ein <a> Tag.
-      $output .= '</a>';
-    } else {
-      // Prüfe ob das Menu Item ein Submenu hat und ob wir ein Dropdown Icon anzeigen möchten.
-      if ( $args->walker->has_children && $args->show_dropdown_icon ) {
-        // Fügt ein UiKit3 Icon nach dem Menu Titel ein.
-        $output .= '<span data-uk-icon="icon:chevron-down"></span>';
-      }
-      // Das Menu Item ist ein "Platzhalter-Link", schließe ein <span> Tag.
-      $output .= '</span>';
-    }
-    // Prüfe ob dieser Menüpunkt ein Submenu hat und füge ein div ein.
-    if ( $args->walker->has_children ) {
-      // Hier wird das .sub-menu noch mit dem UiKit3 benötigten Wrapper umzogen.
-    //  $output .= '<div class="uk-navbar-dropdown">';
-    }
-    // $depth 1 = Das erste Submenu
-    if ( 1 === $depth ) {
-      // Ersetze das ul.submenu mit neuen Klassen 'uk-nav uk-navbar-dropdown-nav'
-      $output = preg_replace('<ul class="sub-menu">', 'ul class="uk-nav-sub" uk-nav="collapsible: true" ', $output, 1);
-    }   
-  }
-  function end_lvl( &$output, $depth = 0, $args = [] ) {
-    // Schließt <ul class="sub-menu uk-nav uk-navbar-dropdown-nav">
-    $output .= '</ul>';
-  }
+class UikitWalkerAkk extends Walker_Nav_Menu {
+  private $is_first_submenu = false;
   
+  function start_lvl(&$output, $depth = 0, $args = []) {
+    $indent = str_repeat("\t", $depth);
+    $blu = ($depth === 0 && $this->is_first_submenu) ? '' : 'hidden'; // fügt attr. hidden ein beim 1. Punkt
+    $output .= "\n$indent<ul class=\"uk-nav-sub  \" $blu>\n"; // Verstecke das Submenü initial
+  }
+
+  function end_lvl(&$output, $depth = 0, $args = []) {
+    $indent = str_repeat("\t", $depth);
+    $output .= "$indent</ul>\n";
+  }
+
+  function start_el(&$output, $item, $depth = 0, $args = [], $id = 0) {
+    $indent = ($depth) ? str_repeat("\t", $depth) : '';
+    $classes = empty($item->classes) ? [] : (array) $item->classes;
+    $classes[] = 'menu-item-' . $item->ID;
+
+    if ($args->walker->has_children) {
+      $classes[] = 'uk-parent'; // Füge die Klasse für Parent-Elemente hinzu
+    }
+
+    $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
+    $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
+
+    $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args);
+    $id = $id ? ' id="' . esc_attr($id) . '"' : '';
+
+    $output .= $indent . '<li' . $id . $class_names .'>';
+
+    $atts = [];
+    $atts['title'] = !empty($item->attr_title) ? $item->attr_title : '';
+    $atts['target'] = !empty($item->target) ? $item->target : '';
+    $atts['rel'] = !empty($item->xfn) ? $item->xfn : '';
+    $atts['href'] = !empty($item->url) ? $item->url : '';
+
+    $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args);
+    $attributes = '';
+    foreach ($atts as $attr => $value) {
+      if (!empty($value)) {
+        $value = ($attr === 'href') ? esc_url($value) : esc_attr($value);
+        $attributes .= ' ' . $attr . '="' . $value . '"';
+      }
+    }
+
+    $title = apply_filters('the_title', $item->title, $item->ID);
+
+    $item_output = $args->before;
+    $item_output .= '<a' . $attributes . '>';
+    $item_output .= $args->link_before . $title . $args->link_after;
+    $item_output .= '</a>';
+
+    // Menü-Toggle-Button für Parent-Elemente hinzufügen
+    if ($args->walker->has_children) {
+      $item_output .= '<button class="uk-accordion-toggle" uk-toggle="target: #menu-item-' . $item->ID . ' > .uk-nav-sub; animation: uk-animation-slide-top-small"><span uk-icon="icon: chevron-down"></span></button>';
+    }
+
+    $item_output .= $args->after;
+
+    $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+  }
+
+  function end_el(&$output, $item, $depth = 0, $args = []) {
+    $output .= "</li>\n";
+    if ($depth === 0 && $this->is_first_submenu) {
+      $this->is_first_submenu = false; // Nur das erste Submenü soll offen sein
+    }
+  }
 }
 
 class Megamenu_Walker extends Walker_Nav_Menu {

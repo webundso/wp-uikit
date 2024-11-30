@@ -29,6 +29,29 @@ jQuery( document ).ready(function($) {
 		$(this).toggleClass('active');
 	});
 	
+	// Hamburger
+	$('.mobileTrigger').click(function() {
+	 $(this).toggleClass('active');
+	 if($(this).hasClass('active')){
+		 $('html, body').css('overflow','hidden'); 	   
+	 }else {
+		 $('html, body').css('overflow','auto'); 	   	   
+	 }
+	});
+	
+	
+	// Offcanvas
+	$('.uk-nav .uk-accordion-toggle').click(function() {
+			$(this).children('span').toggleClass('up');		
+		});
+		
+	// Überprüfen, ob das Element die Klasse 'uk-active' hat
+		if ($('.current_page_parent').hasClass('uk-active')) {
+				// Falls ja, füge der span unter '.uk-accordion-title' die Klasse 'up' hinzu
+				$('.current_page_parent, .current-page-ancestor').children('.uk-accordion-toggle').find('span').addClass('up');
+				$('.current_page_ancestor').filter('.uk-active').children('ul').removeAttr('hidden');
+		}
+
 	
  
 });
