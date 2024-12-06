@@ -207,7 +207,30 @@ $rem-px-only: false !default;
 Margin/Padding
 *********************/
 
-$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 100);
+// $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 100);
+// $sides: (
+//   "": "all",
+//   "t": "top",
+//   "b": "bottom",
+//   "l": "left",
+//   "r": "right",
+// );
+// 
+// @each $space in $spaceamounts {
+//   @each $prefix, $value in $sides {
+//     $property: if($prefix == '', '', -#{$value});
+//     .m#{$prefix}#{$space} {
+//       margin#{$property}: #{$space}px !important;
+//     }
+//     .p#{$prefix}#{$space} {
+//       padding#{$property}: #{$space}px !important;
+//     }
+//   }
+// }
+// To Test:
+@use "sass:math";
+@use "sass:string";
+
 $sides: (
   "": "all",
   "t": "top",
@@ -216,17 +239,26 @@ $sides: (
   "r": "right",
 );
 
-@each $space in $spaceamounts {
+@mixin generate-spacing-classes {
   @each $prefix, $value in $sides {
-    $property: if($prefix == '', '', -#{$value});
-    .m#{$prefix}#{$space} {
-      margin#{$property}: #{$space}px !important;
-    }
-    .p#{$prefix}#{$space} {
-      padding#{$property}: #{$space}px !important;
+    $property: if($prefix == "", "", -#{$value});
+    
+    @for $i from -100 through 100 {
+      $class-name: if($i < 0, "n#{math.abs($i)}", "#{$i}");
+      
+      .m#{$prefix}#{$class-name} {
+        margin#{$property}: #{$i}px !important;
+      }
+      
+      .p#{$prefix}#{$class-name} {
+        padding#{$property}: #{$i}px !important;
+      }
     }
   }
 }
+
+@include generate-spacing-classes;
+
 // Bsp mt40 = margin-top 40
 
 /*********************
