@@ -33,8 +33,8 @@ function wus_topnav($menu_location) {
     wp_nav_menu( array(
       'container'       => false,
       'menu_id'         => $menu_location,
-      'menu_class'      => 'uk-nav-parent-icon',
-      'items_wrap'      => '<ul id="%1$s" class="%2$s" uk-nav>%3$s</ul>',
+      'menu_class'      => 'uk-navbar-nav',
+      'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
       'theme_location'  => $menu_location,
       'depth'           => 3,
       'walker'          => new \UikitWalker(),

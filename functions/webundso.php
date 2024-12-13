@@ -55,36 +55,70 @@ function my_acf_json_save_point( $path ) {
     
 }
 
-/** ACF WYSIWIG Toolbar */
+/** ACF WYSIWIG Toolbar mit eigenen Styles */
 add_filter( 'acf/fields/wysiwyg/toolbars' , 'my_toolbars'  );
-function my_toolbars( $toolbars )
-  {
+function my_toolbars($toolbars)
+{
     // Uncomment to view format of $toolbars
     /*
-    echo '< pre >';
-        print_r($toolbars);
-    echo '< /pre >';
+    echo '<pre>';
+    print_r($toolbars);
+    echo '</pre>';
     die;
     */
-  
+
     // Add a new toolbar called "Very Simple"
     // - this toolbar has only 1 row of buttons
-    $toolbars['Very Simple' ] = array();
-    $toolbars['Very Simple' ][1] = array('bold' , 'italic' , 'underline' );
-  
+    $toolbars['Very Simple'] = array();
+    $toolbars['Very Simple'][1] = array('bold', 'italic', 'formatselect', 'styleselect');
+
     // Edit the "Full" toolbar and remove 'code'
-    // - delet from array code from http://stackoverflow.com/questions/7225070/php-array-delete-by-value-not-key
-    if( ($key = array_search('code' , $toolbars['Full' ][2])) !== false )
-    {
-        unset( $toolbars['Full' ][2][$key] );
+    if (($key = array_search('code', $toolbars['Full'][2])) !== false) {
+        unset($toolbars['Full'][2][$key]);
     }
-  
+
     // remove the 'Basic' toolbar completely
-    unset( $toolbars['Basic' ] );
-  
-    // return $toolbars - IMPORTANT!
+    unset($toolbars['Basic']);
+
     return $toolbars;
-  }
+}
+
+// Fügen Sie diesen Filter hinzu, um die verfügbaren Formate zu begrenzen und eigene Styles hinzuzufügen
+add_filter('tiny_mce_before_init', 'my_mce_before_init_insert_formats');
+function my_mce_before_init_insert_formats($init_array)
+{
+    // Begrenzen Sie die Formate auf h2 und h3
+    $init_array['block_formats'] = 'Paragraph=p;Heading 2=h2;Heading 3=h3';
+
+    // Definieren Sie hier Ihre benutzerdefinierten Styles
+    $style_formats = array(
+        array(
+            'title' => 'Custom Style 1',
+            'inline' => 'span',
+            'classes' => 'custom-style-1'
+        ),
+        array(
+            'title' => 'Custom Style 2',
+            'block' => 'div',
+            'classes' => 'custom-style-2'
+        )
+    );
+
+    $init_array['style_formats'] = json_encode($style_formats);
+
+    return $init_array;
+}
+
+// Fügen Sie den 'styleselect' Button zur Toolbar hinzu (falls noch nicht vorhanden)
+add_filter('mce_buttons_2', 'my_mce_buttons_2');
+function my_mce_buttons_2($buttons)
+{
+    if (!in_array('styleselect', $buttons)) {
+        array_unshift($buttons, 'styleselect');
+    }
+    return $buttons;
+}
+
   
   // Ajax Call
   function my_load_post_content() {

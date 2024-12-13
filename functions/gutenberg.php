@@ -40,7 +40,7 @@ function be_register_blocks()  {
   ));
   
   acf_register_block_type( array(
-    'name'			=> 'inner-block',
+    'name'			=> 'inner-block', // braucht keine ACF Felder!
     'title'			=> 'Block Gefäss',
     'render_template'	=> 'assets/blocks/block-inner.php',
     'mode'			=> 'preview',
