@@ -16,7 +16,7 @@ function enqueue_my_block_styles() {
 }
 
 
-/* Registzer ACF Block for Gutenberg */
+/* Register ACF Block for Gutenberg */
 
 function be_register_blocks()  {
 
@@ -40,7 +40,7 @@ function be_register_blocks()  {
   ));
   
   acf_register_block_type( array(
-    'name'			=> 'inner-block', // braucht keine ACF Felder!
+    'name'			=> 'inner-block',
     'title'			=> 'Block Gefäss',
     'render_template'	=> 'assets/blocks/block-inner.php',
     'mode'			=> 'preview',

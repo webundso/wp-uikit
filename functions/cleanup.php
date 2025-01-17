@@ -80,15 +80,6 @@ function im_setup() {
 // ++++++++++++++++ PERFORMANCE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
 
-	// Remove the version query string from scripts and styles - allows for better caching
-	function im_remove_script_version( $src ){
-		$parts = explode( '?', $src );
-		return $parts[0];
-	}
-	add_filter( 'script_loader_src', 'im_remove_script_version', 15, 1 );
-	add_filter( 'style_loader_src', 'im_remove_script_version', 15, 1 );
-
-
 	// Prevents WordPress from testing SSL capability on domain.com/xmlrpc.php?rsd when XMLRPC not in use
 	remove_filter('atom_service_url','atom_service_url_filter');
 
@@ -246,12 +237,14 @@ function im_setup() {
 
 	// Change the default WordPress greeting in Admin
 	function im_replace_howdy( $wp_admin_bar ) {
-		$my_account=$wp_admin_bar->get_node('my-account');
-		$newtitle = str_replace( 'Howdy,', 'Welcome, ', $my_account->title );
-		$wp_admin_bar->add_node( array(
-			'id' => 'my-account',
-			'title' => $newtitle,
-		) );
+		$my_account = $wp_admin_bar->get_node('my-account');
+	if ($my_account && isset($my_account->title)) {
+			$newtitle = str_replace( 'Howdy,', 'Welcome, ', $my_account->title );
+			$wp_admin_bar->add_node( array(
+				'id' => 'my-account',
+				'title' => $newtitle,
+			));
+		}
 	}
 	add_filter( 'admin_bar_menu', 'im_replace_howdy', 25 );
 

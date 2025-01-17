@@ -1,0 +1,19 @@
+{
+	"name": "acf/block-inner",
+	"title": "Block Gefäss",
+	"description": "Inner block template",
+	"category": "formatting",
+	"icon": "smiley",
+	"keywords": ["services", "inner block"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "block-inner.php"
+	},
+	"supports": {
+		"anchor": true,
+		"jsx": true,
+		"align": true,
+		"customClassName": true,
+		"color": true
+	}
+}
