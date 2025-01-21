@@ -147,3 +147,25 @@ function my_mce_buttons_2($buttons)
   array_unshift($categories , $new_category); 
   return $categories;
 });
+
+// Quadratische Bilder/Boxen w-h
+$(window).on('resize', function() {
+  // $('.akbox').height( $('.akbox').width() );
+  // $('.mbox').height( $('.mbox').width() );
+  // $('.news-list-view .headerWrap').height( ($('.news-list-view .headerWrap').width()) / 2 );
+  // $('.news-list-view .headerWrap.referenz').height( ($('.news-list-view .headerWrap').width()));
+  // $('.front-grid .box').height( ($('.front-grid .box').width()));
+}).trigger('resize');
+  
+  // Galerie Block m. Lightbox
+$('.wp-block-gallery').each(function() {
+  $(this).attr('uk-lightbox', 'animation: fade');
+  $(this).find('figure.wp-block-image').each(function() {
+    var $img = $(this).find('img');
+    var $link = $('<a>').attr({
+      'href': $img.attr('src'),
+      'data-caption': $img.attr('alt')
+    });
+    $img.wrap($link);
+  });
+});
