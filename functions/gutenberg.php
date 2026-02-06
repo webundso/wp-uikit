@@ -1,7 +1,5 @@
 <?php
 defined('ABSPATH') || exit;
-error_log('WUS: gutenberg.php loaded (admin=' . (is_admin() ? 'yes' : 'no') . ')');
-
 
 ///**
 // * gutenberg.php
