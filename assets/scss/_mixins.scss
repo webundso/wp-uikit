@@ -1,125 +1,108 @@
 /******************************************************************/
-/* Stylesheet: Mixins & Constants Stylesheet*/
+/* Mixins & Utilities – WP-SCSS kompatibel                         */
 /******************************************************************/
 
-/*********************
-TOOLS
-*********************/
-
-/** Border for element position **/
-@mixin dev-border($color:red) {
+/* --------------------------------------------------------------- */
+/* DEV / DEBUG                                                     */
+/* --------------------------------------------------------------- */
+@mixin dev-border($color: red) {
   border: 1px solid $color;
 }
-// @include dev-border;
+// @include dev-border();           // rote Debug-Umrandung
+// @include dev-border(blue);       // blaue Debug-Umrandung
 
-/*********************
-COLORS
-*********************/
 
-@mixin background-opacity($color, $opacity: 0.3) {
-  background: $color; /* The Fallback */
-  background: rgba($color, $opacity);
-}
-// @include background-opacity(#333, 0.5);
-
-@mixin opacity($opacity) {
-  opacity: $opacity;
-  $opacity-ie: $opacity * 100;
-  filter: alpha(opacity = $opacity-ie); //IE8
-}
-// @include opacity(.4);
-
-/*********************
-FONTS
-*********************/
-// =============================================================================
-// String Replace
-// =============================================================================
-
+/* --------------------------------------------------------------- */
+/* STRING HELPERS                                                  */
+/* --------------------------------------------------------------- */
 @function str-replace($string, $search, $replace: "") {
   $index: str-index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return str-slice($string, 1, $index - 1)
+      + $replace
+      + str-replace(
+          str-slice($string, $index + str-length($search)),
+          $search,
+          $replace
+        );
   }
 
   @return $string;
 }
+// str-replace("Source Serif 4", " ", "_"); // → "Source_Serif_4"
 
-// =============================================================================
-// Font Face
-// =============================================================================
 
-@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+/* --------------------------------------------------------------- */
+/* FONT FACE                                                       */
+/* --------------------------------------------------------------- */
+@mixin font-face(
+  $name,
+  $path,
+  $weight: null,
+  $style: normal,
+  $exts: woff2 woff,
+  $display: swap
+) {
   $src: null;
 
-  $extmods: (
-    eot: "?",
-    svg: "#" + str-replace($name, " ", "_")
-  );
-
   $formats: (
+    woff2: "woff2",
+    woff: "woff",
     otf: "opentype",
     ttf: "truetype"
   );
 
   @each $ext in $exts {
-    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
     $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
-    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+    $src: append($src, url("#{$path}.#{$ext}") format("#{$format}"), comma);
   }
 
   @font-face {
     font-family: quote($name);
     font-style: $style;
     font-weight: $weight;
+    font-display: $display;
     src: $src;
   }
 }
-// @include font-face(Samplinal, fonts/Samplinal, 500, normal, eot woff2 woff);
-/*********************
-REM UMWANDLUNG
-*********************/
+// @include font-face("Inter", "../fonts/inter-variable", "100 900", normal);
+// @include font-face("Inter", "../fonts/inter-regular", 400, normal);
 
+/* --------------------------------------------------------------- */
+/* REM CONVERSION                                                  */
+/* --------------------------------------------------------------- */
 $rem-baseline: 16px !default;
 $rem-fallback: false !default;
 $rem-px-only: false !default;
 
 @function rem-separator($list, $separator: false) {
-  @if $separator == "comma" or $separator == "space" {
+  @if $separator == comma or $separator == space {
     @return append($list, null, $separator);
-  }   
-  @if function-exists("list-separator") == true {
+  }
+
+  @if function-exists("list-separator") {
     @return list-separator($list);
   }
-  // list-separator polyfill by Hugo Giraudel (https://sass-compatibility.github.io/#list_separator_function)
-  $test-list: ();
-  @each $item in $list {
-    $test-list: append($test-list, $item, space);
-  }
-  @return if($test-list == $list, space, comma);
-}
 
-@mixin rem-baseline($zoom: 100%) {
-  font-size: $zoom / 16px * $rem-baseline;
+  $test: ();
+  @each $item in $list {
+    $test: append($test, $item, space);
+  }
+  @return if($test == $list, space, comma);
 }
 
 @function rem-convert($to, $values...) {
   $result: ();
-  $separator: rem-separator($values);
-  
+  $sep: rem-separator($values);
+
   @each $value in $values {
-    @if type-of($value) == "number" and unit($value) == "rem" and $to == "px" {
-      $result: append($result, $value / 1rem * $rem-baseline, $separator);
-    } @else if type-of($value) == "number" and unit($value) == "px" and $to == "rem" {
-      $result: append($result, $value / $rem-baseline * 1rem, $separator);
-    } @else if type-of($value) == "list" {
-      $value-separator: rem-separator($value);
-      $value: rem-convert($to, $value...);
-      $value: rem-separator($value, $value-separator);
-      $result: append($result, $value, $separator);
+    @if type-of($value) == number and unit($value) == px and $to == rem {
+      $result: append($result, $value / $rem-baseline * 1rem, $sep);
+    } @else if type-of($value) == number and unit($value) == rem and $to == px {
+      $result: append($result, $value / 1rem * $rem-baseline, $sep);
     } @else {
-      $result: append($result, $value, $separator);
+      $result: append($result, $value, $sep);
     }
   }
 
@@ -127,290 +110,109 @@ $rem-px-only: false !default;
 }
 
 @function rem($values...) {
-  @if $rem-px-only {
-    @return rem-convert(px, $values...);
-  } @else {
-    @return rem-convert(rem, $values...);
-  }
+  @return if($rem-px-only, rem-convert(px, $values...), rem-convert(rem, $values...));
 }
 
-@mixin rem($properties, $values...) {
-  @if type-of($properties) == "map" {
-    @each $property in map-keys($properties) {
-      @include rem($property, map-get($properties, $property));
+@mixin rem($props, $values...) {
+  @each $prop in $props {
+    @if $rem-fallback or $rem-px-only {
+      #{$prop}: rem-convert(px, $values...);
     }
-  } @else {
-    @each $property in $properties {
-      @if $rem-fallback or $rem-px-only {
-        #{$property}: rem-convert(px, $values...);
-      }
-      @if not $rem-px-only {
-        #{$property}: rem-convert(rem, $values...);
-      }
+    @if not $rem-px-only {
+      #{$prop}: rem-convert(rem, $values...);
     }
   }
 }
-/*
-.demo {
-  font-size: rem(24px); // Simple
-  padding: rem(5px 10px); // Multiple values
-  border-bottom: rem(1px solid black); // Multiple mixed values
-  box-shadow: rem(0 0 2px #ccc, inset 0 0 5px #eee); // Comma-separated values
-  text-shadow: rem(1px 1px) #eee, rem(-1px) 0 #eee; // Alternate use
+// font-size: rem(24px);
+// @include rem(margin padding, 16px 24px);
+
+
+/* --------------------------------------------------------------- */
+/* BREAKPOINTS – UIkit defaults                                   */
+/* --------------------------------------------------------------- */
+$bp-s: 40em !default;    // 640px
+$bp-m: 60em !default;    // 960px
+$bp-l: 75em !default;    // 1200px
+$bp-xl: 100em !default;  // 1600px
+
+@mixin bp-up($bp) {
+  @media (min-width: $bp) { @content; }
 }
-*/
+// @include bp-up($bp-m) { ... }
 
-/*********************
- BREAKPOINTS (UIKit defaults)
- Affects device widths of 640px and larger. Affects device widths of 960px and larger. Affects device widths of 1200px and larger.
- .uk-margin-remove-left@xl Affects device widths of 1600px and larger.
-*********************/
-
-@mixin bp-xlarge { // > 1600px
-  @media only screen and (min-width: 74.9375em) {
-    @content;
-  }
+@mixin bp-down($bp) {
+  @media (max-width: calc(#{$bp} - 0.0625em)) { @content; }
 }
-  
-@mixin bp-large { // > 1200px
-  @media only screen and (min-width: 74.9375em) {
-    @content;
-  }
-}
+// @include bp-down($bp-m) { ... }
 
-@mixin bp-medium { // > 960px
-  @media only screen and (max-width: 63.9375em) {
-    @content;
-  }
-}
+@mixin bp-small-up   { @include bp-up($bp-s)  { @content; } }
+@mixin bp-medium-up  { @include bp-up($bp-m)  { @content; } }
+@mixin bp-large-up   { @include bp-up($bp-l)  { @content; } }
+@mixin bp-xlarge-up  { @include bp-up($bp-xl) { @content; } }
+// @include bp-large-up { ... }
 
-@mixin bp-small { // 640px
-  @media only screen and (max-width: 39.9375em) {
-    @content;
-  }
-}
+@mixin bp-small-down  { @include bp-down($bp-s)  { @content; } }
+@mixin bp-medium-down { @include bp-down($bp-m)  { @content; } }
+@mixin bp-large-down  { @include bp-down($bp-l)  { @content; } }
+// @include bp-small-down { ... }
 
-/*
-.sidebar {
-  width: 60%;
-  float: left;
-  margin: 0 2% 0 0;
-  @include bp-small {
-    width: 100%;
-    float: none;
-    margin: 0;
-  }
-}	
-*/
 
-/*********************
-Margin/Padding
-*********************/
-
-// $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 100);
-// $sides: (
-//   "": "all",
-//   "t": "top",
-//   "b": "bottom",
-//   "l": "left",
-//   "r": "right",
-// );
-// 
-// @each $space in $spaceamounts {
-//   @each $prefix, $value in $sides {
-//     $property: if($prefix == '', '', -#{$value});
-//     .m#{$prefix}#{$space} {
-//       margin#{$property}: #{$space}px !important;
-//     }
-//     .p#{$prefix}#{$space} {
-//       padding#{$property}: #{$space}px !important;
-//     }
-//   }
-// }
-// To Test:
-@use "sass:math";
-@use "sass:string";
-
-$sides: (
-  "": "all",
-  "t": "top",
-  "b": "bottom",
-  "l": "left",
-  "r": "right",
-);
-
-@mixin generate-spacing-classes {
-  @each $prefix, $value in $sides {
-    $property: if($prefix == "", "", -#{$value});
-    
-    @for $i from -100 through 100 {
-      $class-name: if($i < 0, "n#{math.abs($i)}", "#{$i}");
-      
-      .m#{$prefix}#{$class-name} {
-        margin#{$property}: #{$i}px !important;
-      }
-      
-      .p#{$prefix}#{$class-name} {
-        padding#{$property}: #{$i}px !important;
-      }
-    }
-  }
-}
-
-@include generate-spacing-classes;
-
-// Bsp mt40 = margin-top 40
-
-/*********************
-CSS3 GRADIENTS
-*********************/
-
-@mixin css-gradient($from: #dfdfdf, $to: #f8f8f8) {
-	background-color: $to;
-	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
-	background-image: -webkit-linear-gradient(top, $from, $to);
-	background-image: -moz-linear-gradient(top, $from, $to);
-	background-image: -o-linear-gradient(top, $from, $to);
-	background-image: linear-gradient(to bottom, $from, $to);
-}
-/* @include css-gradient(#dfdfdf,#f8f8f8); */
-
-/*********************
-Border Radius
-*********************/
-
-@mixin border-radius($top-left:10px, $top-right:null, $bottom-right:null, $bottom-left:null){
-  -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
-     -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
-      -ms-border-radius: $top-left $top-right $bottom-right $bottom-left;
-          border-radius: $top-left $top-right $bottom-right $bottom-left;  
-}
-// @include border-radius(1em);
-// @include border-radius(25px,5px,25px,5px);
-
-/*********************
-BOX SHADOW
-*********************/
-
-@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
-  -webkit-box-shadow:$top $left $blur $color #{$inset};
-  -moz-box-shadow:$top $left $blur $color #{$inset};
-  box-shadow:$top $left $blur $color #{$inset};
-}
-// @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5));
-
-/*********************
-List reset
-*********************/
+/* --------------------------------------------------------------- */
+/* LAYOUT HELPERS                                                  */
+/* --------------------------------------------------------------- */
 @mixin list-reset {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 // @include list-reset;
 
-/*********************
- Prefix Property
-*********************/
-
-$prefixes: "webkit", "moz", "ms", "o", "none";
-@mixin prefix($property, $arguments) {
- @each $prefix in $prefixes {
-   @if $prefix == "none" {
-     #{$property}: $arguments;
-   } @else {
-     -#{$prefix}-#{$property}: $arguments;
-   } 
- }
-}
-// @include prefix(opacity, 0.7);
-
-/*********************
-Centering hor/vert
-*********************/
-@mixin center($position) {
+@mixin center($mode: both) {
   position: absolute;
-  
-  @if $position == 'vertical' {
+
+  @if $mode == vertical {
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-  }
-  @else if $position == 'horizontal' {
+  } @else if $mode == horizontal {
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translate(-50%);
-  }
-  @else if $position == 'both' {
+    transform: translateX(-50%);
+  } @else {
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
 }
-/*
-.foo {
-    @include center(both);
-  }
-  .foo-parent {
-    position: relative;
-  }
-*/
+// @include center(both);
 
-/*********************
-Fluid Typografie 
-https://css-tricks.com/snippets/css/fluid-typography/
-*********************/
 
+/* --------------------------------------------------------------- */
+/* FLUID TYPOGRAPHY                                                */
+/* --------------------------------------------------------------- */
 @function strip-unit($value) {
   @return $value / ($value * 0 + 1);
 }
 
-@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
-  $u1: unit($min-vw);
-  $u2: unit($max-vw);
-  $u3: unit($min-font-size);
-  $u4: unit($max-font-size);
+@mixin fluid-type($min-vw, $max-vw, $min-size, $max-size) {
+  font-size: $min-size;
 
-  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
-    & {
-      font-size: $min-font-size;
-      @media screen and (min-width: $min-vw) {
-        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
-      }
-      @media screen and (min-width: $max-vw) {
-        font-size: $max-font-size;
-      }
-    }
+  @media (min-width: $min-vw) {
+    font-size: calc(
+      #{$min-size} + #{strip-unit($max-size - $min-size)}
+      * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+    );
+  }
+
+  @media (min-width: $max-vw) {
+    font-size: $max-size;
   }
 }
-/*
-$min_width: 320px;
-$max_width: 1200px;
-$min_font: 16px;
-$max_font: 24px;
+// @include fluid-type(320px, 1200px, 16px, 24px);
 
-@include fluid-type($min_width, $max_width, $min_font, $max_font);
-*/
 
-// Mixin Transition
-@mixin transition($transition) {
-   -moz-transition: $transition;
-   -o-transition: $transition;
-   -ms-transition: $transition;
-   -webkit-transition: $transition;
-   transition: $transition;
-}
-// @include transition(all 0.3s 0s ease);
-
-// placeholder
+/* --------------------------------------------------------------- */
+/* PLACEHOLDER                                                     */
+/* --------------------------------------------------------------- */
 @mixin placeholder {
-    &.placeholder { @content; }
-    &:-moz-placeholder { @content; }
-    &::-moz-placeholder { @content; }
-    &:-ms-input-placeholder { @content; }
-    &::-webkit-input-placeholder { @content; }
+  &::placeholder { @content; }
 }
+// @include placeholder { color: #999; }

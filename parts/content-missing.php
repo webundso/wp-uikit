@@ -1,43 +1,52 @@
 <?php
-/*
-=================================================================
-Filename: content-missing.php
-Description: Content shown if nothing is found
-Author: Noël Girstmair | webundso GmbH
-Last changes: 9.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
+
+/**
+ * parts/content-missing.php
+ *
+ * Zweck:
+ * - Fallback-Inhalt, wenn keine Posts/Resultate gefunden wurden.
+ * - Wird in index.php, archive.php, search.php etc. via get_template_part() eingebunden.
+ */
+
+$is_search = is_search();
 ?>
 
 <div class="post-not-found">
 
-	<?php if ( is_search() ) : ?>
+	<?php if ($is_search) : ?>
 
-	<div class="uk-alert-warning" uk-padding uk-alert>
+		<div class="uk-alert uk-alert-warning uk-padding-small" role="alert" aria-live="polite">
+			<h2 class="uk-h4 uk-margin-small-bottom">
+				<?php echo esc_html__('Keine Ergebnisse gefunden', 'webundso'); ?>
+			</h2>
 
-		<h2><?php _e( 'Entschuldigung, aber wir konnten keine Ergebnisse für Ihre Suchanfrage finden', 'webundso_wp' );?></h2>
-		<p><?php _e( 'Möglicherweise ist der Begriff falsch geschrieben oder nicht vorhanden. Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut.', 'webundso_wp' );?></p>
+			<p class="uk-margin-remove-top">
+				<?php echo esc_html__('Möglicherweise ist der Begriff falsch geschrieben oder nicht vorhanden. Bitte prüfe deine Eingabe und versuche es erneut.', 'webundso'); ?>
+			</p>
+		</div>
 
-	</div>
+		<section class="uk-section uk-padding-remove-top">
+			<h2 class="uk-h4"><?php echo esc_html__('Suche', 'webundso'); ?></h2>
+			<?php get_search_form(); ?>
+		</section>
 
-	<section class="uk-section">
-		<h2>Suche</h2>
-		<p><?php get_search_form(); ?></p>
-	</section> <!-- end search section -->
+	<?php else : ?>
 
-	<?php else: ?>
+		<div class="uk-alert uk-alert-warning uk-padding-small" role="alert" aria-live="polite">
+			<h2 class="uk-h4 uk-margin-small-bottom">
+				<?php echo esc_html__('Inhalt nicht gefunden', 'webundso'); ?>
+			</h2>
 
-	<h1><?php _e( 'Der Artikel wurde nicht gefunden!', 'webundso_wp' ); ?></h1>
+			<p class="uk-margin-remove-top">
+				<?php echo esc_html__('Leider wurde kein Beitrag gefunden.', 'webundso'); ?>
+			</p>
+		</div>
 
-	<div class="uk-alert-warning" uk-padding uk-alert>
-		<p><?php _e( 'Leider wurde kein Beitrag gefunden.', 'webundso_wp' ); ?></p>
-	</div>
-
-	<section class="uk-section">
-		<h2>Suche</h2>
-		<p><?php get_search_form(); ?></p>
-	</section> <!-- end search section -->
-
+		<section class="uk-section uk-padding-remove-top">
+			<h2 class="uk-h4"><?php echo esc_html__('Suche', 'webundso'); ?></h2>
+			<?php get_search_form(); ?>
+		</section>
 
 	<?php endif; ?>
 

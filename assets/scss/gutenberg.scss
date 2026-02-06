@@ -5,104 +5,54 @@ Stylesheet: Gutenberg (im Backend)
 
 *************************************************/
 
- @import 'mixins';
- @import 'variables';
-
-$hellgrau: #e6e3e3;
-
-.interface-interface-skeleton__content {
-//	background-color: $beige;
-}
-
-// Seitentitel
-.editor-post-title {
-	font-family: $main-font-family;
-//	color: $rot;
-}
-
-.wp-block{
-	max-width: 1000px;
-	&.is-selected {
-		background: $hellgrau;
-	}
-} 
-.wp-block[data-align="wide"] {
-		max-width: 1080px;
-}
-.wp-block[data-align="full"] {
-		max-width: none;
-}
-
-.editor-styles-wrapper {
-	font-family: $main-font-family !important;
-	font-size: rem(18px) !important;
-	color: $black !important;
-}
-
-.mt30 {
-	margin: 0;
-}
-
-/* Titel */
-
-.editor-styles-wrapper{
-	h1, h2, h3, h4{
-		margin-top: 0 !important;
-		margin-bottom: 0 !important;
-	}
-} 
-.wp-block{
-	$a-tags: 'a, a:active, a:hover, a:visited';
-	$a-tags-hover: 'a:active, a:hover';
-	 
-	#{$a-tags} {
-		color: $black;
-		text-decoration: none;
-		border-bottom: 1px solid $black;
-	}
-	#{$a-tags-hover} {
-		color: $black;
-		border-bottom: 1px solid $black;
-	}
-}
-
-.block-editor-block-list__layout{
-	h1, h2, h3, h4, h5, h6 {
-		font-family: $main-font-family;
-	}
-	
-	h1 {
-		font-size: rem(40px);
-		text-align: center;
-		margin-bottom: 30px;
-	
-	}
-	h2 {
-		font-size: rem(24px);
-		color: $black;
-		margin: 30px 0 20px;
-	}
-	h3 {
-		font-size: rem(24px);
-		color: $black;
-	}
-
-
-}
+ @import "mixins";
+ @import "fonts";
+ @import "bridge";
+ @import "utilities";
+ 
+ .editor-styles-wrapper{
+	 font-family: var(--t-font-base);
+	 color: var(--t-color-text);
+   .content {
+      font-size: var(--t-fs-m);
+      line-height: 1.6;
+      > * + * {
+        margin-top: var(--t-space-m);
+      }
+   }   
+ }
+ 
+ .editor-styles-wrapper h1,
+ .editor-styles-wrapper h2,
+ .editor-styles-wrapper h3,
+ .editor-styles-wrapper h4,
+ .editor-styles-wrapper h5,
+ .editor-styles-wrapper h6{
+	 font-family: var(--t-font-heading);
+ }
+ 
+ /* Deine Editor-UX Helfer bleiben erlaubt */
+ .wp-block.is-selected{
+	 background: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%);
+ }
 
 .wp-block-columns {
-	border: 1px dashed $hellgrau;
-	padding: 10px;
-	.wp-block-column {
-		border: 1px dashed $hellgrau;
-	}
-}
-
-.wp-block-spacer {
-	background: $hellgrau;
-	border: 2px dotted $black;
-	margin-bottom: 10px;
-}
+	 border: 1px dashed var(--t-editor-outline);
+	 padding: 10px;
+ 
+	 .wp-block-column {
+		 border: 1px dashed var(--t-editor-outline);
+     &.is-selected{
+       background:  color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 95%);
+     }
+	 }
+ }
+ 
+ .wp-block-spacer {
+	 background: var(--t-editor-fill);
+	 border: 2px dotted var(--t-color-text);
+	 margin-bottom: 10px;
+ }
 
 // ACF Blöcke 
 .acf-block-component{

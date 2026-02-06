@@ -1,39 +1,66 @@
 <?php
-/*
-=================================================================
-Filename: loop-blog-grid.php
-Description: Displays post-list as grid
-Author: Noël Girstmair | webundso GmbH
-Last changes: 9.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
 
-// Adjust the amount of rows in the grid
-$grid_columns = 4; ?>
+/**
+ * parts/loop-blog-grid.php
+ *
+ *
+ * UIkit:
+ * - uk-card Layout
+ * - Thumbnail als Cover via uk-img (lazy) + uk-background-cover
+ *
 
-<?php if( 0 === ( $wp_query->current_post  )  % $grid_columns ): ?>
+ *
+ * Content-Policy:
+ * - In Listen/Grids: the_excerpt() statt the_content()
+ */
 
-  <div class="uk-child-width-1-3@m" uk-grid>
+$post_id   = get_the_ID();
+$permalink = get_permalink($post_id);
+$title     = get_the_title($post_id);
 
-<?php endif; ?> 
+$thumb_url = get_the_post_thumbnail_url($post_id, 'large');
+$has_thumb = !empty($thumb_url);
+?>
 
-		<!--Item: -->
-		<div>
-				<div class="uk-card uk-card-default">
-						<div class="uk-card-media-top uk-background-cover uk-height-medium" data-src="<?php echo the_post_thumbnail_url('large') ?>" uk-img>
-							<a class="uk-display-block" href="<?php the_permalink() ?>"></a>			
-						</div>
-						<div class="uk-card-body">
-								<h3 class="uk-card-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-								<p>	<?php the_content('<button class="tiny">' . __( 'Read more...', 'webundso_wp' ) . '</button>'); ?> </p>
-						</div>
-				</div>
+<div>
+	<article id="post-<?php echo esc_attr((string) $post_id); ?>" <?php post_class('uk-card uk-card-default'); ?>>
+
+		<?php if ($has_thumb): ?>
+			<a class="uk-card-media-top uk-display-block" href="<?php echo esc_url($permalink); ?>" aria-label="<?php echo esc_attr($title); ?>">
+				<div
+					class="uk-background-cover uk-height-medium"
+					data-src="<?php echo esc_url($thumb_url); ?>"
+					uk-img
+				></div>
+			</a>
+		<?php endif; ?>
+
+		<div class="uk-card-body">
+
+			<h3 class="uk-card-title uk-margin-small-bottom">
+				<a href="<?php echo esc_url($permalink); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
+					<?php echo esc_html($title); ?>
+				</a>
+			</h3>
+
+			<div class="uk-text-small uk-margin-small-bottom">
+				<time datetime="<?php echo esc_attr(get_the_date('c', $post_id)); ?>">
+					<?php echo esc_html(get_the_date('j. F Y', $post_id)); ?>
+				</time>
+			</div>
+
+			<div class="entry-summary">
+				<?php the_excerpt(); ?>
+			</div>
+
+			<p class="uk-margin-small-top">
+				<a class="uk-button uk-button-text" href="<?php echo esc_url($permalink); ?>">
+					<?php echo esc_html__('Weiter lesen', 'webundso'); ?>
+				</a>
+			</p>
+
 		</div>
-		
 
-<?php if( 0 === ( $wp_query->current_post + 1 )  % $grid_columns ||  ( $wp_query->current_post + 1 ) ===  $wp_query->post_count ): ?>
-
-  </div>  <!--End Grid --> 
-
-<?php endif; ?>
-
+	</article>
+</div>

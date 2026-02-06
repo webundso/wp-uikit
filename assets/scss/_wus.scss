@@ -1,260 +1,44 @@
 /*--------------------------------------------------------------*/
-/* Project Styles */
+/* Project Styles (token-based)                                 */
 /*--------------------------------------------------------------*/
 
-/***-- Global ------------------------------------------------***/
+/*==============================================================*/
+/* 01) Base / Global                                             */
+/*===============================================================*/
 
-
-/***-- Header ------------------------------------------------***/
-
-	.mobileTrigger {
-		position: absolute;
-		left: 15px;
-		top: 15px;
-		height: 45px;
-		width: 50px;
-		cursor: pointer;
-		z-index: 500;
-		background: rgba($hellbraun, .6);
-		transition: opacity .25s ease;	
-		@include bp-small {	
-			right: 10px;
-		}	  
-		&:hover {
-		// opacity: .7;
-		}		  
-		&.active {
-			.top {
-				transform: translateY(12px) translateX(0) rotate(45deg);
-				background: $black;
-			}
-			.middle {
-				opacity: 0;
-				background: $black;
-			}
-			
-			.bottom {
-				transform: translateY(-12px) translateX(0) rotate(-45deg);
-				background: $black;
-			}
-		}
-		
-		span {
-		background: $black;
-		border: none;
-		height: 2px;
-		width: calc(100% - 10px);
-		position: absolute;
-		top: 10px;
-		left: 5px;
-		transition:  all .35s ease;
-		cursor: pointer;
-			
-			&:nth-of-type(2) {
-				top: 22px;
-			}
-			
-			&:nth-of-type(3) {
-				top: 34px;
-			}
-		}
+html{
+	overflow-x: hidden; // (wg fullwidth)
 }
 
-/***-- Layout ------------------------------------------------***/
-
-
-/***-- Footer ------------------------------------------------***/
-
-.footer-to-top {
-		background-color: rgba($weiss, 0.75); 
-		display: none;
-		z-index: 999;
-		position: fixed;
-		right: 20px;
-		bottom: 20px;
-		width: 50px;
-		height: 50px;
-		text-align: center;
-		vertical-align: middle;
-		padding: 3px 5px;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box; 
-		-webkit-border-radius: 50%;
-		border-radius: 50%;
-		.uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) {
-			stroke: $black !important;
-		}
+html, body {
+	color: var(--t-color-text);
+	background: var(--t-color-bg);
+	font-family: var(--t-font-base);
 }
 
-/***-- Menu --------------------------------------------------***/
+strong { font-weight: 700; }
 
-// topnav
-.uk-navbar-nav {
-	margin-top: 10px;
-	li {
-		a {
-			
-			&:hover {
-				
-			}
-		}
-		.uk-drop {
-			.sub-menu {
-				li {
-					a {
-						
-					}
-					&.uk-active {
-						
-					}
-				}
-			}
-		}
-		&.uk-active {
-			a{
-				
-			}
-		}
-	}
-}
-
-
-//ofcanvas
-.uk-offcanvas-bar {
-	#offcanvas-nav {
-		li {
-			overflow: hidden;
-			margin-top: 5px !important;
-			a {
-				color: $black;
-				font-weight: 700;
-				float: left;
-			}
-			.uk-accordion-toggle {
-				margin-left: 0px;
-				margin-top: 3px;
-				border: 0;
-				background: $trans;
-				&:before {
-					width: 0;
-					margin: 0;
-				}
-				span {
-					svg {
-						polyline {
-							stroke-width: 2.5;
-						}
-					}
-					&.up {
-						transform: rotate(180deg);
-					}
-				}
-			}
-			.uk-nav-sub {
-			// @include transition(all 0.3s 0s ease);
-				clear: both;
-				li {
-					a{
-						font-weight: 400;
-						padding: 3px 0;
-						clear: both;
-					}
-					.uk-accordion-toggle {
-						span {
-							svg {
-								polyline {
-									stroke-width: 1.5;
-								}
-							}	
-						}
-					}
-				}
-			}
-			&.uk-open {
-				> a {
-					span {
-						svg {
-							rotate: 180deg;
-						}
-					}
-				}
-			}
-			&.uk-active {
-				a {
-					color: $black;
-				}
-				.uk-accordion-toggle {
-					span {
-						svg {
-							polyline {
-								stroke: $black;
-							}
-						}	
-					}
-				}
-				.uk-nav-sub {
-					li {
-						a {
-							color: $black;
-						}
-						.uk-accordion-toggle {
-							span {
-								svg {
-									polyline {
-										stroke: $black;
-									}
-								}	
-							}
-						}
-						&.is-active {
-							a {
-								color: $dunkelbraun;
-							}
-							.uk-accordion-toggle {
-								span {
-									svg {
-										polyline {
-											stroke: $black;
-										}
-									}	
-								}
-							}
-						}
-					}	
-					
-				}
-			}
-		}
-	} 
-}
-
-/***-- Typography --------------------------------------------***/
-
-strong {
-	font-weight: 700 !important;
-}
-
-$a-tags: 'a, a:active, a:hover, a:visited';
-$a-tags-hover: 'a:active, a:hover';
- 
-#{$a-tags} {
-	color: $black;
+a,
+a:visited,
+.uk-link {
+	color: var(--t-color-primary);
 	text-decoration: none;
 }
-#{$a-tags-hover} {
-	color: $black;
+
+a:hover,
+a:active,
+.uk-link:hover {
+	color: var(--t-color-primary-hover);
 	text-decoration: underline;
 }
 
-h1 {
-	
-}
-h2{
-	
+h1,h2,h3,h4,h5,h6,
+.uk-h1,.uk-h2,.uk-h3,.uk-h4,.uk-h5,.uk-h6 {
+	font-family: var(--t-font-heading);
 }
 
-p, ul li {
+.content p,
+.content ul li {
 	-webkit-hyphens: auto;
 	-webkit-hyphenate-limit-chars: auto 3;
 	-webkit-hyphenate-limit-lines: 4;
@@ -264,11 +48,327 @@ p, ul li {
 	hyphens: auto;
 }
 
-/***-- Blocks ------------------------------------------------***/
+/*==============================================================*/
+/* 01.5) Content Baseline                                       */
+/*==============================================================*/
+
+.content {
+	font-size: var(--t-fs-m);
+	line-height: 1.6;
+
+	/* Grundabstand zwischen direkten Content-Elementen */
+	> * + * {
+		margin-top: var(--t-space-m);
+	}
+
+	/* Paragraphs */
+	p {
+		margin: 0;
+	}
+
+	/* Headings */
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0;
+		font-family: var(--t-font-heading);
+		line-height: 1.25;
+	}
+
+	h1 { font-size: var(--t-fs-xxl); }
+	h2 { font-size: var(--t-fs-xl); }
+	h3 { font-size: var(--t-fs-l); }
+	h4 { font-size: var(--t-fs-m); }
+	h5 { font-size: var(--t-fs-s); }
+	h6 { font-size: var(--t-fs-xs); }
+
+	/* Extra Abstand vor Überschriften */
+	h1, h2, h3 {
+		margin-top: var(--t-space-l);
+	}
+
+	/* Listen */
+	ul, ol {
+		margin: 0;
+		padding-left: 1.2em;
+	}
+
+	li + li {
+		margin-top: var(--t-space-xs);
+	}
+
+	/* Links innerhalb Content */
+	a {
+		color: var(--t-color-primary);
+		text-decoration: underline;
+	}
+
+	a:hover {
+		color: var(--t-color-primary-hover);
+	}
+
+	/* Bilder */
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	/* Blockquotes */
+	blockquote {
+		margin: 0;
+		padding-left: var(--t-space-m);
+		border-left: 3px solid var(--t-color-border);
+		font-style: italic;
+	}
+}
+
+
+/*==============================================================*/
+/* 02) UIkit Overrides                                          */
+/*==============================================================*/
+
+/* Buttons */
+.uk-button-primary {
+	background-color: var(--t-color-primary);
+	color: var(--t-color-bg);
+
+	transition:
+		background-color .18s ease,
+		color .18s ease,
+		border-color .18s ease,
+		box-shadow .18s ease,
+		transform .18s ease;
+	will-change: transform;
+	&:hover {
+		background-color: var(--t-color-primary-hover);
+	}
+	&:active {
+		background-color: var(--t-color-primary-active);
+	}
+}
+
+.uk-button-primary:hover {
+	background-color: color-mix(in srgb, var(--t-color-primary), #000 12%);
+	transform: translateY(-1px);
+}
+
+.uk-button-primary:active {
+	transform: translateY(0);
+}
+
+/* Cards */
+.uk-card-default {
+	box-shadow: none;
+}
+
+/* Navbar */
+.uk-navbar-nav {
+	margin-top: var(--t-space-s);
+}
+
+.uk-navbar-nav > li > a {
+	font-size: var(--t-fs-m);
+}
+
+/* Offcanvas nav */
+
+.uk-offcanvas-bar {
+	color: var(--t-color-text);
+
+	#offcanvas-nav {
+		> li {
+			overflow: hidden;
+			margin-top: 5px;
+
+			> a {
+				color: inherit;
+				font-weight: 700;
+				float: left;
+			}
+
+			.uk-accordion-toggle {
+				margin-left: 0;
+				margin-top: 3px;
+				border: 0;
+				background: transparent;
+
+				&:before { width: 0; margin: 0; }
+
+				span {
+					svg polyline { stroke-width: 2.5; stroke: currentColor; }
+					&.up { transform: rotate(180deg); }
+				}
+			}
+
+			.uk-nav-sub {
+				clear: both;
+
+				li {
+					a {
+						font-weight: 400;
+						padding: 3px 0;
+						clear: both;
+					}
+
+					.uk-accordion-toggle span svg polyline {
+						stroke-width: 1.5;
+					}
+				}
+			}
+
+			&.uk-active {
+				> a { color: var(--t-color-primary); }
+				.uk-accordion-toggle span svg polyline { stroke: var(--t-color-primary); }
+
+				.uk-nav-sub li {
+					a { color: inherit; }
+					&.is-active > a { color: var(--t-color-primary); }
+				}
+			}
+		}
+	}
+}
+
+/*==============================================================*/
+/* 03) Theme Components                                         */
+/*==============================================================*/
+
+/* Header */
+.mobileTrigger {
+	position: absolute;
+	left: var(--t-space-m);
+	top: var(--t-space-m);
+
+	height: 45px;
+	width: 50px;
+
+	cursor: pointer;
+	z-index: 500;
+
+	background: color-mix(in srgb, var(--t-color-text), transparent 40%);
+	transition: opacity .25s ease;
+
+	@include bp-small-down {
+		left: auto;
+		right: var(--t-space-s);
+	}
+
+	&.active {
+		.top { transform: translateY(12px) rotate(45deg); }
+		.middle { opacity: 0; }
+		.bottom { transform: translateY(-12px) rotate(-45deg); }
+	}
+
+	span {
+		background: var(--t-color-text);
+		border: none;
+		height: 2px;
+		width: calc(100% - 10px);
+		position: absolute;
+		top: 10px;
+		left: 5px;
+		transition: all .35s ease;
+		cursor: pointer;
+
+		&:nth-of-type(2) { top: 22px; }
+		&:nth-of-type(3) { top: 34px; }
+	}
+}
+
+/* Footer */
+.footer {
+	padding-top: var(--t-space-l);
+	padding-bottom: var(--t-space-l);
+	.uk-container {
+		> .uk-grid {
+			row-gap: var(--t-space-m);
+		}
+	}
+}
+
+.footer-to-top {
+	background-color: color-mix(in srgb, var(--t-color-bg), transparent 25%);
+	display: none;
+
+	z-index: 999;
+	position: fixed;
+	right: var(--t-space-l);
+	bottom: var(--t-space-l);
+
+	width: 50px;
+	height: 50px;
+
+	text-align: center;
+	padding: 3px 5px;
+	box-sizing: border-box;
+	border-radius: 50%;
+
+	color: var(--t-color-text);
+
+	.uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) {
+		stroke: currentColor !important;
+	}
+}
+
+/*==============================================================*/
+/* 04) Blocks / Gutenberg                                        */
+/*==============================================================*/
+
+/* Block: Seitenabschnitt */
 
 .block-inner {
 	position: relative;
-	width: 100vw;
-	left: 50%;
-	margin-left: -50vw;
+
+	/* Full-bleed Hintergrund */
+	&--bleed,
+	&--full {
+		width: 100vw;
+		position: relative;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
+		max-width: none;
+		display: block;
+	}
+
+	/* Inner */
+	&__inner {
+		padding-top: var(--t-space-l);
+		padding-bottom: var(--t-space-l);
+	}
+
+	/* Padding Varianten (nur oben/unten) */
+	&--pad-none &__inner {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	&--pad-s &__inner {
+		padding-top: var(--t-space-s);
+		padding-bottom: var(--t-space-s);
+	}
+
+	&--pad-m &__inner {
+		padding-top: var(--t-space-m);
+		padding-bottom: var(--t-space-m);
+	}
+
+	&--pad-l &__inner {
+		padding-top: var(--t-space-l);
+		padding-bottom: var(--t-space-l);
+	}
+
+	&--pad-xl &__inner {
+		padding-top: var(--t-space-xl);
+		padding-bottom: var(--t-space-xl);
+	}
+
+	/* Full: Inhalt volle Breite, aber mit Luft */
+	&--full &__inner {
+		padding-left: var(--t-space-m);
+		padding-right: var(--t-space-m);
+	}
+}
+
+
+.wp-block-columns {
 }

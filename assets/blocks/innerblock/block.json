@@ -1,0 +1,21 @@
+{
+	"name": "innerblock",
+	"title": "Seitenabschnitt",
+	"description": "Layout-Abschnitt mit Hintergrund über Palette und frei wählbarem Inhalt. Optional: Inhalt zentriert oder über volle Breite.",
+	"category": "webundso-spezial",
+	"icon": "align-wide",
+	"supports": {
+		"align": ["wide", "full"],
+		"anchor": true,
+		"customClassName": true,
+		"jsx": true,
+		"color": {
+			"background": true,
+			"text": false
+		}
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	}
+}

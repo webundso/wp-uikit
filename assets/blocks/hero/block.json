@@ -1,0 +1,16 @@
+{
+	"name": "hero",
+	"title": "Hero",
+	"description": "Hero-Bereich mit Titel, Text, Bild und Button",
+	"category": "webundso-spezial",
+	"align": "full",
+	"icon": "cover-image",
+	"supports": {
+		"anchor": true,
+		"customClassName": true
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	}
+}

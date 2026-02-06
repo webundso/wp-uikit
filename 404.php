@@ -1,30 +1,49 @@
 <?php
-/*
-=================================================================
-Filename: 404.php
-Description: Error page
-Author: Noël Girstmair | webundso GmbH
-Last changes: 8.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
 
-get_header(); ?>		
-			 
-	<div class="content">	
-		<div class="uk-container">
+/**
+ * 404.php
+ *
+ * Zweck:
+ * - Wird angezeigt, wenn WordPress keine passende Seite/Route findet.
+ *
+ */
 
-			<h1><?php _e( '404 - Seite nicht gefunden', 'webundso_wp' ); ?></h1>
+get_header();
+?>
 
-			<section class="uk-alert-warning">
-				<div class="uk-padding"><?php _e( 'Die gewünschte Seite konnte nicht gefunden werden.', 'webundso_wp' ); ?></div>
-			</section> <!-- end article section -->
+<main id="content" class="content" role="main">
+	<div class="uk-container">
 
-			<section class="search uk-margin-top">
-				<h2><?php _e( 'Suchen:', 'webundso_wp' ); ?></h2>
-		    <p><?php get_search_form(); ?></p>
-			</section> <!-- end search section -->
+		<header class="uk-margin-medium-bottom">
+			<h1 class="uk-heading-small">
+				<?php echo esc_html__('404 – Seite nicht gefunden', 'webundso'); ?>
+			</h1>
+		</header>
 
-		</div> <!-- end #inner-content -->
-	</div> <!-- end #content -->
+		<section class="uk-alert uk-alert-warning" role="alert" aria-live="polite">
+			<div class="uk-padding-small">
+				<?php echo esc_html__('Die gewünschte Seite konnte nicht gefunden werden.', 'webundso'); ?>
+			</div>
+		</section>
+
+		<section class="search uk-margin-large-top">
+			<h2 class="uk-h4 uk-margin-small-bottom">
+				<?php echo esc_html__('Suchen:', 'webundso'); ?>
+			</h2>
+
+			<div class="uk-width-1-2@m">
+				<?php get_search_form(); ?>
+			</div>
+		</section>
+
+		<section class="uk-margin-large-top">
+			<p class="uk-text-muted">
+				<?php echo esc_html__('Tipp: Prüfe die URL oder nutze die Navigation.', 'webundso'); ?>
+			</p>
+		</section>
+
+	</div>
+</main>
 
 <?php get_footer(); ?>

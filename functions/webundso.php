@@ -1,171 +1,353 @@
 <?php
-/*
-=================================================================
-Filename: webundso.php
-Description: additional functions for this website
-Author: Noël Girstmair | webundso GmbH
-Last changes: 5.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
+
+/**
+ * webundso.php
+ * Projekt-Konfiguration + Feature-Switches (sichere Defaults).
+ *
+ * Ziel:
+ * - neue Projekte schnell starten
+ * - Defaults zentral halten
+ * - pro Projekt via wp-config.php oder früh geladenem Must-Use Plugin überschreibbar
+ *
+ * Regel:
+ * - hier nur Konfig + kleine Helpers, keine Hook-Logik
+ */
+
+/* -----------------------------------------------------------------------------
+ * 1) Environment
+ * -------------------------------------------------------------------------- */
+
+/** Umgebung: steuert z.B. Debug-Verhalten/Logging (local|development|staging|production). */
+if (!defined('WUS_ENV')) {
+    define('WUS_ENV', 'production');
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 2) Branding / Projekt-Defaults
+ * -------------------------------------------------------------------------- */
+
+/** Markenname: für Footer, Admin-Texte, Mails. */
+if (!defined('WUS_BRAND_NAME')) {
+    define('WUS_BRAND_NAME', 'webundso GmbH');
+}
+
+/** Marken-URL: Default-Linkziel für Branding/Signaturen. */
+if (!defined('WUS_BRAND_URL')) {
+    define('WUS_BRAND_URL', 'https://www.webundso.ch');
+}
+
+/** Support-E-Mail: Default-Absender/Reply-To in Projekt-Mails. */
+if (!defined('WUS_BRAND_SUPPORT_EMAIL')) {
+    define('WUS_BRAND_SUPPORT_EMAIL', 'support@webundso.ch');
+}
+
+/**
+ * Header Logo (optional)
+ * - Wenn gesetzt, wird statt Text ein Bild aus /assets verwendet.
+ * - Pfad relativ zum Theme (stylesheet), z.B. '/assets/images/logo.svg'
+ */
+if (!defined('WUS_LOGO_ASSET')) {
+    define('WUS_LOGO_ASSET', '/assets/images/logo.svg');
+}
+
+/**
+ * Logo Alt Text (Fallback: Brand Name)
+ */
+if (!defined('WUS_LOGO_ALT')) {
+    define('WUS_LOGO_ALT', WUS_BRAND_NAME);
+}
+
+/**
+ * Footer Layout Mode:
+ * - 'classic' = fester 3-Spalten Footer (wie vorher)
+ * - 'widgets' = 3 Widget-Spalten (Footer Sidebars)
+ * - 'auto'    = Widgets wenn mind. 1 Footer-Sidebar aktiv, sonst classic
+ */
+if (!defined('WUS_FOOTER_MODE')) {
+    define('WUS_FOOTER_MODE', 'auto');
+}
+
+/**
+ * Page Title Anzeige
+ * - true  = Titel anzeigen (Default)
+ * - false = Titel global ausblenden
+ */
+if (!defined('WUS_PAGE_SHOW_TITLE')) {
+    define('WUS_PAGE_SHOW_TITLE', true);
+}
+
+/**
+ * Blog Loop Variant:
+ * - 'grid' = parts/loop-blog-grid.php
+ * - 'list' = parts/loop-blog.php
+ */
+if (!defined('WUS_BLOG_LOOP_VARIANT')) {
+  define('WUS_BLOG_LOOP_VARIANT', 'list');
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 3) Assets / Libraries
+ * -------------------------------------------------------------------------- */
+
+/** UIkit Version: dient als zentrales Single-Source-of-Truth für Enqueue/CDN-Pfade. */
+if (!defined('WUS_UIKIT_VERSION')) {
+    define('WUS_UIKIT_VERSION', '3.17.11');
+}
+
+/** Script Debug: true = unminified Assets bevorzugen (Dev/Debug). */
+if (!defined('WUS_SCRIPT_DEBUG')) {
+    define('WUS_SCRIPT_DEBUG', false);
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 4) Feature Toggles (sichere Defaults)
+ * -------------------------------------------------------------------------- */
+
+/** Feeds deaktivieren: schaltet RSS/Atom Endpoints ab (weniger Angriffsfläche/Noise). */
+if (!defined('WUS_DISABLE_FEEDS')) {
+    define('WUS_DISABLE_FEEDS', true);
+}
+
+/** Kommentare deaktivieren: entfernt Kommentar-Funktionalität im Front-/Backend. */
+if (!defined('WUS_DISABLE_COMMENTS')) {
+    define('WUS_DISABLE_COMMENTS', true);
+}
+
+/**
+ * Admin-Bar deaktivieren: blendet die WP-Admin-Bar im Frontend aus.
+ * Empfehlung: eher rollenbasiert lösen (Admins sehen sie, Kunden nicht).
+ */
+if (!defined('WUS_DISABLE_ADMIN_BAR')) {
+    define('WUS_DISABLE_ADMIN_BAR', false);
+}
+
+/**
+ * wpautop deaktivieren: entfernt automatische <p>/<br> Einfügungen.
+ * Default OFF, weil globales Entfernen oft Content kaputt macht.
+ */
+if (!defined('WUS_DISABLE_WPAUTOP')) {
+    define('WUS_DISABLE_WPAUTOP', false);
+}
+
+/**
+ * REST API deaktivieren: NICHT im Theme global killen.
+ * Wenn du es brauchst: gezielt (Route/Auth) und eher pluginseitig.
+ */
+// if (!defined('WUS_DISABLE_REST_API')) {
+//     define('WUS_DISABLE_REST_API', false);
+// }
+
+
+/* -----------------------------------------------------------------------------
+ * 5) Search Defaults
+ * -------------------------------------------------------------------------- */
+
+/** Such-Post-Types: welche Inhalte in der WP-Suche berücksichtigt werden. */
+if (!defined('WUS_SEARCH_POST_TYPES')) {
+    define('WUS_SEARCH_POST_TYPES', ['post', 'page', 'site', 'plugin', 'theme', 'person']);
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 6) Uploads (Security: SVG , Plugin Safe SVG verwenden
+ * -------------------------------------------------------------------------- */
+
+/** VCF Upload erlauben: ermöglicht .vcf (Kontakte) im Medien-Upload. */
+if (!defined('WUS_ALLOW_VCF_UPLOAD')) {
+    define('WUS_ALLOW_VCF_UPLOAD', true);
+}
+
+/**
+ * SVG Upload Policy
+ *
+ * Empfehlung:
+ * - Wenn wir das Plugin "Safe SVG" nutzen: Theme-seitig SVG NICHT freischalten.
+ *   Das Plugin übernimmt Allowlist + Sanitizing.
+ * - Wenn wir KEIN Plugin nutzen: WUS_ALLOW_SVG_UPLOAD true setzen und Sanitizer erzwingen.
+ */
+if (!defined('WUS_ALLOW_SVG_UPLOAD')) {
+  define('WUS_ALLOW_SVG_UPLOAD', false);
+}
+
+/**
+ * Theme SVG Regeln (nur relevant wenn WUS_ALLOW_SVG_UPLOAD = true).
+ * Bei Nutzung von "Safe SVG" werden diese Werte vom Theme nicht verwendet.
+ */
+if (!defined('WUS_SVG_ALLOWED_CAPABILITY')) {
+  // Default: nur Admins
+  define('WUS_SVG_ALLOWED_CAPABILITY', 'manage_options');
+}
+
+if (!defined('WUS_SVG_REQUIRE_SANITIZER')) {
+  define('WUS_SVG_REQUIRE_SANITIZER', true);
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 7) Gutenberg / Editor Assets
+ * -------------------------------------------------------------------------- */
+
+/** Blocks Verzeichnis: Pfad zu registrierten Custom Blocks (Build-Artefakte). */
  
-
-/** Standard template name (page.php) **/
-add_filter('default_page_template_title', function() {
-    return __('Standard (Template ganze Breite)', 'webundso_wp');
-});
-
-/** No fullscreen in Gutenberg **/
-
-if (is_admin()) { 
-  function jba_disable_editor_fullscreen_by_default() {
-      $script = "jQuery( window ).load(function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } });";
-      wp_add_inline_script( 'wp-blocks', $script );
-  }
-  add_action( 'enqueue_block_editor_assets', 'jba_disable_editor_fullscreen_by_default' );
+if (!defined('WUS_BLOCKS_DIR')) {
+    define('WUS_BLOCKS_DIR', get_stylesheet_directory() . '/assets/blocks');
 }
 
-/** Allow SVG Upload **/
-function cc_mime_types($mimes) {
-  $mimes['svg'] = 'image/svg+xml';
-  return $mimes;
+/**
+ * Blocks URI: URL Pendant zu WUS_BLOCKS_DIR
+ */
+if (!defined('WUS_BLOCKS_URI')) {
+    define('WUS_BLOCKS_URI', get_stylesheet_directory_uri() . '/assets/blocks');
 }
-add_filter('upload_mimes', 'cc_mime_types');
 
-/* editor block styles */
-// https://soderlind.no/hide-block-styles-in-gutenberg/
-// https://wordpress.stackexchange.com/questions/339436/removing-panels-meta-boxes-in-the-block-editor  
-add_action( 'init', 'remove_block_style' );
+/** Remote Patterns deaktivieren: verhindert das Laden externer Pattern-Verzeichnisse. */
+if (!defined('WUS_DISABLE_REMOTE_PATTERNS')) {
+    define('WUS_DISABLE_REMOTE_PATTERNS', true);
+}
 
-function remove_block_style() {
-  // Register the block editor script.
-  wp_register_script( 'remove-block-style', get_stylesheet_directory_uri() . '/assets/js/editor-functions.js', [ 'wp-blocks', 'wp-edit-post' ] );
-  // register block editor script.
-  register_block_type( 'remove/block-style', [
-    'editor_script' => 'remove-block-style',
-  ] );
+/** Core Patterns deaktivieren: entfernt WP Core-Patterns (weniger Auswahl/Chaos). */
+if (!defined('WUS_DISABLE_CORE_PATTERNS')) {
+    define('WUS_DISABLE_CORE_PATTERNS', true);
+}
+
+/** Editor CSS enqueuen: lädt Theme/Gutenberg-Styles im Editor für WYSIWYG-Nähe. */
+if (!defined('WUS_EDITOR_ENQUEUE_GUTENBERG_CSS')) {
+    define('WUS_EDITOR_ENQUEUE_GUTENBERG_CSS', true);
+}
+
+/** Functions JS im Editor: lädt Editor-spezifische JS Helfer (nur falls genutzt). */
+if (!defined('WUS_EDITOR_ENQUEUE_FUNCTIONS_JS')) {
+    define('WUS_EDITOR_ENQUEUE_FUNCTIONS_JS', true);
 }
 
 
-/** ACF JSON **/
-add_filter('acf/settings/save_json', 'my_acf_json_save_point');
- 
-function my_acf_json_save_point( $path ) {  
-  $path = get_stylesheet_directory() . '/assets/acf-json';
-  return $path;
-    
+/* -----------------------------------------------------------------------------
+ * 8) ACF JSON (nur relevant wenn ACF aktiv ist)
+ * -------------------------------------------------------------------------- */
+
+/** ACF JSON Dir: Export/Import Pfad für Field Groups (child-theme-friendly). */
+if (!defined('WUS_ACF_JSON_DIR')) {
+    define('WUS_ACF_JSON_DIR', trailingslashit(get_stylesheet_directory()) . 'assets/acf-json');
 }
 
-/** ACF WYSIWIG Toolbar mit eigenen Styles */
-add_filter( 'acf/fields/wysiwyg/toolbars' , 'my_toolbars'  );
-function my_toolbars($toolbars)
+/** ACF JSON Dir auto-create: legt den Ordner bei Bedarf automatisch an. */
+if (!defined('WUS_ACF_JSON_AUTOCREATE_DIR')) {
+    define('WUS_ACF_JSON_AUTOCREATE_DIR', true);
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 9) Editor UX / Einschränkungen
+ * -------------------------------------------------------------------------- */
+
+/** Fullscreen im Editor deaktivieren: Editor startet nicht im Fullscreen-Modus. */
+if (!defined('WUS_EDITOR_DISABLE_FULLSCREEN')) {
+    define('WUS_EDITOR_DISABLE_FULLSCREEN', true);
+}
+
+/** Block-Styles Logging: Debug/Analyse von Block-Styles im Editor. */
+if (!defined('WUS_EDITOR_LOG_BLOCK_STYLES')) {
+    define('WUS_EDITOR_LOG_BLOCK_STYLES', false);
+}
+
+/**
+ * Panels entfernen: aktiviert das Entfernen definierter Sidebar-Panels.
+ * Default: OFF. (Wenn ON, nutze WUS_EDITOR_PANELS_TO_REMOVE.)
+ */
+if (!defined('WUS_EDITOR_REMOVE_PANELS')) {
+    define('WUS_EDITOR_REMOVE_PANELS', false);
+}
+
+/**
+ * Panels to remove (Denylist): IDs von Panels, die ausgeblendet werden.
+ * Beispiel-IDs: 'discussion-panel', 'post-excerpt', 'featured-image'
+ */
+if (!defined('WUS_EDITOR_PANELS_TO_REMOVE')) {
+    define('WUS_EDITOR_PANELS_TO_REMOVE', [
+        // 'discussion-panel',
+        // 'taxonomy-panel-post_tag',
+        // 'post-excerpt',
+    ]);
+}
+
+/** Block-Styles entfernen: entfernt registrierte Block-Styles (Editor aufraeumen). */
+if (!defined('WUS_EDITOR_REMOVE_BLOCK_STYLES')) {
+    define('WUS_EDITOR_REMOVE_BLOCK_STYLES', true);
+}
+
+/** Block-Styles to remove: konkrete [block, style]-Paare, wenn Remove aktiv ist. */
+if (!defined('WUS_EDITOR_BLOCK_STYLES_TO_REMOVE')) {
+    define('WUS_EDITOR_BLOCK_STYLES_TO_REMOVE', [
+        // ['core/image', 'rounded'],
+    ]);
+}
+
+/** Formats entfernen: entfernt Richtext-Formate (z.B. Strikethrough, Code). */
+if (!defined('WUS_EDITOR_REMOVE_FORMATS')) {
+    define('WUS_EDITOR_REMOVE_FORMATS', true);
+}
+
+/** Formats to remove: Liste von Format-Slugs, wenn Remove aktiv ist. */
+if (!defined('WUS_EDITOR_FORMATS_TO_REMOVE')) {
+    define('WUS_EDITOR_FORMATS_TO_REMOVE', [
+        // 'core/strikethrough',
+        // 'core/code',
+    ]);
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 10) Custom Block Kategorie + Icons
+ * -------------------------------------------------------------------------- */
+
+/** Block-Kategorie Slug: eigene Kategorie im Inserter. */
+if (!defined('WUS_BLOCK_CATEGORY_SLUG')) {
+    define('WUS_BLOCK_CATEGORY_SLUG', 'webundso-spezial');
+}
+
+/** Block-Kategorie Titel: sichtbarer Name im Inserter. */
+if (!defined('WUS_BLOCK_CATEGORY_TITLE')) {
+    define('WUS_BLOCK_CATEGORY_TITLE', 'webundso-Elemente');
+}
+
+/** Block-Icon Hintergrundfarbe (für ACF Block Icons etc.). */
+if (!defined('WUS_BLOCK_ICON_BG')) {
+    define('WUS_BLOCK_ICON_BG', '#ffffff');
+}
+
+/** Block-Icon Vordergrundfarbe (für ACF Block Icons etc.). */
+if (!defined('WUS_BLOCK_ICON_FG')) {
+    define('WUS_BLOCK_ICON_FG', '#f9a13a');
+}
+
+
+/* -----------------------------------------------------------------------------
+ * 11) Block Control (Allow/Deny)
+ * -------------------------------------------------------------------------- */
+
+
+// Debug optional (nur solange du testest)
+define('WUS_DEBUG_BLOCK_REGISTER', true);
+
+/* -----------------------------------------------------------------------------
+ * 12) Helpers (klein halten; keine Hook-Logik)
+ * -------------------------------------------------------------------------- */
+
+/** Support-Mail als String: z.B. für Templates/Notifications. */
+function wus_support_email(): string
 {
-    // Uncomment to view format of $toolbars
-    /*
-    echo '<pre>';
-    print_r($toolbars);
-    echo '</pre>';
-    die;
-    */
-
-    // Add a new toolbar called "Very Simple"
-    // - this toolbar has only 1 row of buttons
-    $toolbars['Very Simple'] = array();
-    $toolbars['Very Simple'][1] = array('bold', 'italic', 'formatselect', 'styleselect');
-
-    // Edit the "Full" toolbar and remove 'code'
-    if (($key = array_search('code', $toolbars['Full'][2])) !== false) {
-        unset($toolbars['Full'][2][$key]);
-    }
-
-    // remove the 'Basic' toolbar completely
-    unset($toolbars['Basic']);
-
-    return $toolbars;
+    return defined('WUS_BRAND_SUPPORT_EMAIL') ? WUS_BRAND_SUPPORT_EMAIL : '';
 }
 
-// Fügen Sie diesen Filter hinzu, um die verfügbaren Formate zu begrenzen und eigene Styles hinzuzufügen
-add_filter('tiny_mce_before_init', 'my_mce_before_init_insert_formats');
-function my_mce_before_init_insert_formats($init_array)
-{
-    // Begrenzen Sie die Formate auf h2 und h3
-    $init_array['block_formats'] = 'Paragraph=p;Heading 2=h2;Heading 3=h3';
-
-    // Definieren Sie hier Ihre benutzerdefinierten Styles
-    $style_formats = array(
-        array(
-            'title' => 'Custom Style 1',
-            'inline' => 'span',
-            'classes' => 'custom-style-1'
-        ),
-        array(
-            'title' => 'Custom Style 2',
-            'block' => 'div',
-            'classes' => 'custom-style-2'
-        )
-    );
-
-    $init_array['style_formats'] = json_encode($style_formats);
-
-    return $init_array;
+/**
+ * Topnav Walker Default:
+ * - 'dropdown' = normales UIkit Dropdown
+ * - 'mega'     = Megamenu
+ */
+if (!defined('WUS_TOPNAV_MODE')) {
+    define('WUS_TOPNAV_MODE', 'dropdown');
 }
-
-// Fügen Sie den 'styleselect' Button zur Toolbar hinzu (falls noch nicht vorhanden)
-add_filter('mce_buttons_2', 'my_mce_buttons_2');
-function my_mce_buttons_2($buttons)
-{
-    if (!in_array('styleselect', $buttons)) {
-        array_unshift($buttons, 'styleselect');
-    }
-    return $buttons;
-}
-
-  
-  // Ajax Call
-  // function my_load_post_content() {
-  //     // if (isset($_POST['post_id'])) {
-  //        // $post_id = intval($_POST['post_id']);
-  //         $post_id = 9;
-  //         $post = get_post($post_id);
-  //         if ($post) {
-  //             echo apply_filters('the_content', $post->post_content);
-  //         }
-  //   //  }
-  //     wp_die(); // All AJAX handlers should die when finished
-  // }
-  // add_action('wp_ajax_load_post_content', 'my_load_post_content');
-  // add_action('wp_ajax_nopriv_load_post_content', 'my_load_post_content');
-  
-  // Block categories
-  add_filter( 'block_categories_all' , function( $categories ) {
-    // New category array
-    $new_category = array(
-       'slug'  => 'webundso-spezial',
-       'title' => __( 'webundso-Elemente', 'webundso' ),
-       'icon'  => null,
-    );  
-    // Adding a new category to begin of categories array.
-  array_unshift($categories , $new_category); 
-  return $categories;
-});
-
-// Quadratische Bilder/Boxen w-h
-$(window).on('resize', function() {
-  // $('.akbox').height( $('.akbox').width() );
-  // $('.mbox').height( $('.mbox').width() );
-  // $('.news-list-view .headerWrap').height( ($('.news-list-view .headerWrap').width()) / 2 );
-  // $('.news-list-view .headerWrap.referenz').height( ($('.news-list-view .headerWrap').width()));
-  // $('.front-grid .box').height( ($('.front-grid .box').width()));
-}).trigger('resize');
-  
-  // Galerie Block m. Lightbox
-$('.wp-block-gallery').each(function() {
-  $(this).attr('uk-lightbox', 'animation: fade');
-  $(this).find('figure.wp-block-image').each(function() {
-    var $img = $(this).find('img');
-    var $link = $('<a>').attr({
-      'href': $img.attr('src'),
-      'data-caption': $img.attr('alt')
-    });
-    $img.wrap($link);
-  });
-});

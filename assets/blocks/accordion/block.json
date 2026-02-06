@@ -1,0 +1,15 @@
+{
+	"name": "acf/accordion",
+	"title": "Akkordeon",
+	"description": "Mehrere Inhalte als Akkordeon",
+	"category": "webundso-spezial",
+	"icon": "image-flip-vertical",
+	"supports": {
+		"anchor": true,
+		"customClassName": true
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	}
+}

@@ -1,15 +1,20 @@
 <?php
-/*
-=================================================================
-Filename: author.php
-Description: Redirect author pages to the homepage with WP redirect function
-Author: Noël Girstmair | webundso GmbH
-Last changes: 9.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
 
+/**
+ * author.php
+ *
+ * Hinweis:
+ * - 301 = permanent → Suchmaschinen merken sich das
+ * - wp_safe_redirect() schützt vor externen Redirect-Zielen
+ */
 
-wp_safe_redirect( get_home_url(), 301 );
+// Fallback: Home-URL
+$target = home_url('/');
+
+// Optional: Filter, falls du pro Projekt etwas anderes willst
+$target = apply_filters('wus_author_redirect_target', $target);
+
+// Redirect ausführen
+wp_safe_redirect($target, 301);
 exit;
-
-?>

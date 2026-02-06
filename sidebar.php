@@ -1,20 +1,23 @@
 <?php
-/*
-=================================================================
-Filename: sidebar.php
-Description: Sidebar and widget area
-Author: Noël Girstmair | webundso GmbH
-Last changes: 5.2.2024
-=================================================================
-*/
- ?>
+defined('ABSPATH') || exit;
 
-<div class="sidebar">
+/**
+ * sidebar.php
+ * Generic Sidebar Output
+ * Die Sidebar-ID wird kontextabhängig via WUS_Content bestimmt.
+ */
 
-	<?php if ( is_active_sidebar( 'sidebar1' ) ) : ?>
+if (!class_exists('WUS_Content')) {
+	return;
+}
 
-		<?php dynamic_sidebar( 'sidebar1' ); ?>
+$sidebar_id = WUS_Content::get_sidebar_id();
 
-	<?php endif; ?>
+if (!is_active_sidebar($sidebar_id)) {
+	return;
+}
+?>
 
-</div>
+<aside class="sidebar" aria-label="<?php echo esc_attr__('Sidebar', 'webundso'); ?>">
+	<?php dynamic_sidebar($sidebar_id); ?>
+</aside>

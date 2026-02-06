@@ -1,19 +1,40 @@
 <?php
-/*
-=================================================================
-Filename: searchform.php
-Description: the searchform
-Author: Noël Girstmair | webundso GmbH
-Last changes: 5.2.2024
-=================================================================
-*/
+defined('ABSPATH') || exit;
+
+/**
+ * searchform.php
+ *
+ * Zweck:
+ * - Globales Suchformular für das Theme
+ * - Wird von get_search_form() geladen (404, Header, Sidebar, etc.)
+ *
+ */
+
 ?>
 
 <div class="uk-margin">
-	
-	<form class="uk-search uk-search-default" method="get" action="<?php echo home_url( '/' ); ?>">
-		<button class="uk-search-icon-flip" uk-search-icon></button>
-		<input class="uk-search-input" name="s" type="search" placeholder="<?php echo esc_attr_x( 'Suchbegriff', 'webundso_wp' ) ?>" aria-label="<?php echo esc_attr_x( 'Suchbegriff', 'webundso_wp' ) ?>" value="<?php echo get_search_query() ?>">
+
+	<form
+		class="uk-search uk-search-default"
+		method="get"
+		action="<?php echo esc_url(home_url('/')); ?>"
+		role="search"
+	>
+		<button
+			type="submit"
+			class="uk-search-icon-flip"
+			uk-search-icon
+			aria-label="<?php echo esc_attr__('Suche starten', 'webundso'); ?>"
+		></button>
+
+		<input
+			class="uk-search-input"
+			name="s"
+			type="search"
+			placeholder="<?php echo esc_attr__('Suchbegriff', 'webundso'); ?>"
+			aria-label="<?php echo esc_attr__('Suchbegriff', 'webundso'); ?>"
+			value="<?php echo esc_attr(get_search_query()); ?>"
+		>
 	</form>
-	
+
 </div>

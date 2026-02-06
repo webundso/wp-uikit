@@ -1,542 +1,66 @@
 @charset "UTF-8";
-/*--------------------------------------------------------------*/
-/* All SASS Variables */
-/*--------------------------------------------------------------*/
-/*** Colors ***/
 /******************************************************************/
-/* Stylesheet: Mixins & Constants Stylesheet*/
+/* Mixins & Utilities – WP-SCSS kompatibel                         */
 /******************************************************************/
-/*********************
-TOOLS
-*********************/
-/** Border for element position **/
-/*********************
-COLORS
-*********************/
-/*********************
-FONTS
-*********************/
-/*********************
-REM UMWANDLUNG
-*********************/
-/*
-.demo {
-  font-size: rem(24px); // Simple
-  padding: rem(5px 10px); // Multiple values
-  border-bottom: rem(1px solid black); // Multiple mixed values
-  box-shadow: rem(0 0 2px #ccc, inset 0 0 5px #eee); // Comma-separated values
-  text-shadow: rem(1px 1px) #eee, rem(-1px) 0 #eee; // Alternate use
-}
-*/
-/*********************
- BREAKPOINTS (UIKit defaults)
- Affects device widths of 640px and larger. Affects device widths of 960px and larger. Affects device widths of 1200px and larger.
- .uk-margin-remove-left@xl Affects device widths of 1600px and larger.
-*********************/
-/*
-.sidebar {
-  width: 60%;
-  float: left;
-  margin: 0 2% 0 0;
-  @include bp-small {
-    width: 100%;
-    float: none;
-    margin: 0;
-  }
-}	
-*/
-/*********************
-Margin/Padding
-*********************/
-.m0 {
-  margin: 0px;
-}
-.p0 {
-  padding: 0px;
-}
-.mt0 {
-  margin-top: 0px;
-}
-.pt0 {
-  padding-top: 0px;
-}
-.mb0 {
-  margin-bottom: 0px;
-}
-.pb0 {
-  padding-bottom: 0px;
-}
-.ml0 {
-  margin-left: 0px;
-}
-.pl0 {
-  padding-left: 0px;
-}
-.mr0 {
-  margin-right: 0px;
-}
-.pr0 {
-  padding-right: 0px;
-}
-.m5 {
-  margin: 5px;
-}
-.p5 {
-  padding: 5px;
-}
-.mt5 {
-  margin-top: 5px;
-}
-.pt5 {
-  padding-top: 5px;
-}
-.mb5 {
-  margin-bottom: 5px;
-}
-.pb5 {
-  padding-bottom: 5px;
-}
-.ml5 {
-  margin-left: 5px;
-}
-.pl5 {
-  padding-left: 5px;
-}
-.mr5 {
-  margin-right: 5px;
-}
-.pr5 {
-  padding-right: 5px;
-}
-.m10 {
-  margin: 10px;
-}
-.p10 {
-  padding: 10px;
-}
-.mt10 {
-  margin-top: 10px;
-}
-.pt10 {
-  padding-top: 10px;
-}
-.mb10 {
-  margin-bottom: 10px;
-}
-.pb10 {
-  padding-bottom: 10px;
-}
-.ml10 {
-  margin-left: 10px;
-}
-.pl10 {
-  padding-left: 10px;
-}
-.mr10 {
-  margin-right: 10px;
-}
-.pr10 {
-  padding-right: 10px;
-}
-.m15 {
-  margin: 15px;
-}
-.p15 {
-  padding: 15px;
-}
-.mt15 {
-  margin-top: 15px;
-}
-.pt15 {
-  padding-top: 15px;
-}
-.mb15 {
-  margin-bottom: 15px;
-}
-.pb15 {
-  padding-bottom: 15px;
-}
-.ml15 {
-  margin-left: 15px;
-}
-.pl15 {
-  padding-left: 15px;
-}
-.mr15 {
-  margin-right: 15px;
-}
-.pr15 {
-  padding-right: 15px;
-}
-.m20 {
-  margin: 20px;
-}
-.p20 {
-  padding: 20px;
-}
-.mt20 {
-  margin-top: 20px;
-}
-.pt20 {
-  padding-top: 20px;
-}
-.mb20 {
-  margin-bottom: 20px;
-}
-.pb20 {
-  padding-bottom: 20px;
-}
-.ml20 {
-  margin-left: 20px;
-}
-.pl20 {
-  padding-left: 20px;
-}
-.mr20 {
-  margin-right: 20px;
-}
-.pr20 {
-  padding-right: 20px;
-}
-.m25 {
-  margin: 25px;
-}
-.p25 {
-  padding: 25px;
-}
-.mt25 {
-  margin-top: 25px;
-}
-.pt25 {
-  padding-top: 25px;
-}
-.mb25 {
-  margin-bottom: 25px;
-}
-.pb25 {
-  padding-bottom: 25px;
-}
-.ml25 {
-  margin-left: 25px;
-}
-.pl25 {
-  padding-left: 25px;
-}
-.mr25 {
-  margin-right: 25px;
-}
-.pr25 {
-  padding-right: 25px;
-}
-.m30 {
-  margin: 30px;
-}
-.p30 {
-  padding: 30px;
-}
-.mt30 {
-  margin-top: 30px;
-}
-.pt30 {
-  padding-top: 30px;
-}
-.mb30 {
-  margin-bottom: 30px;
-}
-.pb30 {
-  padding-bottom: 30px;
-}
-.ml30 {
-  margin-left: 30px;
-}
-.pl30 {
-  padding-left: 30px;
-}
-.mr30 {
-  margin-right: 30px;
-}
-.pr30 {
-  padding-right: 30px;
-}
-.m35 {
-  margin: 35px;
-}
-.p35 {
-  padding: 35px;
-}
-.mt35 {
-  margin-top: 35px;
-}
-.pt35 {
-  padding-top: 35px;
-}
-.mb35 {
-  margin-bottom: 35px;
-}
-.pb35 {
-  padding-bottom: 35px;
-}
-.ml35 {
-  margin-left: 35px;
-}
-.pl35 {
-  padding-left: 35px;
-}
-.mr35 {
-  margin-right: 35px;
-}
-.pr35 {
-  padding-right: 35px;
-}
-.m40 {
-  margin: 40px;
-}
-.p40 {
-  padding: 40px;
-}
-.mt40 {
-  margin-top: 40px;
-}
-.pt40 {
-  padding-top: 40px;
-}
-.mb40 {
-  margin-bottom: 40px;
-}
-.pb40 {
-  padding-bottom: 40px;
-}
-.ml40 {
-  margin-left: 40px;
-}
-.pl40 {
-  padding-left: 40px;
-}
-.mr40 {
-  margin-right: 40px;
-}
-.pr40 {
-  padding-right: 40px;
-}
-.m45 {
-  margin: 45px;
-}
-.p45 {
-  padding: 45px;
-}
-.mt45 {
-  margin-top: 45px;
-}
-.pt45 {
-  padding-top: 45px;
-}
-.mb45 {
-  margin-bottom: 45px;
-}
-.pb45 {
-  padding-bottom: 45px;
-}
-.ml45 {
-  margin-left: 45px;
-}
-.pl45 {
-  padding-left: 45px;
-}
-.mr45 {
-  margin-right: 45px;
-}
-.pr45 {
-  padding-right: 45px;
-}
-.m50 {
-  margin: 50px;
-}
-.p50 {
-  padding: 50px;
-}
-.mt50 {
-  margin-top: 50px;
-}
-.pt50 {
-  padding-top: 50px;
-}
-.mb50 {
-  margin-bottom: 50px;
-}
-.pb50 {
-  padding-bottom: 50px;
-}
-.ml50 {
-  margin-left: 50px;
-}
-.pl50 {
-  padding-left: 50px;
-}
-.mr50 {
-  margin-right: 50px;
-}
-.pr50 {
-  padding-right: 50px;
-}
-.m60 {
-  margin: 60px;
-}
-.p60 {
-  padding: 60px;
-}
-.mt60 {
-  margin-top: 60px;
-}
-.pt60 {
-  padding-top: 60px;
-}
-.mb60 {
-  margin-bottom: 60px;
-}
-.pb60 {
-  padding-bottom: 60px;
-}
-.ml60 {
-  margin-left: 60px;
-}
-.pl60 {
-  padding-left: 60px;
-}
-.mr60 {
-  margin-right: 60px;
-}
-.pr60 {
-  padding-right: 60px;
-}
-.m70 {
-  margin: 70px;
-}
-.p70 {
-  padding: 70px;
-}
-.mt70 {
-  margin-top: 70px;
-}
-.pt70 {
-  padding-top: 70px;
-}
-.mb70 {
-  margin-bottom: 70px;
-}
-.pb70 {
-  padding-bottom: 70px;
-}
-.ml70 {
-  margin-left: 70px;
-}
-.pl70 {
-  padding-left: 70px;
-}
-.mr70 {
-  margin-right: 70px;
-}
-.pr70 {
-  padding-right: 70px;
-}
-.m75 {
-  margin: 75px;
-}
-.p75 {
-  padding: 75px;
-}
-.mt75 {
-  margin-top: 75px;
-}
-.pt75 {
-  padding-top: 75px;
-}
-.mb75 {
-  margin-bottom: 75px;
-}
-.pb75 {
-  padding-bottom: 75px;
-}
-.ml75 {
-  margin-left: 75px;
-}
-.pl75 {
-  padding-left: 75px;
-}
-.mr75 {
-  margin-right: 75px;
-}
-.pr75 {
-  padding-right: 75px;
-}
-.m100 {
-  margin: 100px;
-}
-.p100 {
-  padding: 100px;
-}
-.mt100 {
-  margin-top: 100px;
-}
-.pt100 {
-  padding-top: 100px;
-}
-.mb100 {
-  margin-bottom: 100px;
-}
-.pb100 {
-  padding-bottom: 100px;
-}
-.ml100 {
-  margin-left: 100px;
-}
-.pl100 {
-  padding-left: 100px;
-}
-.mr100 {
-  margin-right: 100px;
-}
-.pr100 {
-  padding-right: 100px;
-}
-/*********************
-CSS3 GRADIENTS
-*********************/
-/* @include css-gradient(#dfdfdf,#f8f8f8); */
-/*********************
-Border Radius
-*********************/
-/*********************
-BOX SHADOW
-*********************/
-/*********************
-List reset
-*********************/
-/*********************
- Prefix Property
-*********************/
-/*********************
-Centering hor/vert
-*********************/
-/*
-.foo {
-    @include center(both);
-  }
-  .foo-parent {
-    position: relative;
-  }
-*/
-/*********************
-Fluid Typografie 
-https://css-tricks.com/snippets/css/fluid-typography/
-*********************/
-/*
-$min_width: 320px;
-$max_width: 1200px;
-$min_font: 16px;
-$max_font: 24px;
-
-@include fluid-type($min_width, $max_width, $min_font, $max_font);
-*/
+/* --------------------------------------------------------------- */
+/* DEV / DEBUG                                                     */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* STRING HELPERS                                                  */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* FONT FACE                                                       */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* REM CONVERSION                                                  */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* BREAKPOINTS – UIkit defaults                                   */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* LAYOUT HELPERS                                                  */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* FLUID TYPOGRAPHY                                                */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* PLACEHOLDER                                                     */
+/* --------------------------------------------------------------- */
+/*--------------------------------------------------------------*/
+/* Fonts */
+/*--------------------------------------------------------------*/
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/roboto-v50-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v50-latin-regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/roboto-v50-latin-700.woff2") format("woff2"), url("../fonts/roboto-v50-latin-700.woff") format("woff");
+}
+@font-face {
+  font-family: "Adamina";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/adamina-v22-latin-regular.woff2") format("woff2"), url("../fonts/adamina-v22-latin-regular.woff") format("woff");
+}
+/*==============================================================*/
+/* UIkit Sass Overrides – Mechanics only                         */
+/*==============================================================*/
+/* Layout */
+/* Grid */
+/* Typography mechanics */
+/* Fonts: let tokens decide */
+/* Buttons */
+/* Navbar */
+/* Accordion */
+/* Alerts */
 /* ========================================================================
    Component: Base
  ========================================================================== */
@@ -547,15 +71,15 @@ $max_font: 24px;
  */
 html {
   /* 1 */
-  font-family: Arial;
+  font-family: inherit;
   font-size: 16px;
   font-weight: normal;
-  line-height: 1.5;
+  line-height: 1.6;
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 3 */
   background: #fff;
-  color: red;
+  color: #666;
 }
 /*
  * Remove the margin in all browsers.
@@ -569,7 +93,7 @@ body {
  * Style
  */
 a, .uk-link {
-  color: #DA7D02;
+  color: #1e87f0;
   text-decoration: none;
   cursor: pointer;
 }
@@ -622,7 +146,7 @@ em {
  */
 ins {
   background: #ffd;
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /*
@@ -630,7 +154,7 @@ ins {
  */
 mark {
   background: #ffd;
-  color: red;
+  color: #666;
 }
 /*
  * Quote
@@ -714,7 +238,7 @@ p, ul, ol, dl, pre, address, fieldset, figure {
  ========================================================================== */
 h1, .uk-h1, h2, .uk-h2, h3, .uk-h3, h4, .uk-h4, h5, .uk-h5, h6, .uk-h6, .uk-heading-small, .uk-heading-medium, .uk-heading-large, .uk-heading-xlarge, .uk-heading-2xlarge, .uk-heading-3xlarge {
   margin: 0 0 20px 0;
-  font-family: Arial;
+  font-family: inherit;
   font-weight: normal;
   color: #333;
   text-transform: none;
@@ -827,7 +351,7 @@ blockquote footer {
   margin-top: 10px;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: red;
+  color: #666;
 }
 blockquote footer::before {
   content: "— ";
@@ -839,7 +363,7 @@ blockquote footer::before {
  */
 pre {
   font: 0.875rem / 1.5 Consolas, monaco, monospace;
-  color: red;
+  color: #666;
   -moz-tab-size: 4;
   tab-size: 4;
   /* 1 */
@@ -910,7 +434,7 @@ a.uk-link-muted, .uk-link-muted a, .uk-link-toggle .uk-link-muted {
   color: #999;
 }
 a.uk-link-muted:hover, .uk-link-muted a:hover, .uk-link-toggle:hover .uk-link-muted {
-  color: red;
+  color: #666;
 }
 /* Text
  ========================================================================== */
@@ -1218,7 +742,7 @@ a.uk-link-reset, .uk-link-reset a {
   list-style-type: square;
 }
 .uk-list-decimal > ::before {
-  content: counter(decimal,decimal) " . ";
+  content: counter(decimal, decimal) " . ";
 }
 .uk-list-hyphen > ::before {
   content: "–  ";
@@ -1251,7 +775,7 @@ a.uk-link-reset, .uk-link-reset a {
   width: 30px;
   height: 1.5em;
   margin-bottom: -1.5em;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%226%22%20height%3D%226%22%20viewBox%3D%220%200%206%206%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22red%22%20cx%3D%223%22%20cy%3D%223%22%20r%3D%223%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%226%22%20height%3D%226%22%20viewBox%3D%220%200%206%206%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22%23666%22%20cx%3D%223%22%20cy%3D%223%22%20r%3D%223%22%20%2F%3E%0A%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -1603,11 +1127,11 @@ button.uk-icon:not(:disabled) {
   text-decoration: none !important;
 }
 .uk-icon-link:hover {
-  color: red;
+  color: #666;
 }
 /* OnClick + Active */
 .uk-icon-link:active, .uk-active > .uk-icon-link {
-  color: #e60000;
+  color: #595959;
 }
 /*
  * Button
@@ -1631,12 +1155,12 @@ button.uk-icon:not(:disabled) {
 /* Hover */
 .uk-icon-button:hover {
   background-color: #ebebeb;
-  color: red;
+  color: #666;
 }
 /* OnClick + Active */
 .uk-icon-button:active, .uk-active > .uk-icon-button {
   background-color: #dfdfdf;
-  color: red;
+  color: #666;
 }
 /* ========================================================================
    Component: Form Range
@@ -1848,7 +1372,7 @@ button.uk-icon:not(:disabled) {
   /* 4 */
   padding: 0 10px;
   background: #fff;
-  color: red;
+  color: #666;
   border: 1px solid #e5e5e5;
   transition: 0.2s ease-in-out;
   transition-property: color, background-color, border;
@@ -1884,7 +1408,7 @@ button.uk-icon:not(:disabled) {
 .uk-input:focus, .uk-select:focus, .uk-textarea:focus {
   outline: none;
   background-color: #fff;
-  color: red;
+  color: #666;
   border-color: #1e87f0;
 }
 /* Disabled */
@@ -2003,13 +1527,13 @@ select.uk-form-width-xsmall {
   -moz-appearance: none;
   /* 2 */
   padding-right: 20px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22red%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22red%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
   background-repeat: no-repeat;
   background-position: 100% 50%;
 }
 /* 3 */
 .uk-select:not([multiple]):not([size]) option {
-  color: red;
+  color: #666;
 }
 /*
  * Disabled
@@ -2028,7 +1552,7 @@ select.uk-form-width-xsmall {
   background-position: 100% 50%;
 }
 .uk-input[list]:hover, .uk-input[list]:focus {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22red%22%20points%3D%2212%2012%208%206%2016%206%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2012%208%206%2016%206%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 /* 1 */
 .uk-input[list]::-webkit-calendar-picker-indicator {
@@ -2249,7 +1773,7 @@ select.uk-form-width-xsmall {
  * Required for `a`.
  */
 .uk-form-icon:hover {
-  color: red;
+  color: #666;
 }
 /*
  * Make `input` element clickable through icon, e.g. if it's a `span`
@@ -2307,7 +1831,7 @@ select.uk-form-width-xsmall {
   /* 7 */
   display: inline-block;
   box-sizing: border-box;
-  padding: 0 30px;
+  padding: 0 20px;
   vertical-align: middle;
   font-size: 0.875rem;
   /* 8 */
@@ -2654,29 +2178,29 @@ select.uk-form-width-xsmall {
  * Default
  */
 .uk-section-default {
+  --uk-inverse: dark;
   background: #fff;
-  --uk-navbar-color: dark;
 }
 /*
  * Muted
  */
 .uk-section-muted {
+  --uk-inverse: dark;
   background: #f8f8f8;
-  --uk-navbar-color: dark;
 }
 /*
  * Primary
  */
 .uk-section-primary {
+  --uk-inverse: light;
   background: #1e87f0;
-  --uk-navbar-color: light;
 }
 /*
  * Secondary
  */
 .uk-section-secondary {
+  --uk-inverse: light;
   background: #222;
-  --uk-navbar-color: light;
 }
 /* Overlap modifier
  ========================================================================== */
@@ -2695,7 +2219,7 @@ select.uk-form-width-xsmall {
   display: flow-root;
   /* 1 */
   box-sizing: content-box;
-  max-width: 1200px;
+  max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
@@ -2768,7 +2292,7 @@ select.uk-form-width-xsmall {
 /* Tablet landscape and bigger */
 @media (min-width: 960px) {
   .uk-container-expand-left, .uk-container-expand-right {
-    max-width: calc(50% + (1200px / 2) - 40px);
+    max-width: calc(50% + (1100px / 2) - 40px);
   }
   .uk-container-expand-left.uk-container-xsmall, .uk-container-expand-right.uk-container-xsmall {
     max-width: calc(50% + (750px / 2) - 40px);
@@ -2906,24 +2430,28 @@ select.uk-form-width-xsmall {
  * Default
  */
 .uk-tile-default {
+  --uk-inverse: dark;
   background-color: #fff;
 }
 /*
  * Muted
  */
 .uk-tile-muted {
+  --uk-inverse: dark;
   background-color: #f8f8f8;
 }
 /*
  * Primary
  */
 .uk-tile-primary {
+  --uk-inverse: light;
   background-color: #1e87f0;
 }
 /*
  * Secondary
  */
 .uk-tile-secondary {
+  --uk-inverse: light;
   background-color: #222;
 }
 /* ========================================================================
@@ -2932,7 +2460,7 @@ select.uk-form-width-xsmall {
 .uk-card {
   position: relative;
   box-sizing: border-box;
-  color: #000;
+  transition: box-shadow 0.1s ease-in-out;
 }
 /* Sections
  ========================================================================== */
@@ -3026,8 +2554,9 @@ select.uk-form-width-xsmall {
  * Note: Header and Footer are only implemented for the default style
  */
 .uk-card-default {
+  --uk-inverse: dark;
   background-color: #fff;
-  color: red;
+  color: #666;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 .uk-card-default .uk-card-title {
@@ -3047,6 +2576,7 @@ select.uk-form-width-xsmall {
  * Primary
  */
 .uk-card-primary {
+  --uk-inverse: light;
   background-color: #1e87f0;
   color: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
@@ -3062,6 +2592,7 @@ select.uk-form-width-xsmall {
  * Secondary
  */
 .uk-card-secondary {
+  --uk-inverse: light;
   background-color: #222;
   color: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
@@ -3188,7 +2719,7 @@ select.uk-form-width-xsmall {
 }
 /* Hover */
 .uk-close:hover {
-  color: red;
+  color: #666;
 }
 /* ========================================================================
    Component: Spinner
@@ -3246,7 +2777,7 @@ select.uk-form-width-xsmall {
 }
 /* Hover */
 .uk-totop:hover {
-  color: red;
+  color: #666;
 }
 /* OnClick */
 .uk-totop:active {
@@ -3276,7 +2807,7 @@ select.uk-form-width-xsmall {
   margin-bottom: 20px;
   padding: 15px 29px 15px 15px;
   background: #f8f8f8;
-  color: red;
+  color: #666;
 }
 /* Add margin if adjacent element */
 * + .uk-alert {
@@ -3462,12 +2993,14 @@ select.uk-form-width-xsmall {
  * Default
  */
 .uk-overlay-default {
+  --uk-inverse: dark;
   background: rgba(255, 255, 255, 0.8);
 }
 /*
  * Primary
  */
 .uk-overlay-primary {
+  --uk-inverse: light;
   background: rgba(34, 34, 34, 0.8);
 }
 /* ========================================================================
@@ -3510,7 +3043,7 @@ select.uk-form-width-xsmall {
   color: #999;
 }
 .uk-article-meta a:hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* ========================================================================
@@ -3646,7 +3179,7 @@ select.uk-form-width-xsmall {
   width: 100%;
   /* 9 */
   border: none;
-  color: red;
+  color: #666;
 }
 .uk-search-input:focus {
   outline: none;
@@ -3721,21 +3254,53 @@ select.uk-form-width-xsmall {
 .uk-search-default .uk-search-icon {
   width: 40px;
 }
-.uk-search-default .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
+.uk-search-default:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input {
   padding-left: 40px;
 }
-.uk-search-default .uk-search-icon-flip ~ .uk-search-input {
+.uk-search-default:has(.uk-search-icon-flip) .uk-search-input {
   padding-right: 40px;
 }
 /* Navbar modifier
  ========================================================================== */
 .uk-search-navbar {
-  width: 400px;
+  width: 240px;
 }
 /*
  * Input
  */
 .uk-search-navbar .uk-search-input {
+  height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+/* Focus */
+.uk-search-navbar .uk-search-input:focus {
+  background-color: #fff;
+  border-color: #1e87f0;
+}
+/*
+ * Icon
+ */
+.uk-search-navbar .uk-search-icon {
+  width: 40px;
+}
+.uk-search-navbar:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input {
+  padding-left: 40px;
+}
+.uk-search-navbar:has(.uk-search-icon-flip) .uk-search-input {
+  padding-right: 40px;
+}
+/* Medium modifier
+ ========================================================================== */
+.uk-search-medium {
+  width: 400px;
+}
+/*
+ * Input
+ */
+.uk-search-medium .uk-search-input {
   height: 40px;
   background: transparent;
   font-size: 1.5rem;
@@ -3744,14 +3309,14 @@ select.uk-form-width-xsmall {
 /*
  * Icon
  */
-.uk-search-navbar .uk-search-icon {
-  width: 40px;
+.uk-search-medium .uk-search-icon {
+  width: 24px;
 }
-.uk-search-navbar .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
-  padding-left: 40px;
+.uk-search-medium:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input {
+  padding-left: 34px;
 }
-.uk-search-navbar .uk-search-icon-flip ~ .uk-search-input {
-  padding-right: 40px;
+.uk-search-medium:has(.uk-search-icon-flip) .uk-search-input {
+  padding-right: 34px;
 }
 /* Large modifier
  ========================================================================== */
@@ -3771,13 +3336,13 @@ select.uk-form-width-xsmall {
  * Icon
  */
 .uk-search-large .uk-search-icon {
-  width: 80px;
+  width: 40px;
 }
-.uk-search-large .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
-  padding-left: 80px;
+.uk-search-large:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input {
+  padding-left: 60px;
 }
-.uk-search-large .uk-search-icon-flip ~ .uk-search-input {
-  padding-right: 80px;
+.uk-search-large:has(.uk-search-icon-flip) .uk-search-input {
+  padding-right: 60px;
 }
 /* Toggle
  ========================================================================== */
@@ -3786,7 +3351,7 @@ select.uk-form-width-xsmall {
 }
 /* Hover */
 .uk-search-toggle:hover {
-  color: red;
+  color: #666;
 }
 /* ========================================================================
    Component: Accordion
@@ -3815,23 +3380,23 @@ select.uk-form-width-xsmall {
   height: 1.4em;
   margin-left: 10px;
   float: right;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22red%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%20%20%20%20%3Crect%20fill%3D%22red%22%20width%3D%221%22%20height%3D%2213%22%20x%3D%226%22%20y%3D%220%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%221%22%20height%3D%2213%22%20x%3D%226%22%20y%3D%220%22%20%2F%3E%0A%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 .uk-open > .uk-accordion-title::before {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22red%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%3C%2Fsvg%3E");
 }
 /* Hover */
 .uk-accordion-title:hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Content
  ========================================================================== */
 .uk-accordion-content {
   display: flow-root;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 /*
  * Remove margin from the last-child
@@ -3889,12 +3454,13 @@ select.uk-form-width-xsmall {
   --uk-position-offset: 0;
   --uk-position-shift-offset: 0;
   --uk-position-viewport-offset: 0;
+  --uk-inverse: dark;
   /* 1 */
   width: auto;
   /* 2 */
   padding: 25px 15px 25px 15px;
   background: #fff;
-  color: red;
+  color: #666;
 }
 /*
  * Remove margin from the last-child
@@ -4305,7 +3871,7 @@ select.uk-form-width-xsmall {
  */
 .uk-slider-items > * {
   /* 1 */
-  flex: none;
+  flex: none !important;
   box-sizing: border-box;
   max-width: 100%;
   /* 2 */
@@ -4385,6 +3951,7 @@ select.uk-form-width-xsmall {
  * 3. Allow scrolling
  */
 .uk-offcanvas-bar {
+  --uk-inverse: light;
   /* 1 */
   position: absolute;
   top: 0;
@@ -4690,7 +4257,7 @@ select.uk-form-width-xsmall {
   position: relative;
   padding: 15px;
   background: #f8f8f8;
-  color: red;
+  color: #666;
   font-size: 1.25rem;
   line-height: 1.4;
   cursor: pointer;
@@ -4857,6 +4424,157 @@ select.uk-form-width-xsmall {
 /* Label
  ========================================================================== */
 /* ========================================================================
+   Component: Thumbnav
+ ========================================================================== */
+/*
+ * 1. Allow items to wrap into the next line
+ * 2. Reset list
+ * 3. Gutter
+ */
+.uk-thumbnav {
+  display: flex;
+  /* 1 */
+  flex-wrap: wrap;
+  /* 2 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 3 */
+  margin-left: -15px;
+}
+/*
+ * Space is allocated based on content dimensions, but shrinks: 0 1 auto
+ * 1. Gutter
+ */
+.uk-thumbnav > * {
+  /* 1 */
+  padding-left: 15px;
+}
+/* Items
+ ========================================================================== */
+/*
+ * Items
+ */
+.uk-thumbnav > * > * {
+  display: inline-block;
+  position: relative;
+}
+.uk-thumbnav > * > *::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4));
+  transition: opacity 0.1s ease-in-out;
+}
+/* Hover */
+.uk-thumbnav > * > :hover::after {
+  opacity: 0;
+}
+/* Active */
+.uk-thumbnav > .uk-active > *::after {
+  opacity: 0;
+}
+/* Modifier: 'uk-thumbnav-vertical'
+ ========================================================================== */
+/*
+ * 1. Change direction
+ * 2. Gutter
+ */
+.uk-thumbnav-vertical {
+  /* 1 */
+  flex-direction: column;
+  /* 2 */
+  margin-left: 0;
+  margin-top: -15px;
+}
+/* 2 */
+.uk-thumbnav-vertical > * {
+  padding-left: 0;
+  padding-top: 15px;
+}
+/* ========================================================================
+   Component: Iconnav
+ ========================================================================== */
+/*
+ * 1. Allow items to wrap into the next line
+ * 2. Reset list
+ * 3. Gutter
+ */
+.uk-iconnav {
+  display: flex;
+  /* 1 */
+  flex-wrap: wrap;
+  /* 2 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 3 */
+  margin-left: -10px;
+}
+/*
+ * Space is allocated based on content dimensions, but shrinks: 0 1 auto
+ * 1. Gutter
+ */
+.uk-iconnav > * {
+  /* 1 */
+  padding-left: 10px;
+}
+/* Items
+ ========================================================================== */
+/*
+ * Items must target `a` elements to exclude other elements (e.g. dropdowns)
+ * 1. Center content vertically if there is still some text
+ * 2. Imitate white space gap when using flexbox
+ * 3. Force text not to affect item height
+ * 4. Style
+ * 5. Required for `a` if there is still some text
+ */
+.uk-iconnav > * > a {
+  /* 1 */
+  display: flex;
+  align-items: center;
+  /* 2 */
+  column-gap: 0.25em;
+  /* 3 */
+  line-height: 0;
+  /* 4 */
+  color: #999;
+  /* 5 */
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: 0.1s ease-in-out;
+  transition-property: color, background-color;
+}
+/* Hover */
+.uk-iconnav > * > a:hover {
+  color: #666;
+}
+/* Active */
+.uk-iconnav > .uk-active > a {
+  color: #666;
+}
+/* Modifier: 'uk-iconnav-vertical'
+ ========================================================================== */
+/*
+ * 1. Change direction
+ * 2. Gutter
+ */
+.uk-iconnav-vertical {
+  /* 1 */
+  flex-direction: column;
+  /* 2 */
+  margin-left: 0;
+  margin-top: -10px;
+}
+/* 2 */
+.uk-iconnav-vertical > * {
+  padding-left: 0;
+  padding-top: 10px;
+}
+/* ========================================================================
    Component: Grid
  ========================================================================== */
 /*
@@ -4893,14 +4611,14 @@ select.uk-form-width-xsmall {
  */
 /* Horizontal */
 .uk-grid {
-  margin-left: -30px;
+  margin-left: -20px;
 }
 .uk-grid > * {
-  padding-left: 30px;
+  padding-left: 20px;
 }
 /* Vertical */
 .uk-grid + .uk-grid, .uk-grid > .uk-grid-margin, * + .uk-grid-margin {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 /* Desktop and bigger */
 @media (min-width: 1200px) {
@@ -5011,21 +4729,21 @@ select.uk-form-width-xsmall {
  */
 /* Horizontal */
 .uk-grid-divider {
-  margin-left: -60px;
+  margin-left: -40px;
 }
 .uk-grid-divider > * {
-  padding-left: 60px;
+  padding-left: 40px;
 }
 .uk-grid-divider > :not(.uk-first-column)::before {
-  left: 30px;
+  left: 20px;
 }
 /* Vertical */
 .uk-grid-divider.uk-grid-stack > .uk-grid-margin {
-  margin-top: 60px;
+  margin-top: 40px;
 }
 .uk-grid-divider.uk-grid-stack > .uk-grid-margin::before {
-  top: -30px;
-  left: 60px;
+  top: -20px;
+  left: 40px;
 }
 /* Desktop and bigger */
 @media (min-width: 1200px) {
@@ -5267,7 +4985,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-nav-default > li > a:hover {
-  color: red;
+  color: #666;
 }
 /* Active */
 .uk-nav-default > li.uk-active > a {
@@ -5302,7 +5020,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-nav-default .uk-nav-sub a:hover {
-  color: red;
+  color: #666;
 }
 .uk-nav-default .uk-nav-sub li.uk-active > a {
   color: #333;
@@ -5321,7 +5039,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-nav-primary > li > a:hover {
-  color: red;
+  color: #666;
 }
 /* Active */
 .uk-nav-primary > li.uk-active > a {
@@ -5356,7 +5074,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-nav-primary .uk-nav-sub a:hover {
-  color: red;
+  color: #666;
 }
 .uk-nav-primary .uk-nav-sub li.uk-active > a {
   color: #333;
@@ -5396,7 +5114,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-nav-secondary > li > a:hover .uk-nav-subtitle {
-  color: red;
+  color: #666;
 }
 /* Active */
 .uk-nav-secondary > li.uk-active > a .uk-nav-subtitle {
@@ -5425,10 +5143,51 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-nav-secondary .uk-nav-sub a:hover {
-  color: red;
+  color: #666;
 }
 .uk-nav-secondary .uk-nav-sub li.uk-active > a {
   color: #333;
+}
+/* Size modifier
+ ========================================================================== */
+/*
+ * Medium
+ */
+.uk-nav-medium {
+  font-size: 2.8875rem;
+  line-height: 1;
+}
+.uk-nav-large {
+  font-size: 3.4rem;
+  line-height: 1;
+}
+.uk-nav-xlarge {
+  font-size: 4rem;
+  line-height: 1;
+}
+/* Tablet Landscape and bigger */
+@media (min-width: 960px) {
+  .uk-nav-medium {
+    font-size: 3.5rem;
+  }
+  .uk-nav-large {
+    font-size: 4rem;
+  }
+  .uk-nav-xlarge {
+    font-size: 6rem;
+  }
+}
+/* Laptop and bigger */
+@media (min-width: 1200px) {
+  .uk-nav-medium {
+    font-size: 4rem;
+  }
+  .uk-nav-large {
+    font-size: 6rem;
+  }
+  .uk-nav-xlarge {
+    font-size: 8rem;
+  }
 }
 /* Alignment modifier
  ========================================================================== */
@@ -5468,14 +5227,11 @@ ul.uk-nav-sub {
  ========================================================================== */
 /*
  * 1. Create position context to center navbar group
- * 2. Pass dropbar behind color to JS
  */
 .uk-navbar {
   display: flex;
   /* 1 */
   position: relative;
-  /* 2 */
-  --uk-navbar-dropbar-behind-color: dark;
 }
 /* Container
  ========================================================================== */
@@ -5573,10 +5329,10 @@ ul.uk-nav-sub {
   column-gap: 0.25em;
   /* 3 */
   box-sizing: border-box;
-  min-height: 80px;
+  min-height: 60px;
   /* 4 */
   font-size: 0.875rem;
-  font-family: Arial;
+  font-family: inherit;
   /* 5 */
   text-decoration: none;
 }
@@ -5595,7 +5351,7 @@ ul.uk-nav-sub {
  * Apply hover style also if dropdown is opened
  */
 .uk-navbar-nav > li:hover > a, .uk-navbar-nav > li > a[aria-expanded="true"] {
-  color: red;
+  color: #666;
 }
 /* OnClick */
 .uk-navbar-nav > li > a:active {
@@ -5618,7 +5374,7 @@ ul.uk-nav-sub {
  ========================================================================== */
 .uk-navbar-item {
   padding: 0 0;
-  color: red;
+  color: #666;
 }
 /*
  * Remove margin from the last-child
@@ -5633,7 +5389,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-navbar-toggle:hover, .uk-navbar-toggle[aria-expanded="true"] {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /*
@@ -5664,12 +5420,13 @@ ul.uk-nav-sub {
   --uk-position-offset: 15px;
   --uk-position-shift-offset: 0;
   --uk-position-viewport-offset: 15px;
+  --uk-inverse: dark;
   /* 1 */
   width: 200px;
   /* 2 */
   padding: 25px;
   background: #fff;
-  color: red;
+  color: #666;
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 /*
@@ -5767,7 +5524,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-navbar-dropdown-nav > li > a:hover {
-  color: red;
+  color: #666;
 }
 /* Active */
 .uk-navbar-dropdown-nav > li.uk-active > a {
@@ -5798,7 +5555,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-navbar-dropdown-nav .uk-nav-sub a:hover {
-  color: red;
+  color: #666;
 }
 .uk-navbar-dropdown-nav .uk-nav-sub li.uk-active > a {
   color: #333;
@@ -5888,7 +5645,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-subnav > * > a:hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Active */
@@ -5935,12 +5692,12 @@ ul.uk-nav-sub {
 /* Hover */
 .uk-subnav-pill > * > a:hover {
   background-color: #f8f8f8;
-  color: red;
+  color: #666;
 }
 /* OnClick */
 .uk-subnav-pill > * > a:active {
   background-color: #f8f8f8;
-  color: red;
+  color: #666;
 }
 /* Active */
 .uk-subnav-pill > .uk-active > a {
@@ -5977,13 +5734,13 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-breadcrumb > * > :hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Disabled */
 /* Active */
 .uk-breadcrumb > :last-child > span, .uk-breadcrumb > :last-child > a:not([href]) {
-  color: red;
+  color: #666;
 }
 /*
  * Divider
@@ -6054,12 +5811,12 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-pagination > * > :hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Active */
 .uk-pagination > .uk-active > * {
-  color: red;
+  color: #666;
 }
 /* Disabled */
 .uk-pagination > .uk-disabled > * {
@@ -6132,7 +5889,7 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-tab > * > a:hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Active */
@@ -6207,16 +5964,16 @@ ul.uk-nav-sub {
  */
 .uk-slidenav {
   padding: 5px 10px;
-  color: rgba(255, 0, 0, 0.5);
+  color: rgba(102, 102, 102, 0.5);
   transition: color 0.1s ease-in-out;
 }
 /* Hover */
 .uk-slidenav:hover {
-  color: rgba(255, 0, 0, 0.9);
+  color: rgba(102, 102, 102, 0.9);
 }
 /* OnClick */
 .uk-slidenav:active {
-  color: rgba(255, 0, 0, 0.5);
+  color: rgba(102, 102, 102, 0.5);
 }
 /* Icon modifier
  ========================================================================== */
@@ -6282,23 +6039,23 @@ ul.uk-nav-sub {
   text-indent: 100%;
   overflow: hidden;
   white-space: nowrap;
-  border: 1px solid rgba(255, 0, 0, 0.4);
+  border: 1px solid rgba(102, 102, 102, 0.4);
   transition: 0.2s ease-in-out;
   transition-property: background-color, border-color;
 }
 /* Hover */
 .uk-dotnav > * > :hover {
-  background-color: rgba(255, 0, 0, 0.6);
+  background-color: rgba(102, 102, 102, 0.6);
   border-color: transparent;
 }
 /* OnClick */
 .uk-dotnav > * > :active {
-  background-color: rgba(255, 0, 0, 0.2);
+  background-color: rgba(102, 102, 102, 0.2);
   border-color: transparent;
 }
 /* Active */
 .uk-dotnav > .uk-active > * {
-  background-color: rgba(255, 0, 0, 0.6);
+  background-color: rgba(102, 102, 102, 0.6);
   border-color: transparent;
 }
 /* Modifier: 'uk-dotnav-vertical'
@@ -6320,157 +6077,6 @@ ul.uk-nav-sub {
   padding-top: 12px;
 }
 /* ========================================================================
-   Component: Thumbnav
- ========================================================================== */
-/*
- * 1. Allow items to wrap into the next line
- * 2. Reset list
- * 3. Gutter
- */
-.uk-thumbnav {
-  display: flex;
-  /* 1 */
-  flex-wrap: wrap;
-  /* 2 */
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  /* 3 */
-  margin-left: -15px;
-}
-/*
- * Space is allocated based on content dimensions, but shrinks: 0 1 auto
- * 1. Gutter
- */
-.uk-thumbnav > * {
-  /* 1 */
-  padding-left: 15px;
-}
-/* Items
- ========================================================================== */
-/*
- * Items
- */
-.uk-thumbnav > * > * {
-  display: inline-block;
-  position: relative;
-}
-.uk-thumbnav > * > *::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4));
-  transition: opacity 0.1s ease-in-out;
-}
-/* Hover */
-.uk-thumbnav > * > :hover::after {
-  opacity: 0;
-}
-/* Active */
-.uk-thumbnav > .uk-active > *::after {
-  opacity: 0;
-}
-/* Modifier: 'uk-thumbnav-vertical'
- ========================================================================== */
-/*
- * 1. Change direction
- * 2. Gutter
- */
-.uk-thumbnav-vertical {
-  /* 1 */
-  flex-direction: column;
-  /* 2 */
-  margin-left: 0;
-  margin-top: -15px;
-}
-/* 2 */
-.uk-thumbnav-vertical > * {
-  padding-left: 0;
-  padding-top: 15px;
-}
-/* ========================================================================
-   Component: Iconnav
- ========================================================================== */
-/*
- * 1. Allow items to wrap into the next line
- * 2. Reset list
- * 3. Gutter
- */
-.uk-iconnav {
-  display: flex;
-  /* 1 */
-  flex-wrap: wrap;
-  /* 2 */
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  /* 3 */
-  margin-left: -10px;
-}
-/*
- * Space is allocated based on content dimensions, but shrinks: 0 1 auto
- * 1. Gutter
- */
-.uk-iconnav > * {
-  /* 1 */
-  padding-left: 10px;
-}
-/* Items
- ========================================================================== */
-/*
- * Items must target `a` elements to exclude other elements (e.g. dropdowns)
- * 1. Center content vertically if there is still some text
- * 2. Imitate white space gap when using flexbox
- * 3. Force text not to affect item height
- * 4. Style
- * 5. Required for `a` if there is still some text
- */
-.uk-iconnav > * > a {
-  /* 1 */
-  display: flex;
-  align-items: center;
-  /* 2 */
-  column-gap: 0.25em;
-  /* 3 */
-  line-height: 0;
-  /* 4 */
-  color: #999;
-  /* 5 */
-  text-decoration: none;
-  font-size: 0.875rem;
-  transition: 0.1s ease-in-out;
-  transition-property: color, background-color;
-}
-/* Hover */
-.uk-iconnav > * > a:hover {
-  color: red;
-}
-/* Active */
-.uk-iconnav > .uk-active > a {
-  color: red;
-}
-/* Modifier: 'uk-iconnav-vertical'
- ========================================================================== */
-/*
- * 1. Change direction
- * 2. Gutter
- */
-.uk-iconnav-vertical {
-  /* 1 */
-  flex-direction: column;
-  /* 2 */
-  margin-left: 0;
-  margin-top: -10px;
-}
-/* 2 */
-.uk-iconnav-vertical > * {
-  padding-left: 0;
-  padding-top: 10px;
-}
-/* ========================================================================
    Component: Dropdown
  ========================================================================== */
 /*
@@ -6482,6 +6088,7 @@ ul.uk-nav-sub {
 .uk-dropdown {
   --uk-position-offset: 10px;
   --uk-position-viewport-offset: 15px;
+  --uk-inverse: dark;
   /* 1 */
   width: auto;
   /* 2 */
@@ -6489,7 +6096,7 @@ ul.uk-nav-sub {
   /* 3 */
   padding: 25px;
   background: #fff;
-  color: red;
+  color: #666;
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 /*
@@ -6553,7 +6160,7 @@ ul.uk-nav-sub {
 }
 /* Hover + Active */
 .uk-dropdown-nav > li > a:hover, .uk-dropdown-nav > li.uk-active > a {
-  color: red;
+  color: #666;
 }
 /*
  * Subtitle
@@ -6580,7 +6187,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-dropdown-nav .uk-nav-sub a:hover, .uk-dropdown-nav .uk-nav-sub li.uk-active > a {
-  color: red;
+  color: #666;
 }
 /* ========================================================================
    Component: Lightbox
@@ -7046,7 +6653,7 @@ ul.uk-nav-sub {
   width: 50%;
 }
 .uk-child-width-1-3 > * {
-  width: calc(100% * 1 / 3.001);
+  width: calc(100% / 3);
 }
 .uk-child-width-1-4 > * {
   width: 25%;
@@ -7055,7 +6662,7 @@ ul.uk-nav-sub {
   width: 20%;
 }
 .uk-child-width-1-6 > * {
-  width: calc(100% * 1 / 6.001);
+  width: calc(100% / 6);
 }
 .uk-child-width-auto > * {
   width: auto;
@@ -7073,6 +6680,7 @@ ul.uk-nav-sub {
 }
 /* Phone landscape and bigger */
 @media (min-width: 640px) {
+  /* Reset expand */
   .uk-child-width-1-1\@s > * {
     width: 100%;
   }
@@ -7080,7 +6688,7 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-child-width-1-3\@s > * {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-child-width-1-4\@s > * {
     width: 25%;
@@ -7089,7 +6697,7 @@ ul.uk-nav-sub {
     width: 20%;
   }
   .uk-child-width-1-6\@s > * {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-child-width-auto\@s > * {
     width: auto;
@@ -7098,9 +6706,13 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-child-width-1-1\@s > :not([class*="uk-width"]), .uk-child-width-1-2\@s > :not([class*="uk-width"]), .uk-child-width-1-3\@s > :not([class*="uk-width"]), .uk-child-width-1-4\@s > :not([class*="uk-width"]), .uk-child-width-1-5\@s > :not([class*="uk-width"]), .uk-child-width-1-6\@s > :not([class*="uk-width"]), .uk-child-width-auto\@s > :not([class*="uk-width"]) {
+    flex: initial;
+  }
 }
 /* Tablet landscape and bigger */
 @media (min-width: 960px) {
+  /* Reset expand */
   .uk-child-width-1-1\@m > * {
     width: 100%;
   }
@@ -7108,7 +6720,7 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-child-width-1-3\@m > * {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-child-width-1-4\@m > * {
     width: 25%;
@@ -7117,7 +6729,7 @@ ul.uk-nav-sub {
     width: 20%;
   }
   .uk-child-width-1-6\@m > * {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-child-width-auto\@m > * {
     width: auto;
@@ -7126,9 +6738,13 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-child-width-1-1\@m > :not([class*="uk-width"]), .uk-child-width-1-2\@m > :not([class*="uk-width"]), .uk-child-width-1-3\@m > :not([class*="uk-width"]), .uk-child-width-1-4\@m > :not([class*="uk-width"]), .uk-child-width-1-5\@m > :not([class*="uk-width"]), .uk-child-width-1-6\@m > :not([class*="uk-width"]), .uk-child-width-auto\@m > :not([class*="uk-width"]) {
+    flex: initial;
+  }
 }
 /* Desktop and bigger */
 @media (min-width: 1200px) {
+  /* Reset expand */
   .uk-child-width-1-1\@l > * {
     width: 100%;
   }
@@ -7136,7 +6752,7 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-child-width-1-3\@l > * {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-child-width-1-4\@l > * {
     width: 25%;
@@ -7145,7 +6761,7 @@ ul.uk-nav-sub {
     width: 20%;
   }
   .uk-child-width-1-6\@l > * {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-child-width-auto\@l > * {
     width: auto;
@@ -7154,9 +6770,13 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-child-width-1-1\@l > :not([class*="uk-width"]), .uk-child-width-1-2\@l > :not([class*="uk-width"]), .uk-child-width-1-3\@l > :not([class*="uk-width"]), .uk-child-width-1-4\@l > :not([class*="uk-width"]), .uk-child-width-1-5\@l > :not([class*="uk-width"]), .uk-child-width-1-6\@l > :not([class*="uk-width"]), .uk-child-width-auto\@l > :not([class*="uk-width"]) {
+    flex: initial;
+  }
 }
 /* Large screen and bigger */
 @media (min-width: 1600px) {
+  /* Reset expand */
   .uk-child-width-1-1\@xl > * {
     width: 100%;
   }
@@ -7164,7 +6784,7 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-child-width-1-3\@xl > * {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-child-width-1-4\@xl > * {
     width: 25%;
@@ -7173,7 +6793,7 @@ ul.uk-nav-sub {
     width: 20%;
   }
   .uk-child-width-1-6\@xl > * {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-child-width-auto\@xl > * {
     width: auto;
@@ -7181,6 +6801,9 @@ ul.uk-nav-sub {
   .uk-child-width-expand\@xl > :not([class*="uk-width"]) {
     flex: 1;
     min-width: 1px;
+  }
+  .uk-child-width-1-1\@xl > :not([class*="uk-width"]), .uk-child-width-1-2\@xl > :not([class*="uk-width"]), .uk-child-width-1-3\@xl > :not([class*="uk-width"]), .uk-child-width-1-4\@xl > :not([class*="uk-width"]), .uk-child-width-1-5\@xl > :not([class*="uk-width"]), .uk-child-width-1-6\@xl > :not([class*="uk-width"]), .uk-child-width-auto\@xl > :not([class*="uk-width"]) {
+    flex: initial;
   }
 }
 /* Single Widths
@@ -7200,10 +6823,10 @@ ul.uk-nav-sub {
 }
 /* Thirds */
 .uk-width-1-3 {
-  width: calc(100% * 1 / 3.001);
+  width: calc(100% / 3);
 }
 .uk-width-2-3 {
-  width: calc(100% * 2 / 3.001);
+  width: calc(200% / 3);
 }
 /* Quarters */
 .uk-width-1-4 {
@@ -7227,10 +6850,10 @@ ul.uk-nav-sub {
 }
 /* Sixths */
 .uk-width-1-6 {
-  width: calc(100% * 1 / 6.001);
+  width: calc(100% / 6);
 }
 .uk-width-5-6 {
-  width: calc(100% * 5 / 6.001);
+  width: calc(500% / 6);
 }
 /* Pixel */
 .uk-width-small {
@@ -7268,6 +6891,7 @@ ul.uk-nav-sub {
   /* Pixel */
   /* Auto */
   /* Expand */
+  /* Reset expand */
   .uk-width-1-1\@s {
     width: 100%;
   }
@@ -7275,10 +6899,10 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-width-1-3\@s {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-width-2-3\@s {
-    width: calc(100% * 2 / 3.001);
+    width: calc(200% / 3);
   }
   .uk-width-1-4\@s {
     width: 25%;
@@ -7299,10 +6923,10 @@ ul.uk-nav-sub {
     width: 80%;
   }
   .uk-width-1-6\@s {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-width-5-6\@s {
-    width: calc(100% * 5 / 6.001);
+    width: calc(500% / 6);
   }
   .uk-width-small\@s {
     width: 150px;
@@ -7326,6 +6950,9 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-width-1-1\@s, .uk-width-1-2\@s, .uk-width-1-3\@s, .uk-width-2-3\@s, .uk-width-1-4\@s, .uk-width-3-4\@s, .uk-width-1-5\@s, .uk-width-2-5\@s, .uk-width-3-5\@s, .uk-width-4-5\@s, .uk-width-1-6\@s, .uk-width-5-6\@s, .uk-width-small\@s, .uk-width-medium\@s, .uk-width-large\@s, .uk-width-xlarge\@s, .uk-width-2xlarge\@s, .uk-width-auto\@s {
+    flex: initial;
+  }
 }
 /* Tablet landscape and bigger */
 @media (min-width: 960px) {
@@ -7338,6 +6965,7 @@ ul.uk-nav-sub {
   /* Pixel */
   /* Auto */
   /* Expand */
+  /* Reset expand */
   .uk-width-1-1\@m {
     width: 100%;
   }
@@ -7345,10 +6973,10 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-width-1-3\@m {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-width-2-3\@m {
-    width: calc(100% * 2 / 3.001);
+    width: calc(200% / 3);
   }
   .uk-width-1-4\@m {
     width: 25%;
@@ -7369,10 +6997,10 @@ ul.uk-nav-sub {
     width: 80%;
   }
   .uk-width-1-6\@m {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-width-5-6\@m {
-    width: calc(100% * 5 / 6.001);
+    width: calc(500% / 6);
   }
   .uk-width-small\@m {
     width: 150px;
@@ -7396,6 +7024,9 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-width-1-1\@m, .uk-width-1-2\@m, .uk-width-1-3\@m, .uk-width-2-3\@m, .uk-width-1-4\@m, .uk-width-3-4\@m, .uk-width-1-5\@m, .uk-width-2-5\@m, .uk-width-3-5\@m, .uk-width-4-5\@m, .uk-width-1-6\@m, .uk-width-5-6\@m, .uk-width-small\@m, .uk-width-medium\@m, .uk-width-large\@m, .uk-width-xlarge\@m, .uk-width-2xlarge\@m, .uk-width-auto\@m {
+    flex: initial;
+  }
 }
 /* Desktop and bigger */
 @media (min-width: 1200px) {
@@ -7408,6 +7039,7 @@ ul.uk-nav-sub {
   /* Pixel */
   /* Auto */
   /* Expand */
+  /* Reset expand */
   .uk-width-1-1\@l {
     width: 100%;
   }
@@ -7415,10 +7047,10 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-width-1-3\@l {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-width-2-3\@l {
-    width: calc(100% * 2 / 3.001);
+    width: calc(200% / 3);
   }
   .uk-width-1-4\@l {
     width: 25%;
@@ -7439,10 +7071,10 @@ ul.uk-nav-sub {
     width: 80%;
   }
   .uk-width-1-6\@l {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-width-5-6\@l {
-    width: calc(100% * 5 / 6.001);
+    width: calc(500% / 6);
   }
   .uk-width-small\@l {
     width: 150px;
@@ -7466,6 +7098,9 @@ ul.uk-nav-sub {
     flex: 1;
     min-width: 1px;
   }
+  .uk-width-1-1\@l, .uk-width-1-2\@l, .uk-width-1-3\@l, .uk-width-2-3\@l, .uk-width-1-4\@l, .uk-width-3-4\@l, .uk-width-1-5\@l, .uk-width-2-5\@l, .uk-width-3-5\@l, .uk-width-4-5\@l, .uk-width-1-6\@l, .uk-width-5-6\@l, .uk-width-small\@l, .uk-width-medium\@l, .uk-width-large\@l, .uk-width-xlarge\@l, .uk-width-2xlarge\@l, .uk-width-auto\@l {
+    flex: initial;
+  }
 }
 /* Large screen and bigger */
 @media (min-width: 1600px) {
@@ -7478,6 +7113,7 @@ ul.uk-nav-sub {
   /* Pixel */
   /* Auto */
   /* Expand */
+  /* Reset expand */
   .uk-width-1-1\@xl {
     width: 100%;
   }
@@ -7485,10 +7121,10 @@ ul.uk-nav-sub {
     width: 50%;
   }
   .uk-width-1-3\@xl {
-    width: calc(100% * 1 / 3.001);
+    width: calc(100% / 3);
   }
   .uk-width-2-3\@xl {
-    width: calc(100% * 2 / 3.001);
+    width: calc(200% / 3);
   }
   .uk-width-1-4\@xl {
     width: 25%;
@@ -7509,10 +7145,10 @@ ul.uk-nav-sub {
     width: 80%;
   }
   .uk-width-1-6\@xl {
-    width: calc(100% * 1 / 6.001);
+    width: calc(100% / 6);
   }
   .uk-width-5-6\@xl {
-    width: calc(100% * 5 / 6.001);
+    width: calc(500% / 6);
   }
   .uk-width-small\@xl {
     width: 150px;
@@ -7535,6 +7171,9 @@ ul.uk-nav-sub {
   .uk-width-expand\@xl {
     flex: 1;
     min-width: 1px;
+  }
+  .uk-width-1-1\@xl, .uk-width-1-2\@xl, .uk-width-1-3\@xl, .uk-width-2-3\@xl, .uk-width-1-4\@xl, .uk-width-3-4\@xl, .uk-width-1-5\@xl, .uk-width-2-5\@xl, .uk-width-3-5\@xl, .uk-width-4-5\@xl, .uk-width-1-6\@xl, .uk-width-5-6\@xl, .uk-width-small\@xl, .uk-width-medium\@xl, .uk-width-large\@xl, .uk-width-xlarge\@xl, .uk-width-2xlarge\@xl, .uk-width-auto\@xl {
+    flex: initial;
   }
 }
 /* Intrinsic Widths
@@ -7613,7 +7252,7 @@ ul.uk-nav-sub {
   color: #999;
 }
 .uk-text-meta > a:hover {
-  color: red;
+  color: #666;
   text-decoration: none;
 }
 /* Size modifiers
@@ -7708,7 +7347,7 @@ ul.uk-nav-sub {
   display: inline-block;
   /* 4 */
   background-color: #1e87f0;
-  background-image: linear-gradient(90deg, #1e87f0 0%, spin(#1e87f0, 40%) 100%);
+  background-image: linear-gradient(90deg, #1e87f0 0%, #411ef0 100%);
 }
 /* Alignment modifiers
  ========================================================================== */
@@ -8331,7 +7970,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 [class*="uk-float-"] {
   max-width: 100%;
 }
-/* Overfow
+/* Overflow
  ========================================================================== */
 .uk-overflow-hidden {
   overflow: hidden;
@@ -8608,7 +8247,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 .uk-logo {
   /* 1 */
   font-size: 1.5rem;
-  font-family: Arial;
+  font-family: inherit;
   color: #333;
   /* 2 */
   text-decoration: none;
@@ -8853,6 +8492,66 @@ iframe[uk-cover], iframe[data-uk-cover] {
 .uk-flex-bottom {
   align-items: flex-end;
 }
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .uk-flex-stretch\@s {
+    align-items: stretch;
+  }
+  .uk-flex-top\@s {
+    align-items: flex-start;
+  }
+  .uk-flex-middle\@s {
+    align-items: center;
+  }
+  .uk-flex-bottom\@s {
+    align-items: flex-end;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .uk-flex-stretch\@m {
+    align-items: stretch;
+  }
+  .uk-flex-top\@m {
+    align-items: flex-start;
+  }
+  .uk-flex-middle\@m {
+    align-items: center;
+  }
+  .uk-flex-bottom\@m {
+    align-items: flex-end;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .uk-flex-stretch\@l {
+    align-items: stretch;
+  }
+  .uk-flex-top\@l {
+    align-items: flex-start;
+  }
+  .uk-flex-middle\@l {
+    align-items: center;
+  }
+  .uk-flex-bottom\@l {
+    align-items: flex-end;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .uk-flex-stretch\@xl {
+    align-items: stretch;
+  }
+  .uk-flex-top\@xl {
+    align-items: flex-start;
+  }
+  .uk-flex-middle\@xl {
+    align-items: center;
+  }
+  .uk-flex-bottom\@xl {
+    align-items: flex-end;
+  }
+}
 /* Direction
  ========================================================================== */
 .uk-flex-row {
@@ -8866,6 +8565,42 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-flex-column-reverse {
   flex-direction: column-reverse;
+}
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .uk-flex-row\@s {
+    flex-direction: row;
+  }
+  .uk-flex-column\@s {
+    flex-direction: column;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .uk-flex-row\@m {
+    flex-direction: row;
+  }
+  .uk-flex-column\@m {
+    flex-direction: column;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .uk-flex-row\@l {
+    flex-direction: row;
+  }
+  .uk-flex-column\@l {
+    flex-direction: column;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .uk-flex-row\@xl {
+    flex-direction: row;
+  }
+  .uk-flex-column\@xl {
+    flex-direction: column;
+  }
 }
 /* Wrap
  ========================================================================== */
@@ -8953,6 +8688,9 @@ iframe[uk-cover], iframe[data-uk-cover] {
  * Initial: 0 1 auto
  * Content dimensions, but shrinks
  */
+.uk-flex-initial {
+  flex: initial;
+}
 /*
  * No Flex: 0 0 auto
  * Content dimensions
@@ -8973,6 +8711,54 @@ iframe[uk-cover], iframe[data-uk-cover] {
  */
 .uk-flex-1 {
   flex: 1;
+}
+/* Phone landscape and bigger */
+@media (min-width: 640px) {
+  .uk-flex-initial\@s {
+    flex: initial;
+  }
+  .uk-flex-none\@s {
+    flex: none;
+  }
+  .uk-flex-1\@s {
+    flex: 1;
+  }
+}
+/* Tablet landscape and bigger */
+@media (min-width: 960px) {
+  .uk-flex-initial\@m {
+    flex: initial;
+  }
+  .uk-flex-none\@m {
+    flex: none;
+  }
+  .uk-flex-1\@m {
+    flex: 1;
+  }
+}
+/* Desktop and bigger */
+@media (min-width: 1200px) {
+  .uk-flex-initial\@l {
+    flex: initial;
+  }
+  .uk-flex-none\@l {
+    flex: none;
+  }
+  .uk-flex-1\@l {
+    flex: 1;
+  }
+}
+/* Large screen and bigger */
+@media (min-width: 1600px) {
+  .uk-flex-initial\@xl {
+    flex: initial;
+  }
+  .uk-flex-none\@xl {
+    flex: none;
+  }
+  .uk-flex-1\@xl {
+    flex: 1;
+  }
 }
 /* ========================================================================
    Component: Margin
@@ -9385,7 +9171,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
   width: max-content;
 }
 /* Vertical */
-[class*="uk-position-center-left"], [class*="uk-position-center-right"] {
+[class*="uk-position-center-left"], [class*="uk-position-center-right"], .uk-position-center-vertical {
   top: calc(50% - var(--uk-position-margin-offset));
   --uk-position-translate-y: -50%;
   transform: translate(0, var(--uk-position-translate-y));
@@ -9394,6 +9180,10 @@ iframe[uk-cover], iframe[data-uk-cover] {
   left: 0;
 }
 .uk-position-center-right {
+  right: 0;
+}
+.uk-position-center-vertical {
+  left: 0;
   right: 0;
 }
 .uk-position-center-left-out {
@@ -9405,7 +9195,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
   width: max-content;
 }
 /* Horizontal */
-.uk-position-top-center, .uk-position-bottom-center {
+.uk-position-top-center, .uk-position-bottom-center, .uk-position-center-horizontal {
   left: calc(50% - var(--uk-position-margin-offset));
   --uk-position-translate-x: -50%;
   transform: translate(var(--uk-position-translate-x), 0);
@@ -9416,6 +9206,10 @@ iframe[uk-cover], iframe[data-uk-cover] {
   top: 0;
 }
 .uk-position-bottom-center {
+  bottom: 0;
+}
+.uk-position-center-horizontal {
+  top: 0;
   bottom: 0;
 }
 /*
@@ -9673,32 +9467,26 @@ iframe[uk-cover], iframe[data-uk-cover] {
 /*
  * Remove space when hidden.
  * 1. Remove from document flow.
- * 2. Hide element and shrink its dimension. Can't use zero dimensions together
- *    with `overflow: hidden` it would remove it from the accessibility tree.
- * 3. Hide the single rendered pixel.
- * 4. Prevent text wrapping caused by `width: 1px` because it has side effects on vocalisation
- *    by screen readers and the visual tracking indicator of other assistive technologies.
+ * 2. Hide element and shrink its dimension. Current browsers and screen readers
+ *    keep the element in the accessibility tree even with zero dimensions.
+ *    Using `tabindex="-1"` will show the element on touch devices.
+ *    Note: `clip-path` doesn't work with `tabindex` on touch devices.
  */
 .uk-hidden-visually:not(:focus):not(:active):not(:focus-within), .uk-visible-toggle:not(:hover):not(:focus) .uk-hidden-hover:not(:focus-within) {
   /* 1 */
   position: absolute !important;
   /* 2 */
-  width: 1px !important;
-  height: 1px !important;
+  width: 0 !important;
+  height: 0 !important;
   padding: 0 !important;
   border: 0 !important;
   margin: 0 !important;
   overflow: hidden !important;
-  /* 3 */
-  clip-path: inset(50%) !important;
-  /* 4 */
-  white-space: nowrap !important;
 }
 /*
  * Keep space when hidden.
  * Hide element without shrinking its dimension.
- * Unfortunately, can't use `clip-path: inset(50%)` because hover won't work
- * if the element is positioned outside of the toggle box.
+ * Note: `clip-path` doesn't work with hover for elements outside of the toggle box.
  */
 .uk-visible-toggle:not(:hover):not(:focus) .uk-invisible-hover:not(:focus-within) {
   opacity: 0 !important;
@@ -9742,7 +9530,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-badge, .uk-section-primary:not(.uk-preserve-color) .uk-badge, .uk-section-secondary:not(.uk-preserve-color) .uk-badge, .uk-tile-primary:not(.uk-preserve-color) .uk-badge, .uk-tile-secondary:not(.uk-preserve-color) .uk-badge, .uk-card-primary.uk-card-body .uk-badge, .uk-card-primary > :not([class*="uk-card-media"]) .uk-badge, .uk-card-secondary.uk-card-body .uk-badge, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-badge, .uk-overlay-primary .uk-badge, .uk-offcanvas-bar .uk-badge {
   background-color: #fff;
-  color: red !important;
+  color: #666 !important;
 }
 .uk-light a, .uk-section-primary:not(.uk-preserve-color) a, .uk-section-secondary:not(.uk-preserve-color) a, .uk-tile-primary:not(.uk-preserve-color) a, .uk-tile-secondary:not(.uk-preserve-color) a, .uk-card-primary.uk-card-body a, .uk-card-primary > :not([class*="uk-card-media"]) a, .uk-card-secondary.uk-card-body a, .uk-card-secondary > :not([class*="uk-card-media"]) a, .uk-overlay-primary a, .uk-offcanvas-bar a, .uk-light .uk-link, .uk-section-primary:not(.uk-preserve-color) .uk-link, .uk-section-secondary:not(.uk-preserve-color) .uk-link, .uk-tile-primary:not(.uk-preserve-color) .uk-link, .uk-tile-secondary:not(.uk-preserve-color) .uk-link, .uk-card-primary.uk-card-body .uk-link, .uk-card-primary > :not([class*="uk-card-media"]) .uk-link, .uk-card-secondary.uk-card-body .uk-link, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-link, .uk-overlay-primary .uk-link, .uk-offcanvas-bar .uk-link {
   color: #fff;
@@ -9801,27 +9589,27 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-button-primary, .uk-section-primary:not(.uk-preserve-color) .uk-button-primary, .uk-section-secondary:not(.uk-preserve-color) .uk-button-primary, .uk-tile-primary:not(.uk-preserve-color) .uk-button-primary, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-primary, .uk-card-primary.uk-card-body .uk-button-primary, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-primary, .uk-card-secondary.uk-card-body .uk-button-primary, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-primary, .uk-overlay-primary .uk-button-primary, .uk-offcanvas-bar .uk-button-primary {
   background-color: #fff;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-primary:hover, .uk-section-primary:not(.uk-preserve-color) .uk-button-primary:hover, .uk-section-secondary:not(.uk-preserve-color) .uk-button-primary:hover, .uk-tile-primary:not(.uk-preserve-color) .uk-button-primary:hover, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-primary:hover, .uk-card-primary.uk-card-body .uk-button-primary:hover, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-primary:hover, .uk-card-secondary.uk-card-body .uk-button-primary:hover, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-primary:hover, .uk-overlay-primary .uk-button-primary:hover, .uk-offcanvas-bar .uk-button-primary:hover {
   background-color: #f2f2f2;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-primary:active, .uk-section-primary:not(.uk-preserve-color) .uk-button-primary:active, .uk-section-secondary:not(.uk-preserve-color) .uk-button-primary:active, .uk-tile-primary:not(.uk-preserve-color) .uk-button-primary:active, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-primary:active, .uk-card-primary.uk-card-body .uk-button-primary:active, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-primary:active, .uk-card-secondary.uk-card-body .uk-button-primary:active, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-primary:active, .uk-overlay-primary .uk-button-primary:active, .uk-offcanvas-bar .uk-button-primary:active, .uk-light .uk-button-primary.uk-active, .uk-section-primary:not(.uk-preserve-color) .uk-button-primary.uk-active, .uk-section-secondary:not(.uk-preserve-color) .uk-button-primary.uk-active, .uk-tile-primary:not(.uk-preserve-color) .uk-button-primary.uk-active, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-primary.uk-active, .uk-card-primary.uk-card-body .uk-button-primary.uk-active, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-primary.uk-active, .uk-card-secondary.uk-card-body .uk-button-primary.uk-active, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-primary.uk-active, .uk-overlay-primary .uk-button-primary.uk-active, .uk-offcanvas-bar .uk-button-primary.uk-active {
   background-color: #e6e6e6;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-secondary, .uk-section-primary:not(.uk-preserve-color) .uk-button-secondary, .uk-section-secondary:not(.uk-preserve-color) .uk-button-secondary, .uk-tile-primary:not(.uk-preserve-color) .uk-button-secondary, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-secondary, .uk-card-primary.uk-card-body .uk-button-secondary, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-secondary, .uk-card-secondary.uk-card-body .uk-button-secondary, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-secondary, .uk-overlay-primary .uk-button-secondary, .uk-offcanvas-bar .uk-button-secondary {
   background-color: #fff;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-secondary:hover, .uk-section-primary:not(.uk-preserve-color) .uk-button-secondary:hover, .uk-section-secondary:not(.uk-preserve-color) .uk-button-secondary:hover, .uk-tile-primary:not(.uk-preserve-color) .uk-button-secondary:hover, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-secondary:hover, .uk-card-primary.uk-card-body .uk-button-secondary:hover, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-secondary:hover, .uk-card-secondary.uk-card-body .uk-button-secondary:hover, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-secondary:hover, .uk-overlay-primary .uk-button-secondary:hover, .uk-offcanvas-bar .uk-button-secondary:hover {
   background-color: #f2f2f2;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-secondary:active, .uk-section-primary:not(.uk-preserve-color) .uk-button-secondary:active, .uk-section-secondary:not(.uk-preserve-color) .uk-button-secondary:active, .uk-tile-primary:not(.uk-preserve-color) .uk-button-secondary:active, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-secondary:active, .uk-card-primary.uk-card-body .uk-button-secondary:active, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-secondary:active, .uk-card-secondary.uk-card-body .uk-button-secondary:active, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-secondary:active, .uk-overlay-primary .uk-button-secondary:active, .uk-offcanvas-bar .uk-button-secondary:active, .uk-light .uk-button-secondary.uk-active, .uk-section-primary:not(.uk-preserve-color) .uk-button-secondary.uk-active, .uk-section-secondary:not(.uk-preserve-color) .uk-button-secondary.uk-active, .uk-tile-primary:not(.uk-preserve-color) .uk-button-secondary.uk-active, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-secondary.uk-active, .uk-card-primary.uk-card-body .uk-button-secondary.uk-active, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-secondary.uk-active, .uk-card-secondary.uk-card-body .uk-button-secondary.uk-active, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-secondary.uk-active, .uk-overlay-primary .uk-button-secondary.uk-active, .uk-offcanvas-bar .uk-button-secondary.uk-active {
   background-color: #e6e6e6;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-button-text, .uk-section-primary:not(.uk-preserve-color) .uk-button-text, .uk-section-secondary:not(.uk-preserve-color) .uk-button-text, .uk-tile-primary:not(.uk-preserve-color) .uk-button-text, .uk-tile-secondary:not(.uk-preserve-color) .uk-button-text, .uk-card-primary.uk-card-body .uk-button-text, .uk-card-primary > :not([class*="uk-card-media"]) .uk-button-text, .uk-card-secondary.uk-card-body .uk-button-text, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-button-text, .uk-overlay-primary .uk-button-text, .uk-offcanvas-bar .uk-button-text {
   color: #fff;
@@ -9843,7 +9631,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light.uk-card-badge, .uk-card-badge.uk-section-primary:not(.uk-preserve-color), .uk-card-badge.uk-section-secondary:not(.uk-preserve-color), .uk-card-badge.uk-tile-primary:not(.uk-preserve-color), .uk-card-badge.uk-tile-secondary:not(.uk-preserve-color), .uk-card-badge.uk-card-primary.uk-card-body, .uk-card-primary > .uk-card-badge:not([class*="uk-card-media"]), .uk-card-badge.uk-card-secondary.uk-card-body, .uk-card-secondary > .uk-card-badge:not([class*="uk-card-media"]), .uk-card-badge.uk-overlay-primary, .uk-card-badge.uk-offcanvas-bar {
   background-color: #fff;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-close, .uk-section-primary:not(.uk-preserve-color) .uk-close, .uk-section-secondary:not(.uk-preserve-color) .uk-close, .uk-tile-primary:not(.uk-preserve-color) .uk-close, .uk-tile-secondary:not(.uk-preserve-color) .uk-close, .uk-card-primary.uk-card-body .uk-close, .uk-card-primary > :not([class*="uk-card-media"]) .uk-close, .uk-card-secondary.uk-card-body .uk-close, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-close, .uk-overlay-primary .uk-close, .uk-offcanvas-bar .uk-close {
   color: rgba(255, 255, 255, 0.5);
@@ -9921,13 +9709,13 @@ iframe[uk-cover], iframe[data-uk-cover] {
   background-color: white;
 }
 .uk-light .uk-radio:checked, .uk-section-primary:not(.uk-preserve-color) .uk-radio:checked, .uk-section-secondary:not(.uk-preserve-color) .uk-radio:checked, .uk-tile-primary:not(.uk-preserve-color) .uk-radio:checked, .uk-tile-secondary:not(.uk-preserve-color) .uk-radio:checked, .uk-card-primary.uk-card-body .uk-radio:checked, .uk-card-primary > :not([class*="uk-card-media"]) .uk-radio:checked, .uk-card-secondary.uk-card-body .uk-radio:checked, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-radio:checked, .uk-overlay-primary .uk-radio:checked, .uk-offcanvas-bar .uk-radio:checked {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22red%22%20cx%3D%228%22%20cy%3D%228%22%20r%3D%222%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22%23666%22%20cx%3D%228%22%20cy%3D%228%22%20r%3D%222%22%20%2F%3E%0A%3C%2Fsvg%3E");
 }
 .uk-light .uk-checkbox:checked, .uk-section-primary:not(.uk-preserve-color) .uk-checkbox:checked, .uk-section-secondary:not(.uk-preserve-color) .uk-checkbox:checked, .uk-tile-primary:not(.uk-preserve-color) .uk-checkbox:checked, .uk-tile-secondary:not(.uk-preserve-color) .uk-checkbox:checked, .uk-card-primary.uk-card-body .uk-checkbox:checked, .uk-card-primary > :not([class*="uk-card-media"]) .uk-checkbox:checked, .uk-card-secondary.uk-card-body .uk-checkbox:checked, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-checkbox:checked, .uk-overlay-primary .uk-checkbox:checked, .uk-offcanvas-bar .uk-checkbox:checked {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22red%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 .uk-light .uk-checkbox:indeterminate, .uk-section-primary:not(.uk-preserve-color) .uk-checkbox:indeterminate, .uk-section-secondary:not(.uk-preserve-color) .uk-checkbox:indeterminate, .uk-tile-primary:not(.uk-preserve-color) .uk-checkbox:indeterminate, .uk-tile-secondary:not(.uk-preserve-color) .uk-checkbox:indeterminate, .uk-card-primary.uk-card-body .uk-checkbox:indeterminate, .uk-card-primary > :not([class*="uk-card-media"]) .uk-checkbox:indeterminate, .uk-card-secondary.uk-card-body .uk-checkbox:indeterminate, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-checkbox:indeterminate, .uk-overlay-primary .uk-checkbox:indeterminate, .uk-offcanvas-bar .uk-checkbox:indeterminate {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22red%22%20x%3D%223%22%20y%3D%228%22%20width%3D%2210%22%20height%3D%221%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23666%22%20x%3D%223%22%20y%3D%228%22%20width%3D%2210%22%20height%3D%221%22%20%2F%3E%0A%3C%2Fsvg%3E");
 }
 .uk-light .uk-form-label, .uk-section-primary:not(.uk-preserve-color) .uk-form-label, .uk-section-secondary:not(.uk-preserve-color) .uk-form-label, .uk-tile-primary:not(.uk-preserve-color) .uk-form-label, .uk-tile-secondary:not(.uk-preserve-color) .uk-form-label, .uk-card-primary.uk-card-body .uk-form-label, .uk-card-primary > :not([class*="uk-card-media"]) .uk-form-label, .uk-card-secondary.uk-card-body .uk-form-label, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-form-label, .uk-overlay-primary .uk-form-label, .uk-offcanvas-bar .uk-form-label {
   color: #fff;
@@ -9985,7 +9773,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-label, .uk-section-primary:not(.uk-preserve-color) .uk-label, .uk-section-secondary:not(.uk-preserve-color) .uk-label, .uk-tile-primary:not(.uk-preserve-color) .uk-label, .uk-tile-secondary:not(.uk-preserve-color) .uk-label, .uk-card-primary.uk-card-body .uk-label, .uk-card-primary > :not([class*="uk-card-media"]) .uk-label, .uk-card-secondary.uk-card-body .uk-label, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-label, .uk-overlay-primary .uk-label, .uk-offcanvas-bar .uk-label {
   background-color: #fff;
-  color: red;
+  color: #666;
 }
 .uk-light a.uk-link-muted, .uk-section-primary:not(.uk-preserve-color) a.uk-link-muted, .uk-section-secondary:not(.uk-preserve-color) a.uk-link-muted, .uk-tile-primary:not(.uk-preserve-color) a.uk-link-muted, .uk-tile-secondary:not(.uk-preserve-color) a.uk-link-muted, .uk-card-primary.uk-card-body a.uk-link-muted, .uk-card-primary > :not([class*="uk-card-media"]) a.uk-link-muted, .uk-card-secondary.uk-card-body a.uk-link-muted, .uk-card-secondary > :not([class*="uk-card-media"]) a.uk-link-muted, .uk-overlay-primary a.uk-link-muted, .uk-offcanvas-bar a.uk-link-muted, .uk-light .uk-link-muted a, .uk-section-primary:not(.uk-preserve-color) .uk-link-muted a, .uk-section-secondary:not(.uk-preserve-color) .uk-link-muted a, .uk-tile-primary:not(.uk-preserve-color) .uk-link-muted a, .uk-tile-secondary:not(.uk-preserve-color) .uk-link-muted a, .uk-card-primary.uk-card-body .uk-link-muted a, .uk-card-primary > :not([class*="uk-card-media"]) .uk-link-muted a, .uk-card-secondary.uk-card-body .uk-link-muted a, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-link-muted a, .uk-overlay-primary .uk-link-muted a, .uk-offcanvas-bar .uk-link-muted a {
   color: rgba(255, 255, 255, 0.5);
@@ -10026,10 +9814,10 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-marker, .uk-section-primary:not(.uk-preserve-color) .uk-marker, .uk-section-secondary:not(.uk-preserve-color) .uk-marker, .uk-tile-primary:not(.uk-preserve-color) .uk-marker, .uk-tile-secondary:not(.uk-preserve-color) .uk-marker, .uk-card-primary.uk-card-body .uk-marker, .uk-card-primary > :not([class*="uk-card-media"]) .uk-marker, .uk-card-secondary.uk-card-body .uk-marker, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-marker, .uk-overlay-primary .uk-marker, .uk-offcanvas-bar .uk-marker {
   background: #f8f8f8;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-marker:hover, .uk-section-primary:not(.uk-preserve-color) .uk-marker:hover, .uk-section-secondary:not(.uk-preserve-color) .uk-marker:hover, .uk-tile-primary:not(.uk-preserve-color) .uk-marker:hover, .uk-tile-secondary:not(.uk-preserve-color) .uk-marker:hover, .uk-card-primary.uk-card-body .uk-marker:hover, .uk-card-primary > :not([class*="uk-card-media"]) .uk-marker:hover, .uk-card-secondary.uk-card-body .uk-marker:hover, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-marker:hover, .uk-overlay-primary .uk-marker:hover, .uk-offcanvas-bar .uk-marker:hover {
-  color: red;
+  color: #666;
 }
 .uk-light .uk-nav-default > li > a, .uk-section-primary:not(.uk-preserve-color) .uk-nav-default > li > a, .uk-section-secondary:not(.uk-preserve-color) .uk-nav-default > li > a, .uk-tile-primary:not(.uk-preserve-color) .uk-nav-default > li > a, .uk-tile-secondary:not(.uk-preserve-color) .uk-nav-default > li > a, .uk-card-primary.uk-card-body .uk-nav-default > li > a, .uk-card-primary > :not([class*="uk-card-media"]) .uk-nav-default > li > a, .uk-card-secondary.uk-card-body .uk-nav-default > li > a, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-nav-default > li > a, .uk-overlay-primary .uk-nav-default > li > a, .uk-offcanvas-bar .uk-nav-default > li > a {
   color: rgba(255, 255, 255, 0.5);
@@ -10171,6 +9959,13 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-search-navbar .uk-search-input, .uk-section-primary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input, .uk-section-secondary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input, .uk-tile-primary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input, .uk-tile-secondary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input, .uk-card-primary.uk-card-body .uk-search-navbar .uk-search-input, .uk-card-primary > :not([class*="uk-card-media"]) .uk-search-navbar .uk-search-input, .uk-card-secondary.uk-card-body .uk-search-navbar .uk-search-input, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-search-navbar .uk-search-input, .uk-overlay-primary .uk-search-navbar .uk-search-input, .uk-offcanvas-bar .uk-search-navbar .uk-search-input {
   background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.uk-light .uk-search-navbar .uk-search-input:focus, .uk-section-primary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input:focus, .uk-section-secondary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input:focus, .uk-tile-primary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input:focus, .uk-tile-secondary:not(.uk-preserve-color) .uk-search-navbar .uk-search-input:focus, .uk-card-primary.uk-card-body .uk-search-navbar .uk-search-input:focus, .uk-card-primary > :not([class*="uk-card-media"]) .uk-search-navbar .uk-search-input:focus, .uk-card-secondary.uk-card-body .uk-search-navbar .uk-search-input:focus, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-search-navbar .uk-search-input:focus, .uk-overlay-primary .uk-search-navbar .uk-search-input:focus, .uk-offcanvas-bar .uk-search-navbar .uk-search-input:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.uk-light .uk-search-medium .uk-search-input, .uk-section-primary:not(.uk-preserve-color) .uk-search-medium .uk-search-input, .uk-section-secondary:not(.uk-preserve-color) .uk-search-medium .uk-search-input, .uk-tile-primary:not(.uk-preserve-color) .uk-search-medium .uk-search-input, .uk-tile-secondary:not(.uk-preserve-color) .uk-search-medium .uk-search-input, .uk-card-primary.uk-card-body .uk-search-medium .uk-search-input, .uk-card-primary > :not([class*="uk-card-media"]) .uk-search-medium .uk-search-input, .uk-card-secondary.uk-card-body .uk-search-medium .uk-search-input, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-search-medium .uk-search-input, .uk-overlay-primary .uk-search-medium .uk-search-input, .uk-offcanvas-bar .uk-search-medium .uk-search-input {
+  background-color: transparent;
 }
 .uk-light .uk-search-large .uk-search-input, .uk-section-primary:not(.uk-preserve-color) .uk-search-large .uk-search-input, .uk-section-secondary:not(.uk-preserve-color) .uk-search-large .uk-search-input, .uk-tile-primary:not(.uk-preserve-color) .uk-search-large .uk-search-input, .uk-tile-secondary:not(.uk-preserve-color) .uk-search-large .uk-search-input, .uk-card-primary.uk-card-body .uk-search-large .uk-search-input, .uk-card-primary > :not([class*="uk-card-media"]) .uk-search-large .uk-search-input, .uk-card-secondary.uk-card-body .uk-search-large .uk-search-input, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-search-large .uk-search-input, .uk-overlay-primary .uk-search-large .uk-search-input, .uk-offcanvas-bar .uk-search-large .uk-search-input {
   background-color: transparent;
@@ -10216,7 +10011,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-subnav-pill > .uk-active > a, .uk-section-primary:not(.uk-preserve-color) .uk-subnav-pill > .uk-active > a, .uk-section-secondary:not(.uk-preserve-color) .uk-subnav-pill > .uk-active > a, .uk-tile-primary:not(.uk-preserve-color) .uk-subnav-pill > .uk-active > a, .uk-tile-secondary:not(.uk-preserve-color) .uk-subnav-pill > .uk-active > a, .uk-card-primary.uk-card-body .uk-subnav-pill > .uk-active > a, .uk-card-primary > :not([class*="uk-card-media"]) .uk-subnav-pill > .uk-active > a, .uk-card-secondary.uk-card-body .uk-subnav-pill > .uk-active > a, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-subnav-pill > .uk-active > a, .uk-overlay-primary .uk-subnav-pill > .uk-active > a, .uk-offcanvas-bar .uk-subnav-pill > .uk-active > a {
   background-color: #fff;
-  color: red;
+  color: #666;
 }
 .uk-light .uk-subnav > .uk-disabled > a, .uk-section-primary:not(.uk-preserve-color) .uk-subnav > .uk-disabled > a, .uk-section-secondary:not(.uk-preserve-color) .uk-subnav > .uk-disabled > a, .uk-tile-primary:not(.uk-preserve-color) .uk-subnav > .uk-disabled > a, .uk-tile-secondary:not(.uk-preserve-color) .uk-subnav > .uk-disabled > a, .uk-card-primary.uk-card-body .uk-subnav > .uk-disabled > a, .uk-card-primary > :not([class*="uk-card-media"]) .uk-subnav > .uk-disabled > a, .uk-card-secondary.uk-card-body .uk-subnav > .uk-disabled > a, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-subnav > .uk-disabled > a, .uk-overlay-primary .uk-subnav > .uk-disabled > a, .uk-offcanvas-bar .uk-subnav > .uk-disabled > a {
   color: rgba(255, 255, 255, 0.5);
@@ -10276,7 +10071,7 @@ iframe[uk-cover], iframe[data-uk-cover] {
 .uk-light .uk-logo:hover, .uk-section-primary:not(.uk-preserve-color) .uk-logo:hover, .uk-section-secondary:not(.uk-preserve-color) .uk-logo:hover, .uk-tile-primary:not(.uk-preserve-color) .uk-logo:hover, .uk-tile-secondary:not(.uk-preserve-color) .uk-logo:hover, .uk-card-primary.uk-card-body .uk-logo:hover, .uk-card-primary > :not([class*="uk-card-media"]) .uk-logo:hover, .uk-card-secondary.uk-card-body .uk-logo:hover, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-logo:hover, .uk-overlay-primary .uk-logo:hover, .uk-offcanvas-bar .uk-logo:hover {
   color: #fff;
 }
-.uk-light .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-section-primary:not(.uk-preserve-color) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-section-secondary:not(.uk-preserve-color) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-tile-primary:not(.uk-preserve-color) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-tile-secondary:not(.uk-preserve-color) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-card-primary.uk-card-body .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-card-primary > :not([class*="uk-card-media"]) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-card-secondary.uk-card-body .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-card-secondary > :not([class*="uk-card-media"]) .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-overlay-primary .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-offcanvas-bar .uk-logo > picture:not(:only-of-type) > :not(.uk-logo-inverse), .uk-light .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-section-primary:not(.uk-preserve-color) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-section-secondary:not(.uk-preserve-color) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-tile-primary:not(.uk-preserve-color) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-tile-secondary:not(.uk-preserve-color) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-card-primary.uk-card-body .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-card-primary > :not([class*="uk-card-media"]) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-card-secondary.uk-card-body .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-card-secondary > :not([class*="uk-card-media"]) .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-overlay-primary .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type), .uk-offcanvas-bar .uk-logo > :not(picture):not(.uk-logo-inverse):not(:only-of-type) {
+.uk-light .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-section-primary:not(.uk-preserve-color) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-section-secondary:not(.uk-preserve-color) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-tile-primary:not(.uk-preserve-color) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-tile-secondary:not(.uk-preserve-color) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-card-primary.uk-card-body .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-card-primary > :not([class*="uk-card-media"]) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-card-secondary.uk-card-body .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-card-secondary > :not([class*="uk-card-media"]) .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-overlay-primary .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse), .uk-offcanvas-bar .uk-logo:has(.uk-logo-inverse) > :not(picture:has(.uk-logo-inverse)):not(.uk-logo-inverse) {
   display: none;
 }
 .uk-light .uk-logo-inverse, .uk-section-primary:not(.uk-preserve-color) .uk-logo-inverse, .uk-section-secondary:not(.uk-preserve-color) .uk-logo-inverse, .uk-tile-primary:not(.uk-preserve-color) .uk-logo-inverse, .uk-tile-secondary:not(.uk-preserve-color) .uk-logo-inverse, .uk-card-primary.uk-card-body .uk-logo-inverse, .uk-card-primary > :not([class*="uk-card-media"]) .uk-logo-inverse, .uk-card-secondary.uk-card-body .uk-logo-inverse, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-logo-inverse, .uk-overlay-primary .uk-logo-inverse, .uk-offcanvas-bar .uk-logo-inverse {
@@ -10290,6 +10085,24 @@ iframe[uk-cover], iframe[data-uk-cover] {
 }
 .uk-light .uk-table-striped > tr:nth-of-type(even):last-child, .uk-section-primary:not(.uk-preserve-color) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-section-secondary:not(.uk-preserve-color) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-tile-primary:not(.uk-preserve-color) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-tile-secondary:not(.uk-preserve-color) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-card-primary.uk-card-body .uk-table-striped > tr:nth-of-type(even):last-child, .uk-card-primary > :not([class*="uk-card-media"]) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-card-secondary.uk-card-body .uk-table-striped > tr:nth-of-type(even):last-child, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-table-striped > tr:nth-of-type(even):last-child, .uk-overlay-primary .uk-table-striped > tr:nth-of-type(even):last-child, .uk-offcanvas-bar .uk-table-striped > tr:nth-of-type(even):last-child, .uk-light .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-section-primary:not(.uk-preserve-color) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-section-secondary:not(.uk-preserve-color) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-tile-primary:not(.uk-preserve-color) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-tile-secondary:not(.uk-preserve-color) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-card-primary.uk-card-body .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-card-primary > :not([class*="uk-card-media"]) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-card-secondary.uk-card-body .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-card-secondary > :not([class*="uk-card-media"]) .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-overlay-primary .uk-table-striped tbody tr:nth-of-type(even):last-child, .uk-offcanvas-bar .uk-table-striped tbody tr:nth-of-type(even):last-child {
   border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+/*
+ * Pass dropbar behind color to JS
+ */
+* {
+  --uk-inverse: initial;
+}
+.uk-light, .uk-section-primary:not(.uk-preserve-color), .uk-section-secondary:not(.uk-preserve-color), .uk-tile-primary:not(.uk-preserve-color), .uk-tile-secondary:not(.uk-preserve-color), .uk-card-primary.uk-card-body, .uk-card-primary > :not([class*="uk-card-media"]), .uk-card-secondary.uk-card-body, .uk-card-secondary > :not([class*="uk-card-media"]), .uk-overlay-primary, .uk-offcanvas-bar {
+  --uk-inverse: light;
+}
+.uk-dark, .uk-section-default:not(.uk-preserve-color), .uk-section-muted:not(.uk-preserve-color), .uk-tile-default:not(.uk-preserve-color), .uk-tile-muted:not(.uk-preserve-color), .uk-card-default.uk-card-body, .uk-card-default > :not([class*="uk-card-media"]), .uk-overlay-default, .uk-dropbar, .uk-navbar-container:not(.uk-navbar-transparent), .uk-navbar-dropdown, .uk-dropdown {
+  --uk-inverse: dark;
+}
+.uk-inverse-light {
+  --uk-inverse: light !important;
+}
+.uk-inverse-dark {
+  --uk-inverse: dark !important;
 }
 /* ========================================================================
    Component: Print
@@ -10327,4 +10140,466 @@ iframe[uk-cover], iframe[data-uk-cover] {
   h2, h3 {
     page-break-after: avoid;
   }
+}
+/*--------------------------------------------------------------*/
+/* Bridge mappt WP Presets auf eigene Tokens */
+/*--------------------------------------------------------------*/
+/* --------------------------------------------------
+COLOR TOKENS
+primary   = Hauptfarbe (Buttons, Links, Active)
+secondary = Sekundärfarbe (Akzente)
+danger    = Fehler, Warnungen
+muted     = Editor-Hilfen, Trennlinien
+-------------------------------------------------- */
+:root {
+  --t-color-text: var(--wp--preset--color--text);
+  --t-color-bg: var(--wp--preset--color--background);
+  --t-color-primary: var(--wp--preset--color--primary);
+  --t-color-secondary: var(--wp--preset--color--secondary);
+  --t-color-muted: var(--wp--preset--color--muted);
+  --t-color-danger: var(--wp--preset--color--danger);
+  /* State tokens (Default: abgeleitet) */
+  --t-color-primary-hover: color-mix(in srgb, var(--t-color-primary), #000 12%);
+  --t-color-primary-active: color-mix(in srgb, var(--t-color-primary), #000 18%);
+  /* Surface/Border (Default: abgeleitet) */
+  --t-color-surface: color-mix(in srgb, var(--t-color-bg), #000 3%);
+  --t-color-border:  color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%);
+  --t-font-base: var(--wp--preset--font-family--base);
+  --t-font-heading: var(--wp--preset--font-family--heading);
+  --t-space-xs: var(--wp--preset--spacing--xs);
+  --t-space-s:  var(--wp--preset--spacing--s);
+  --t-space-m:  var(--wp--preset--spacing--m);
+  --t-space-l:  var(--wp--preset--spacing--l);
+  --t-space-xl: var(--wp--preset--spacing--xl);
+  /* Fontsizes	*/
+  --t-fs-xs:  var(--wp--preset--font-size--xs);
+  --t-fs-s:   var(--wp--preset--font-size--s);
+  --t-fs-m:   var(--wp--preset--font-size--m);
+  --t-fs-l:   var(--wp--preset--font-size--l);
+  --t-fs-xl:  var(--wp--preset--font-size--xl);
+  --t-fs-xxl: var(--wp--preset--font-size--xxl);
+  --t-editor-outline: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 80%);
+  --t-editor-fill:    color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 90%);
+  /* ----------------------------------------------------------
+	 * State tokens (hybrid)
+	 * Wenn CI-Token existiert: wird genutzt
+	 * Sonst: fallback via color-mix()
+	 * ---------------------------------------------------------- */
+  --t-color-primary-hover: var(
+		--wp--preset--color--primary-hover,
+		color-mix(in srgb, var(--t-color-primary), #000 12%)
+	);
+  --t-color-primary-active: var(
+		--wp--preset--color--primary-active,
+		color-mix(in srgb, var(--t-color-primary), #000 18%)
+	);
+  --t-color-secondary-hover: var(
+		--wp--preset--color--secondary-hover,
+		color-mix(in srgb, var(--t-color-secondary), #000 12%)
+	);
+  --t-color-secondary-active: var(
+		--wp--preset--color--secondary-active,
+		color-mix(in srgb, var(--t-color-secondary), #000 18%)
+	);
+  --t-color-danger-hover: var(
+		--wp--preset--color--danger-hover,
+		color-mix(in srgb, var(--t-color-danger), #000 12%)
+	);
+  --t-color-danger-active: var(
+		--wp--preset--color--danger-active,
+		color-mix(in srgb, var(--t-color-danger), #000 18%)
+	);
+  /* Border / Surface (hybrid) */
+  --t-color-border: var(
+		--wp--preset--color--border,
+		color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%)
+	);
+  --t-color-surface: var(
+		--wp--preset--color--surface,
+		color-mix(in srgb, var(--t-color-bg), #000 3%)
+	);
+}
+/*--------------------------------------------------------------*/
+/* Project Styles (token-based)                                 */
+/*--------------------------------------------------------------*/
+/*==============================================================*/
+/* 01) Base / Global                                             */
+/*===============================================================*/
+html {
+  overflow-x: hidden;
+}
+html, body {
+  color: var(--t-color-text);
+  background: var(--t-color-bg);
+  font-family: var(--t-font-base);
+}
+strong {
+  font-weight: 700;
+}
+a, a:visited, .uk-link {
+  color: var(--t-color-primary);
+  text-decoration: none;
+}
+a:hover, a:active, .uk-link:hover {
+  color: var(--t-color-primary-hover);
+  text-decoration: underline;
+}
+h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
+  font-family: var(--t-font-heading);
+}
+.content p, .content ul li {
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-chars: auto 3;
+  -webkit-hyphenate-limit-lines: 4;
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: auto 3;
+  -ms-hyphenate-limit-lines: 4;
+  hyphens: auto;
+}
+/*==============================================================*/
+/* 01.5) Content Baseline                                       */
+/*==============================================================*/
+.content {
+  font-size: var(--t-fs-m);
+  line-height: 1.6;
+  /* Grundabstand zwischen direkten Content-Elementen */
+  /* Paragraphs */
+  /* Headings */
+  /* Extra Abstand vor Überschriften */
+  /* Listen */
+  /* Links innerhalb Content */
+  /* Bilder */
+  /* Blockquotes */
+}
+.content > * + * {
+  margin-top: var(--t-space-m);
+}
+.content p {
+  margin: 0;
+}
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  margin: 0;
+  font-family: var(--t-font-heading);
+  line-height: 1.25;
+}
+.content h1 {
+  font-size: var(--t-fs-xxl);
+}
+.content h2 {
+  font-size: var(--t-fs-xl);
+}
+.content h3 {
+  font-size: var(--t-fs-l);
+}
+.content h4 {
+  font-size: var(--t-fs-m);
+}
+.content h5 {
+  font-size: var(--t-fs-s);
+}
+.content h6 {
+  font-size: var(--t-fs-xs);
+}
+.content h1, .content h2, .content h3 {
+  margin-top: var(--t-space-l);
+}
+.content ul, .content ol {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.content li + li {
+  margin-top: var(--t-space-xs);
+}
+.content a {
+  color: var(--t-color-primary);
+  text-decoration: underline;
+}
+.content a:hover {
+  color: var(--t-color-primary-hover);
+}
+.content img {
+  max-width: 100%;
+  height: auto;
+}
+.content blockquote {
+  margin: 0;
+  padding-left: var(--t-space-m);
+  border-left: 3px solid var(--t-color-border);
+  font-style: italic;
+}
+/*==============================================================*/
+/* 02) UIkit Overrides                                          */
+/*==============================================================*/
+/* Buttons */
+.uk-button-primary {
+  background-color: var(--t-color-primary);
+  color: var(--t-color-bg);
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  will-change: transform;
+}
+.uk-button-primary:hover {
+  background-color: var(--t-color-primary-hover);
+}
+.uk-button-primary:active {
+  background-color: var(--t-color-primary-active);
+}
+.uk-button-primary:hover {
+  background-color: color-mix(in srgb, var(--t-color-primary), #000 12%);
+  transform: translateY(-1px);
+}
+.uk-button-primary:active {
+  transform: translateY(0);
+}
+/* Cards */
+.uk-card-default {
+  box-shadow: none;
+}
+/* Navbar */
+.uk-navbar-nav {
+  margin-top: var(--t-space-s);
+}
+.uk-navbar-nav > li > a {
+  font-size: var(--t-fs-m);
+}
+/* Offcanvas nav */
+.uk-offcanvas-bar {
+  color: var(--t-color-text);
+}
+.uk-offcanvas-bar #offcanvas-nav > li {
+  overflow: hidden;
+  margin-top: 5px;
+}
+.uk-offcanvas-bar #offcanvas-nav > li > a {
+  color: inherit;
+  font-weight: 700;
+  float: left;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-accordion-toggle {
+  margin-left: 0;
+  margin-top: 3px;
+  border: 0;
+  background: transparent;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-accordion-toggle:before {
+  width: 0;
+  margin: 0;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-accordion-toggle span svg polyline {
+  stroke-width: 2.5;
+  stroke: currentColor;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-accordion-toggle span.up {
+  transform: rotate(180deg);
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-nav-sub {
+  clear: both;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-nav-sub li a {
+  font-weight: 400;
+  padding: 3px 0;
+  clear: both;
+}
+.uk-offcanvas-bar #offcanvas-nav > li .uk-nav-sub li .uk-accordion-toggle span svg polyline {
+  stroke-width: 1.5;
+}
+.uk-offcanvas-bar #offcanvas-nav > li.uk-active > a {
+  color: var(--t-color-primary);
+}
+.uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-accordion-toggle span svg polyline {
+  stroke: var(--t-color-primary);
+}
+.uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-nav-sub li a {
+  color: inherit;
+}
+.uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-nav-sub li.is-active > a {
+  color: var(--t-color-primary);
+}
+/*==============================================================*/
+/* 03) Theme Components                                         */
+/*==============================================================*/
+/* Header */
+.mobileTrigger {
+  position: absolute;
+  left: var(--t-space-m);
+  top: var(--t-space-m);
+  height: 45px;
+  width: 50px;
+  cursor: pointer;
+  z-index: 500;
+  background: color-mix(in srgb, var(--t-color-text), transparent 40%);
+  transition: opacity 0.25s ease;
+}
+@media (max-width: calc(40em - 0.0625em)) {
+  .mobileTrigger {
+    left: auto;
+    right: var(--t-space-s);
+  }
+}
+.mobileTrigger.active .top {
+  transform: translateY(12px) rotate(45deg);
+}
+.mobileTrigger.active .middle {
+  opacity: 0;
+}
+.mobileTrigger.active .bottom {
+  transform: translateY(-12px) rotate(-45deg);
+}
+.mobileTrigger span {
+  background: var(--t-color-text);
+  border: none;
+  height: 2px;
+  width: calc(100% - 10px);
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+.mobileTrigger span:nth-of-type(2) {
+  top: 22px;
+}
+.mobileTrigger span:nth-of-type(3) {
+  top: 34px;
+}
+/* Footer */
+.footer {
+  padding-top: var(--t-space-l);
+  padding-bottom: var(--t-space-l);
+}
+.footer .uk-container > .uk-grid {
+  row-gap: var(--t-space-m);
+}
+.footer-to-top {
+  background-color: color-mix(in srgb, var(--t-color-bg), transparent 25%);
+  display: none;
+  z-index: 999;
+  position: fixed;
+  right: var(--t-space-l);
+  bottom: var(--t-space-l);
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding: 3px 5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  color: var(--t-color-text);
+}
+.footer-to-top .uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) {
+  stroke: currentColor !important;
+}
+/*==============================================================*/
+/* 04) Blocks / Gutenberg                                        */
+/*==============================================================*/
+/* Block: Seitenabschnitt */
+.block-inner {
+  position: relative;
+  /* Full-bleed Hintergrund */
+  /* Inner */
+  /* Padding Varianten (nur oben/unten) */
+  /* Full: Inhalt volle Breite, aber mit Luft */
+}
+.block-inner--bleed, .block-inner--full {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: none;
+  display: block;
+}
+.block-inner__inner {
+  padding-top: var(--t-space-l);
+  padding-bottom: var(--t-space-l);
+}
+.block-inner--pad-none .block-inner__inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.block-inner--pad-s .block-inner__inner {
+  padding-top: var(--t-space-s);
+  padding-bottom: var(--t-space-s);
+}
+.block-inner--pad-m .block-inner__inner {
+  padding-top: var(--t-space-m);
+  padding-bottom: var(--t-space-m);
+}
+.block-inner--pad-l .block-inner__inner {
+  padding-top: var(--t-space-l);
+  padding-bottom: var(--t-space-l);
+}
+.block-inner--pad-xl .block-inner__inner {
+  padding-top: var(--t-space-xl);
+  padding-bottom: var(--t-space-xl);
+}
+.block-inner--full .block-inner__inner {
+  padding-left: var(--t-space-m);
+  padding-right: var(--t-space-m);
+}
+/*--------------------------------------------------------------*/
+/* Utility classes for spacing in Gutenberg */
+/*--------------------------------------------------------------*/
+/* Margin Top */
+.mt-xs {
+  margin-top: var(--t-space-xs) !important;
+}
+.mt-s {
+  margin-top: var(--t-space-s) !important;
+}
+.mt-m {
+  margin-top: var(--t-space-m) !important;
+}
+.mt-l {
+  margin-top: var(--t-space-l) !important;
+}
+.mt-xl {
+  margin-top: var(--t-space-xl) !important;
+}
+/* Margin Bottom */
+.mb-xs {
+  margin-bottom: var(--t-space-xs) !important;
+}
+.mb-s {
+  margin-bottom: var(--t-space-s) !important;
+}
+.mb-m {
+  margin-bottom: var(--t-space-m) !important;
+}
+.mb-l {
+  margin-bottom: var(--t-space-l) !important;
+}
+.mb-xl {
+  margin-bottom: var(--t-space-xl) !important;
+}
+/* Padding Top */
+.pt-xs {
+  padding-top: var(--t-space-xs) !important;
+}
+.pt-s {
+  padding-top: var(--t-space-s) !important;
+}
+.pt-m {
+  padding-top: var(--t-space-m) !important;
+}
+.pt-l {
+  padding-top: var(--t-space-l) !important;
+}
+.pt-xl {
+  padding-top: var(--t-space-xl) !important;
+}
+/* Padding Bottom */
+.pb-xs {
+  padding-bottom: var(--t-space-xs) !important;
+}
+.pb-s {
+  padding-bottom: var(--t-space-s) !important;
+}
+.pb-m {
+  padding-bottom: var(--t-space-m) !important;
+}
+.pb-l {
+  padding-bottom: var(--t-space-l) !important;
+}
+.pb-xl {
+  padding-bottom: var(--t-space-xl) !important;
 }

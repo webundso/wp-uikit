@@ -1,74 +1,171 @@
 /*
 =================================================================
 Filename: editor-functions.js
-Description: add/remove block styles | add/remove panels
+Description: Gutenberg editor tweaks (styles, formats, panels)
 Author: Noël Girstmair | webundso GmbH
-Last changes: 5.2.2024
+Last changes: 05.02.2026
 =================================================================
 */
 
-// Show all block Styles in console
+// Blockliste ausgeben
 wp.domReady(() => {
-	// find blocks styles
-	wp.blocks.getBlockTypes().forEach((block) => {
-		if (_.isArray(block['styles'])) {
-			console.log(block.name, _.pluck(block['styles'], 'name'));
+	const blocks = wp.blocks.getBlockTypes().map((b) => ({
+		name: b.name,
+		title: b.title,
+		description: b.description,
+		category: b.category,
+	}));
+
+	// sortiert nach name
+	blocks.sort((a,b) => (a.name > b.name ? 1 : -1));
+
+	console.table(blocks);
+
+	// Wenn du es copy/paste-faehig brauchst:
+	console.log(JSON.stringify(blocks, null, 2));
+});
+
+
+/* global WUS_EDITOR */
+
+(function () {
+	if (!window.wp || !wp.domReady) return;
+
+	const cfg = window.WUS_EDITOR || {};
+
+	const has = (obj, key) => obj && Object.prototype.hasOwnProperty.call(obj, key);
+
+	const safeUnregisterBlockStyle = (blockName, styleName) => {
+		if (!wp.blocks || !wp.blocks.unregisterBlockStyle) return;
+		try {
+			wp.blocks.unregisterBlockStyle(blockName, styleName);
+		} catch (e) {
+			// ignore (style might not exist in this WP version)
+		}
+	};
+
+	const safeRemovePanel = (panelName) => {
+		if (!wp.data || !wp.data.dispatch) return;
+		const editor = wp.data.dispatch('core/edit-post');
+		if (!editor || !editor.removeEditorPanel) return;
+
+		try {
+			editor.removeEditorPanel(panelName);
+		} catch (e) {
+			// ignore
+		}
+	};
+
+	const safeUnregisterFormat = (formatName) => {
+		if (!wp.richText || !wp.richText.unregisterFormatType) return;
+		try {
+			wp.richText.unregisterFormatType(formatName);
+		} catch (e) {
+			// ignore
+		}
+	};
+
+	const safeDisableFullscreen = () => {
+		if (!wp.data || !wp.data.select || !wp.data.dispatch) return;
+
+		const sel = wp.data.select('core/edit-post');
+		const dis = wp.data.dispatch('core/edit-post');
+
+		if (!sel || !dis || !sel.isFeatureActive || !dis.toggleFeature) return;
+
+		try {
+			if (sel.isFeatureActive('fullscreenMode')) {
+				dis.toggleFeature('fullscreenMode');
+			}
+		} catch (e) {
+			// ignore
+		}
+	};
+
+	const logBlockStyles = () => {
+		if (!wp.blocks || !wp.blocks.getBlockTypes) return;
+
+		try {
+			wp.blocks.getBlockTypes().forEach((block) => {
+				const styles = Array.isArray(block.styles) ? block.styles.map((s) => s.name) : [];
+				if (styles.length) {
+					console.log(`[WUS] ${block.name}:`, styles);
+				}
+			});
+		} catch (e) {
+			// ignore
+		}
+	};
+
+	// Defaults (falls cfg nicht gesetzt)
+	const defaultStylesToRemove = [
+		['core/image', 'default'],
+		['core/image', 'rounded'],
+		['core/quote', 'default'],
+		['core/quote', 'plain'],
+		['core/button', 'fill'],
+		['core/button', 'outline'],
+		['core/pullquote', 'default'],
+		['core/pullquote', 'solid-color'],
+		['core/separator', 'default'],
+		['core/separator', 'wide'],
+		['core/separator', 'dots'],
+		['core/table', 'regular'],
+		['core/table', 'stripes'],
+		['core/social-links', 'default'],
+		['core/social-links', 'logos-only'],
+		['core/social-links', 'pill-shape'],
+		['core/tag-cloud', 'default'],
+		['core/tag-cloud', 'outline']
+	];
+
+	const defaultFormatsToRemove = [
+		'core/italic',
+		'core/strikethrough',
+		'core/keyboard',
+		'core/text-color',
+		'core/code',
+		'core/subscript',
+		'core/superscript',
+		'core/footnote',
+		'core/language'
+	];
+
+	wp.domReady(() => {
+		// optional: log styles
+		if (cfg.logBlockStyles === true) {
+			logBlockStyles();
+		}
+
+		// fullscreen off
+		if (cfg.disableFullscreen === true) {
+			safeDisableFullscreen();
+		}
+
+		// remove panels
+		if (cfg.removePanels === true && Array.isArray(cfg.panelsToRemove)) {
+			cfg.panelsToRemove.forEach(safeRemovePanel);
+		}
+
+		// remove block styles
+		if (cfg.removeBlockStyles === true) {
+			const list = Array.isArray(cfg.blockStylesToRemove) && cfg.blockStylesToRemove.length
+				? cfg.blockStylesToRemove
+				: defaultStylesToRemove;
+
+			list.forEach(([blockName, styleName]) => safeUnregisterBlockStyle(blockName, styleName));
+		}
+
+		// remove formats
+		if (cfg.removeFormats === true) {
+			const list = Array.isArray(cfg.formatsToRemove) && cfg.formatsToRemove.length
+				? cfg.formatsToRemove
+				: defaultFormatsToRemove;
+
+			list.forEach(safeUnregisterFormat);
 		}
 	});
-	
-	// remove, only without Adminimize
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('post-status'); // Status and Visibility
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-category'); // Categories
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-TAXONOMY-NAME'); // custom taxonomy
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('taxonomy-panel-post_tag'); // Tags
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('featured-image'); // Featured Image
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('post-excerpt'); // Excerpt
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('post-link'); // permalink
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('page-attributes'); // page attributes
-	// wp.data.dispatch('core/edit-post').removeEditorPanel('discussion-panel'); // Discussion
-	
-	wp.blocks.unregisterBlockStyle('core/image', 'default');
-	wp.blocks.unregisterBlockStyle('core/image', 'rounded');
-	// quote
-	wp.blocks.unregisterBlockStyle('core/quote', 'default');
-	wp.blocks.unregisterBlockStyle('core/quote', 'plain');
-	// button
-	wp.blocks.unregisterBlockStyle('core/button', 'fill');
-	wp.blocks.unregisterBlockStyle('core/button', 'outline');
-	// pullquote
-	wp.blocks.unregisterBlockStyle('core/pullquote', 'default');
-	wp.blocks.unregisterBlockStyle('core/pullquote', 'solid-color');
-	// separator
-	wp.blocks.unregisterBlockStyle('core/separator', 'default');
-	wp.blocks.unregisterBlockStyle('core/separator', 'wide');
-	wp.blocks.unregisterBlockStyle('core/separator', 'dots');
-	// table
-	wp.blocks.unregisterBlockStyle('core/table', 'regular');
-	wp.blocks.unregisterBlockStyle('core/table', 'stripes');
-	// social-links
-	wp.blocks.unregisterBlockStyle('core/social-links', 'default');
-	wp.blocks.unregisterBlockStyle('core/social-links', 'logos-only');
-	wp.blocks.unregisterBlockStyle('core/social-links', 'pill-shape');
-	// tag-cloud
-	wp.blocks.unregisterBlockStyle('core/tag-cloud', 'default');
-	wp.blocks.unregisterBlockStyle('core/tag-cloud', 'outline');
-	
-	
-	
-	// remove format buttons from paragraph block 
-	wp.data.select( 'core/rich-text' ).getFormatTypes()
-	wp.richText.unregisterFormatType( 'core/italic' );
-	wp.richText.unregisterFormatType( 'core/image' );
-	wp.richText.unregisterFormatType( 'core/strikethrough' );
-	wp.richText.unregisterFormatType( 'core/keyboard' );
-	wp.richText.unregisterFormatType( 'core/text-color' );
-	wp.richText.unregisterFormatType( 'core/code' );
-	wp.richText.unregisterFormatType( 'core/subscript' );
-	wp.richText.unregisterFormatType( 'core/superscript' );
-	wp.richText.unregisterFormatType( 'core/footnote' );
-	wp.richText.unregisterFormatType( 'core/language' );
-	
-});
+})();
 
 /**** add special Block style to paragraph block ****/
 
