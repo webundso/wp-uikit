@@ -26,7 +26,9 @@ $theme_uri = get_stylesheet_directory_uri();
 
 
 
-		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+		<?php if (!defined('WUS_DISABLE_COMMENTS') || !WUS_DISABLE_COMMENTS) : ?>
+	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+	<?php endif; ?>
 
 		<?php wp_head(); ?>
 </head>

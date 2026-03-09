@@ -274,9 +274,6 @@ if (defined('WUS_DISABLE_CORE_PATTERNS') && WUS_DISABLE_CORE_PATTERNS) {
  * -------------------------------------------------------------------------- */
 
 add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
-    
-   error_log('WUS: allowed_block_types_all fired');
-
 
     // Default: allow (strict) damit kein Wildwuchs entsteht
     $mode = defined('WUS_EDITOR_BLOCK_CONTROL_MODE') ? WUS_EDITOR_BLOCK_CONTROL_MODE : 'allow';

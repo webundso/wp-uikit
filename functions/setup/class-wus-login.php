@@ -45,8 +45,12 @@ class WUS_Login
 
 				$logo_url = esc_url($logo_url);
 
-				// Inline-CSS ist hier ok, weil Login-Screen separat ist.
-				echo '<style>
+				// wp_add_inline_style() statt direktem echo '<style>':
+				// - CSP-kompatibler (kein inline style tag im HTML)
+				// - WP-konform (Style wird korrekt in die Queue eingereiht)
+				wp_register_style('wus-login', false);
+				wp_enqueue_style('wus-login');
+				wp_add_inline_style('wus-login', '
 						.login #login { padding-top: 0; }
 						.login h1 { width: 320px; height: 200px; }
 						.login h1 a {
@@ -55,7 +59,7 @@ class WUS_Login
 								width: 320px;
 								height: 200px;
 						}
-				</style>';
+				');
 		}
 
 		/**

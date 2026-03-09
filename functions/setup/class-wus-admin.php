@@ -139,7 +139,7 @@ class WUS_Admin
 				add_options_page(
 						__('Alle Einstellungen', 'webundso'),
 						__('ALLE Einstellungen', 'webundso'),
-						'administrator',
+						'manage_options',
 						'options.php'
 				);
 

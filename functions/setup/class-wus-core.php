@@ -21,7 +21,6 @@ class WUS_Core
 		public static function init(): void
 		{
 				add_action('after_setup_theme', [__CLASS__, 'setup'], 10);
-				add_action('widgets_init', [__CLASS__, 'register_sidebars']);
 		}
 
 		/**
@@ -95,31 +94,5 @@ class WUS_Core
 
 				// Optional: Editor Style (wenn du’s wirklich pflegst)
 				// add_editor_style('editor-style.css');
-		}
-		
-		/**
-		 * Widget Areas (Sidebars) registrieren.
-		 */
-		public static function register_sidebars(): void
-		{
-				register_sidebar([
-						'name'          => __('Sidebar – Seiten', 'webundso'),
-						'id'            => 'wus-sidebar-pages',
-						'description'   => __('Widgets für normale Seiten', 'webundso'),
-						'before_widget' => '<div id="%1$s" class="widget %2$s uk-margin">',
-						'after_widget'  => '</div>',
-						'before_title'  => '<h3 class="widget-title">',
-						'after_title'   => '</h3>',
-				]);
-		
-				register_sidebar([
-						'name'          => __('Sidebar – Blog', 'webundso'),
-						'id'            => 'wus-sidebar-blog',
-						'description'   => __('Widgets für Blogseiten und Beiträge', 'webundso'),
-						'before_widget' => '<div id="%1$s" class="widget %2$s uk-margin">',
-						'after_widget'  => '</div>',
-						'before_title'  => '<h3 class="widget-title">',
-						'after_title'   => '</h3>',
-				]);
 		}
 }

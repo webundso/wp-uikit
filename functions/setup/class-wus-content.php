@@ -143,7 +143,7 @@ class WUS_Content
 				// Optional: Sanitizer erzwingen
 				if (defined('WUS_SVG_REQUIRE_SANITIZER') && WUS_SVG_REQUIRE_SANITIZER) {
 					// Beispiel-Check: an dein Sanitizer-Setup anpassen
-					$sanitizer_ok = function_exists('enshrined\svgSanitize\Sanitizer') || function_exists('svg_sanitizer_init');
+					$sanitizer_ok = class_exists('enshrined\\svgSanitize\\Sanitizer') || function_exists('svg_sanitizer_init');
 					if (!$sanitizer_ok) {
 						return $existing_mimes;
 					}

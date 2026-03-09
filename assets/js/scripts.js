@@ -70,6 +70,7 @@ jQuery(document).ready(function ($) {
 		$('.mobileTrigger').on('click', function () {
 				var $btn = $(this);
 				$btn.toggleClass('active');
+				$btn.attr('aria-expanded', $btn.hasClass('active') ? 'true' : 'false');
 
 				if ($btn.hasClass('active')) {
 						$('html, body').css('overflow', 'hidden');
@@ -113,10 +114,12 @@ jQuery(document).ready(function ($) {
 		// Effekt: Placeholder für “square boxes” etc.
 		// ---------------------------------------------------------------------
 
-		$(window).on('resize', function () {
-				// Beispiele:
-				// $('.akbox').height($('.akbox').width());
-		}).trigger('resize');
+		// $(window).on('resize', function () {
+		// 		// Beispiele:
+		// 		// $('.akbox').height($('.akbox').width());
+		// }).trigger('resize');
+		// ⚠ Auskommentiert: leerer resize-Listener registriert unnötig einen Event-Handler bei jedem Seitenaufruf.
+		// Nur aktivieren wenn tatsächlich resize-Logik benötigt wird.
 
 
 		// ---------------------------------------------------------------------

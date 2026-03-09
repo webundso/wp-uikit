@@ -148,7 +148,7 @@ if (!defined('WUS_DISABLE_WPAUTOP')) {
 
 /** Such-Post-Types: welche Inhalte in der WP-Suche berücksichtigt werden. */
 if (!defined('WUS_SEARCH_POST_TYPES')) {
-    define('WUS_SEARCH_POST_TYPES', ['post', 'page', 'site', 'plugin', 'theme', 'person']);
+    define('WUS_SEARCH_POST_TYPES', ['post', 'page']);
 }
 
 
@@ -330,8 +330,9 @@ if (!defined('WUS_BLOCK_ICON_FG')) {
  * -------------------------------------------------------------------------- */
 
 
-// Debug optional (nur solange du testest)
-define('WUS_DEBUG_BLOCK_REGISTER', true);
+if (!defined('WUS_DEBUG_BLOCK_REGISTER')) {
+    define('WUS_DEBUG_BLOCK_REGISTER', false);
+}
 
 /* -----------------------------------------------------------------------------
  * 12) Helpers (klein halten; keine Hook-Logik)

@@ -7,7 +7,10 @@
 /*===============================================================*/
 
 html{
-	overflow-x: hidden; // (wg fullwidth)
+	// overflow-x: hidden; // (wg fullwidth)
+	// ⚠ Nicht hier setzen: bricht position:sticky global und verändert den Stacking Context.
+	// Stattdessen overflow-x: clip auf den betroffenen Full-Width-Elementen setzen (siehe .block-inner--bleed/--full).
+	// overflow-x: clip; // modernes clip statt hidden, bricht kein sticky
 }
 
 html, body {
@@ -318,6 +321,8 @@ h1,h2,h3,h4,h5,h6,
 	position: relative;
 
 	/* Full-bleed Hintergrund */
+	// Falls hier horizontaler Overflow entsteht: overflow-x: clip setzen (nicht auf html/body).
+	// overflow-x: clip; // modernes clip statt hidden, bricht kein sticky
 	&--bleed,
 	&--full {
 		width: 100vw;
