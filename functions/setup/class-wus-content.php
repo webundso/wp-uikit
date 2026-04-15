@@ -26,7 +26,12 @@ class WUS_Content
 	public static function init(): void
 	{
 		add_action('pre_get_posts', [__CLASS__, 'search_all']);
+		add_action('pre_get_posts', [__CLASS__, 'blog_posts_per_page']);
 		add_filter('request', [__CLASS__, 'custom_feed_request']);
+
+		// AJAX Load More
+		add_action('wp_ajax_wus_load_more',        [__CLASS__, 'ajax_load_more']);
+		add_action('wp_ajax_nopriv_wus_load_more', [__CLASS__, 'ajax_load_more']);
 
 		add_filter('excerpt_length', [__CLASS__, 'excerpt_length']);
 		add_filter('upload_mimes', [__CLASS__, 'custom_upload_mimes']);
@@ -335,6 +340,71 @@ class WUS_Content
 		echo '</div>';
 	
 		wp_reset_postdata();
+	}
+
+	/**
+	 * Blog Posts per Page: setzt posts_per_page für Blog/Archive auf WUS_BLOG_POSTS_PER_PAGE.
+	 */
+	public static function blog_posts_per_page($query): void
+	{
+		if (is_admin() || !$query->is_main_query()) {
+			return;
+		}
+
+		if (!$query->is_home() && !$query->is_archive()) {
+			return;
+		}
+
+		$per_page = defined('WUS_BLOG_POSTS_PER_PAGE') ? (int) WUS_BLOG_POSTS_PER_PAGE : 10;
+		$query->set('posts_per_page', $per_page);
+	}
+
+	/**
+	 * AJAX Load More Handler.
+	 * Erwartet POST: paged, nonce
+	 * Gibt zurück: JSON { html, max_pages, paged }
+	 */
+	public static function ajax_load_more(): void
+	{
+		// Nonce prüfen
+		if (!check_ajax_referer('wus_load_more', 'nonce', false)) {
+			wp_send_json_error(['message' => 'Invalid nonce'], 403);
+		}
+
+		$paged    = isset($_POST['paged']) ? absint($_POST['paged']) : 2;
+		$per_page = defined('WUS_BLOG_POSTS_PER_PAGE') ? (int) WUS_BLOG_POSTS_PER_PAGE : 10;
+		$variant  = defined('WUS_BLOG_LOOP_VARIANT')   ? (string) WUS_BLOG_LOOP_VARIANT : 'grid';
+
+		$query = new WP_Query([
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => $per_page,
+			'paged'          => $paged,
+			'no_found_rows'  => false,
+		]);
+
+		ob_start();
+
+		if ($query->have_posts()) {
+			$is_grid   = ($variant !== 'list');
+			$loop_slug = $is_grid ? 'blog-grid' : 'blog';
+
+			while ($query->have_posts()) {
+				$query->the_post();
+				get_template_part('parts/loop', $loop_slug);
+			}
+
+			wp_reset_postdata();
+		}
+
+		$html      = ob_get_clean();
+		$max_pages = (int) $query->max_num_pages;
+
+		wp_send_json_success([
+			'html'      => $html,
+			'max_pages' => $max_pages,
+			'paged'     => $paged,
+		]);
 	}
 
 }

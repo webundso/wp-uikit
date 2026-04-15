@@ -56,15 +56,22 @@ $loop_slug = $is_grid ? 'blog-grid' : 'blog';
 
 				<?php if (have_posts()) : ?>
 
-					<?php if ($is_grid) : ?>
+					<?php
+				$max_pages   = $GLOBALS['wp_query']->max_num_pages;
+				$load_more   = defined('WUS_BLOG_LOAD_MORE') ? (bool) WUS_BLOG_LOAD_MORE : true;
+				$show_button = $load_more && ($max_pages > 1);
+				?>
 
-						<div class="uk-child-width-1-3@m uk-grid-match" uk-grid>
+				<?php if ($is_grid) : ?>
+
+						<div id="wus-blog-posts" class="uk-child-width-1-3@m uk-grid-match" uk-grid>
 							<?php while (have_posts()) : the_post(); ?>
 								<?php get_template_part('parts/loop', $loop_slug); ?>
 							<?php endwhile; ?>
 						</div>
 					<?php else : ?>
 
+						<div id="wus-blog-posts">
 						<?php
 						/**
 						 * Listen-Variante:
@@ -75,19 +82,38 @@ $loop_slug = $is_grid ? 'blog-grid' : 'blog';
 							get_template_part('parts/loop', $loop_slug);
 						endwhile;
 						?>
+						</div>
 
 					<?php endif; ?>
 
-					<!-- Pagination -->
-					<nav class="uk-margin-large-top" aria-label="<?php echo esc_attr__('Beiträge Navigation', 'webundso'); ?>">
-						<?php
-						the_posts_pagination([
-							'mid_size'  => 2,
-							'prev_text' => esc_html__('Zurück', 'webundso'),
-							'next_text' => esc_html__('Weiter', 'webundso'),
-						]);
-						?>
-					</nav>
+					<?php if ($show_button) : ?>
+
+						<!-- Load More Button -->
+						<div class="uk-margin-large-top uk-text-center">
+							<button
+								id="wus-load-more"
+								class="uk-button uk-button-default"
+								data-max-pages="<?php echo esc_attr((string) $max_pages); ?>"
+								data-label="<?php echo esc_attr__('Ältere Beiträge laden', 'webundso'); ?>"
+							>
+								<?php echo esc_html__('Ältere Beiträge laden', 'webundso'); ?>
+							</button>
+						</div>
+
+					<?php else : ?>
+
+						<!-- Pagination (Load More deaktiviert) -->
+						<nav class="uk-margin-large-top" aria-label="<?php echo esc_attr__('Beiträge Navigation', 'webundso'); ?>">
+							<?php
+							the_posts_pagination([
+								'mid_size'  => 2,
+								'prev_text' => esc_html__('Zurück', 'webundso'),
+								'next_text' => esc_html__('Weiter', 'webundso'),
+							]);
+							?>
+						</nav>
+
+					<?php endif; ?>
 
 				<?php else : ?>
 

@@ -1,49 +1,71 @@
 /*
 =================================================================
 Filename: wus-ajax.js
-Description: load posts with ajax
+Description: AJAX Load More for blog posts
 Author: Noël Girstmair | webundso GmbH
-Last changes: 3.6.2024
+Last changes: 18.3.2026
 =================================================================
 */
 
+jQuery(document).ready(function ($) {
+	var $btn       = $('#wus-load-more');
+	var $container = $('#wus-blog-posts');
 
- UIkit.util.on('#ueber-uns', 'show', function () {
-		 $("#post-container").html("content loading");
+	if (!$btn.length || !$container.length) {
+		return;
+	}
+
+	var currentPage = 1;
+	var maxPages    = parseInt($btn.data('max-pages'), 10) || 1;
+
+	// Button verstecken, wenn keine weiteren Seiten vorhanden
+	if (currentPage >= maxPages) {
+		$btn.hide();
+	}
+
+	$btn.on('click', function () {
+		var $self = $(this);
+
+		$self.prop('disabled', true);
+		$self.text(wusAjax.loading);
+
 		$.ajax({
-				url: my_ajax_obj.ajax_url,
-				method: 'POST',
-				data: {
-						action: 'load_post_content',
-						post_id: 9
-				},
-				success: function(response) {
-						$('#post-container').html(response);
+			url:    wusAjax.ajaxUrl,
+			method: 'POST',
+			data: {
+				action: 'wus_load_more',
+				nonce:  wusAjax.nonce,
+				paged:  currentPage + 1,
+			},
+			success: function (response) {
+				if (!response.success) {
+					$self.prop('disabled', false);
+					$self.text($self.data('label'));
+					return;
 				}
-		});
 
-		 
- });
- 
- // oder mit trigger
- // jQuery(document).ready(function($) {
-	// 	 $('#load-post-button').on('click', function() {
-	// 			 var post_id = $(this).data('post-id');
- // 
-	// 			 $.ajax({
-	// 					 url: my_ajax_obj.ajax_url,
-	// 					 method: 'POST',
-	// 					 data: {
-	// 							 action: 'load_post_content',
-	// 							 post_id: post_id
-	// 					 },
-	// 					 success: function(response) {
-	// 							 $('#post-content-div').html(response);
-	// 					 }
-	// 			 });
-	// 	 });
- // });
- 
- // Trigger:
- /* <button id="load-post-button" data-post-id="1">Load Post</button>
- <div id="post-content-div"></div> */
+				$container.append(response.data.html);
+
+				// UIkit-Komponenten in neuen Elementen initialisieren
+				if (window.UIkit) {
+					UIkit.update($container[0]);
+				}
+
+				currentPage = parseInt(response.data.paged, 10);
+				maxPages    = parseInt(response.data.max_pages, 10);
+
+				if (currentPage >= maxPages) {
+					$self.text(wusAjax.noMore);
+					$self.prop('disabled', true);
+				} else {
+					$self.prop('disabled', false);
+					$self.text($self.data('label'));
+				}
+			},
+			error: function () {
+				$self.prop('disabled', false);
+				$self.text($self.data('label'));
+			},
+		});
+	});
+});

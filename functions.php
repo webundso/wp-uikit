@@ -13,10 +13,12 @@ require_once get_template_directory() . '/functions/cleanup.php';
 require_once get_template_directory() . '/functions/menus.php';
 require_once get_template_directory() . '/functions/gutenberg.php';
 
+// Projektspezifische Funktionen, Hooks, CPTs etc.
+require_once get_template_directory() . '/functions/project.php';
+
 // Replace 'older/newer' post links with numbered navigation
 // require_once(get_template_directory().'/functions/page-navi.php'); 
 
-// Makes WordPress comments suck less
 // require_once(get_template_directory().'/functions/comments.php'); 
 
 // Customize the WordPress admin/dashboard

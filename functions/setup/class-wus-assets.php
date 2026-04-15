@@ -114,6 +114,35 @@ class WUS_Assets
 				}
 
 				// ---------------------------------------------------------------------
+				// AJAX Load More (nur auf Blog/Archive-Seiten)
+				// ---------------------------------------------------------------------
+				if (
+						(defined('WUS_BLOG_LOAD_MORE') && WUS_BLOG_LOAD_MORE) &&
+						(is_home() || is_archive())
+				) {
+						$ajax_rel = '/assets/js/wus-ajax.js';
+						$ajax_abs = get_stylesheet_directory() . $ajax_rel;
+						$ajax_uri = get_stylesheet_directory_uri() . $ajax_rel;
+
+						if (file_exists($ajax_abs)) {
+								wp_enqueue_script(
+										'wus-ajax',
+										$ajax_uri,
+										['jquery', 'uikit'],
+										filemtime($ajax_abs),
+										true
+								);
+
+								wp_localize_script('wus-ajax', 'wusAjax', [
+										'ajaxUrl' => admin_url('admin-ajax.php'),
+										'nonce'   => wp_create_nonce('wus_load_more'),
+										'loading' => esc_html__('Wird geladen…', 'webundso'),
+										'noMore'  => esc_html__('Keine weiteren Beiträge', 'webundso'),
+								]);
+						}
+				}
+
+				// ---------------------------------------------------------------------
 				// CSS
 				// ---------------------------------------------------------------------
 				$css_rel = '/assets/styles/site.css';

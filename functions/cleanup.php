@@ -35,6 +35,9 @@ require_once __DIR__ . '/setup/class-wus-content.php';
 /** Sidebars initalisieren */
 require_once __DIR__ . '/setup/class-wus-widgets.php';
 
+/** Token Sheet: Design-Token-Cheat-Sheet im Frontend (nur Admins). Schalter: WUS_TOKEN_SHEET */
+require_once __DIR__ . '/setup/class-wus-token-sheet.php';
+
 
 // -----------------------------------------------------------------------------
 // Boot sequence
@@ -96,6 +99,13 @@ add_action('after_setup_theme', function (): void {
 		 */
 		if (class_exists('WUS_Assets')) {
 				WUS_Assets::init();
+		}
+
+		/**
+		 * Token Sheet: Dev-Tool, nur wenn WUS_TOKEN_SHEET aktiv.
+		 */
+		if (class_exists('WUS_TokenSheet')) {
+				WUS_TokenSheet::init();
 		}
 
 }, 5);

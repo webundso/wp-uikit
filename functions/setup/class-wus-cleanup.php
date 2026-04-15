@@ -89,6 +89,15 @@ class WUS_Cleanup
 						add_action('do_feed_rss',  [__CLASS__, 'disable_feed'], 1);
 						add_action('do_feed_rss2', [__CLASS__, 'disable_feed'], 1);
 				}
+
+				// ---------------------------------------------------------------------
+				// Openverse deaktivieren
+				// Effekt: entfernt den Openverse-Tab im Medien-Dialog (externe Mediensuche).
+				// ---------------------------------------------------------------------
+				add_filter('media_view_settings', static function (array $settings): array {
+						$settings['openverse'] = ['status' => false];
+						return $settings;
+				});
 		}
 
 		/**

@@ -150,4 +150,18 @@ jQuery(document).ready(function ($) {
 				});
 		});
 
+
+	// ---------------------------------------------------------------------
+	// Nav Suche: aria-expanded synchronisieren (UIkit Drop Events)
+	// Effekt: Screenreader weiss ob das Suchfeld offen oder geschlossen ist.
+	// ---------------------------------------------------------------------
+
+	UIkit.util.on('#wus-nav-search-drop', 'show', function () {
+			$('.wus-nav-search-wrap .uk-navbar-toggle').attr('aria-expanded', 'true');
+	});
+
+	UIkit.util.on('#wus-nav-search-drop', 'hide', function () {
+			$('.wus-nav-search-wrap .uk-navbar-toggle').attr('aria-expanded', 'false');
+	});
+
 });

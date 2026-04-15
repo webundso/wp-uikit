@@ -60,13 +60,21 @@ if (!defined('WUS_LOGO_ALT')) {
 }
 
 /**
- * Footer Layout Mode:
- * - 'classic' = fester 3-Spalten Footer (wie vorher)
- * - 'widgets' = 3 Widget-Spalten (Footer Sidebars)
- * - 'auto'    = Widgets wenn mind. 1 Footer-Sidebar aktiv, sonst classic
+ * Footer Spalten-Modus (pro Spalte unabhängig):
+ * - 'auto'    (default) = Widgets wenn Sidebar befüllt, sonst HTML-Fallback
+ * - 'widgets'           = immer Widgets
+ * - 'html'              = immer HTML-Fallback
+ *
+ * HTML-Fallback direkt in footer.php anpassen.
  */
-if (!defined('WUS_FOOTER_MODE')) {
-    define('WUS_FOOTER_MODE', 'auto');
+if (!defined('WUS_FOOTER_COL1')) {
+    define('WUS_FOOTER_COL1', 'auto');
+}
+if (!defined('WUS_FOOTER_COL2')) {
+    define('WUS_FOOTER_COL2', 'auto');
+}
+if (!defined('WUS_FOOTER_COL3')) {
+    define('WUS_FOOTER_COL3', 'auto');
 }
 
 /**
@@ -85,6 +93,23 @@ if (!defined('WUS_PAGE_SHOW_TITLE')) {
  */
 if (!defined('WUS_BLOG_LOOP_VARIANT')) {
   define('WUS_BLOG_LOOP_VARIANT', 'list');
+}
+
+/**
+ * Blog Posts per Page:
+ * - Anzahl Posts beim ersten Laden UND pro AJAX-Nachladen.
+ */
+if (!defined('WUS_BLOG_POSTS_PER_PAGE')) {
+    define('WUS_BLOG_POSTS_PER_PAGE', 10);
+}
+
+/**
+ * Blog Load More Button:
+ * - true  = "Mehr laden" Button statt Pagination
+ * - false = normale WP-Pagination
+ */
+if (!defined('WUS_BLOG_LOAD_MORE')) {
+    define('WUS_BLOG_LOAD_MORE', true);
 }
 
 
@@ -351,4 +376,21 @@ function wus_support_email(): string
  */
 if (!defined('WUS_TOPNAV_MODE')) {
     define('WUS_TOPNAV_MODE', 'dropdown');
+}
+
+/**
+ * Nav Suche:
+ * - true  = Suchicon nach letztem Navpunkt, öffnet Drop mit Suchfeld
+ * - false = kein Suchicon
+ */
+if (!defined('WUS_NAV_SEARCH')) {
+    define('WUS_NAV_SEARCH', true);
+}
+/**
+ * Design Token Sheet:
+ * - true  = Token-Cheat-Sheet im Frontend (nur für eingeloggte Admins sichtbar)
+ * - false = deaktiviert
+ */
+if (!defined('WUS_TOKEN_SHEET')) {
+    define('WUS_TOKEN_SHEET', false);
 }
