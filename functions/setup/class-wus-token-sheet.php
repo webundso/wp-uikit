@@ -4,7 +4,8 @@ defined('ABSPATH') || exit;
 /**
  * WUS_TokenSheet
  *
- * Zeigt alle --t-* Design Tokens als Cheat Sheet im Frontend.
+ * Zeigt alle Design Tokens aus theme.json als Cheat Sheet im Frontend.
+ * Token-Listen werden automatisch aus theme.json gelesen — keine manuelle Pflege nötig.
  * Nur für eingeloggte Admins sichtbar (manage_options).
  *
  * Schalter:
@@ -21,11 +22,51 @@ class WUS_TokenSheet
 		add_action('wp_footer', [__CLASS__, 'render'], 99);
 	}
 
+	/**
+	 * Liest theme.json und gibt alle Design Tokens als --wp--preset--* zurück,
+	 * kategorisiert nach Farbe, Schriftfamilie, Schriftgrösse und Abstand.
+	 */
+	private static function theme_tokens(): array
+	{
+		$path = get_template_directory() . '/theme.json';
+
+		if (!file_exists($path)) {
+			return ['colors' => [], 'fonts' => [], 'sizes' => [], 'spacing' => []];
+		}
+
+		$json     = json_decode((string) file_get_contents($path), true);
+		$settings = $json['settings'] ?? [];
+
+		$colors = [];
+		foreach ($settings['color']['palette'] ?? [] as $item) {
+			$colors[] = '--wp--preset--color--' . $item['slug'];
+		}
+
+		$fonts = [];
+		foreach ($settings['typography']['fontFamilies'] ?? [] as $item) {
+			$fonts[] = '--wp--preset--font-family--' . $item['slug'];
+		}
+
+		$sizes = [];
+		foreach ($settings['typography']['fontSizes'] ?? [] as $item) {
+			$sizes[] = '--wp--preset--font-size--' . $item['slug'];
+		}
+
+		$spacing = [];
+		foreach ($settings['spacing']['spacingSizes'] ?? [] as $item) {
+			$spacing[] = '--wp--preset--spacing--' . $item['slug'];
+		}
+
+		return compact('colors', 'fonts', 'sizes', 'spacing');
+	}
+
 	public static function render(): void
 	{
 		if (!current_user_can('manage_options')) {
 			return;
 		}
+
+		$tokens = self::theme_tokens();
 		?>
 		<!-- WUS Design Token Sheet -->
 		<div id="wus-ts-toggle" title="Design Tokens" aria-label="Design Token Sheet öffnen">
@@ -88,7 +129,7 @@ class WUS_TokenSheet
 		/* ── Toggle Button ───────────────────────────── */
 		#wus-ts-toggle {
 			position: fixed;
-			bottom: 24px;
+			bottom: 74px;
 			right: 24px;
 			z-index: 99998;
 			width: 44px;
@@ -391,6 +432,10 @@ class WUS_TokenSheet
 		</style>
 
 		<script>
+		const wusTokens = <?php echo wp_json_encode($tokens, JSON_UNESCAPED_UNICODE); ?>;
+		</script>
+
+		<script>
 		(function () {
 			'use strict';
 
@@ -447,26 +492,10 @@ class WUS_TokenSheet
 				toast('Kopiert: ' + text);
 			}
 
-			const colorTokens = [
-				{ token: '--t-color-primary',         label: 'Buttons, Links, Active' },
-				{ token: '--t-color-secondary',        label: 'Akzente' },
-				{ token: '--t-color-muted',            label: 'Trennlinien, Hilfen' },
-				{ token: '--t-color-danger',           label: 'Fehler, Warnungen' },
-				{ token: '--t-color-text',             label: 'Fliesstext' },
-				{ token: '--t-color-bg',               label: 'Seitenhintergrund' },
-				{ token: '--t-color-border',           label: 'Rahmen' },
-				{ token: '--t-color-surface',          label: 'Karten, Flächen' },
-				{ token: '--t-color-primary-hover',    label: 'Primary hover' },
-				{ token: '--t-color-primary-active',   label: 'Primary active' },
-				{ token: '--t-color-secondary-hover',  label: 'Secondary hover' },
-				{ token: '--t-color-secondary-active', label: 'Secondary active' },
-				{ token: '--t-color-danger-hover',     label: 'Danger hover' },
-				{ token: '--t-color-danger-active',    label: 'Danger active' },
-				{ token: '--t-editor-outline',         label: 'Editor outline' },
-				{ token: '--t-editor-fill',            label: 'Editor fill' },
-			];
-			const spaceTokens = ['--t-space-xs','--t-space-s','--t-space-m','--t-space-l','--t-space-xl'];
-			const fsTokens    = ['--t-fs-xs','--t-fs-s','--t-fs-m','--t-fs-l','--t-fs-xl','--t-fs-xxl'];
+			// Token-Listen kommen dynamisch aus _bridge.scss (via PHP geparst)
+			const colorTokens = wusTokens.colors.map(t => ({ token: t, label: t.replace('--wp--preset--color--', '') }));
+			const spaceTokens = wusTokens.spacing;
+			const fsTokens    = wusTokens.sizes;
 
 			function buildColors() {
 				const grid = document.getElementById('wus-color-grid');
@@ -499,12 +528,15 @@ class WUS_TokenSheet
 					if (!hex.startsWith('#')) return;
 					const opt = document.createElement('option');
 					opt.value = hex;
-					opt.textContent = c.token.replace('--t-color-', '') + ' (' + hex + ')';
+					opt.dataset.token = c.token;
+					opt.textContent = c.token.replace('--wp--preset--color--', '') + ' (' + hex + ')';
 					sel.appendChild(opt);
 				});
 			}
 			function buildShades() {
-				const hex   = document.getElementById('wus-shade-select').value;
+				const sel   = document.getElementById('wus-shade-select');
+				const hex   = sel.value;
+				const token = sel.options[sel.selectedIndex]?.dataset.token || '';
 				const dark  = parseInt(document.getElementById('wus-shade-dark').value);
 				const light = parseInt(document.getElementById('wus-shade-light').value);
 				document.getElementById('wus-dark-val').textContent  = dark  + '%';
@@ -520,7 +552,8 @@ class WUS_TokenSheet
 					chip.textContent = p + '%';
 					chip.title = p === 0 ? hex : `color-mix(in srgb, ${hex}, #000 ${p}%)`;
 					chip.addEventListener('click', () => {
-						const val = p === 0 ? hex : `color-mix(in srgb, var(--t-color-...), #000 ${p}%)`;
+						const val = p === 0 ? (token ? `var(${token})` : hex)
+							: (token ? `color-mix(in srgb, var(${token}), #000 ${p}%)` : `color-mix(in srgb, ${hex}, #000 ${p}%)`);
 						document.getElementById('wus-shade-result').textContent = '→ ' + chip.title;
 						copy(val);
 					});
@@ -538,7 +571,9 @@ class WUS_TokenSheet
 					chip.textContent = '+' + p + '%';
 					chip.title = `color-mix(in srgb, ${hex}, #fff ${p}%)`;
 					chip.addEventListener('click', () => {
-						const val = `color-mix(in srgb, var(--t-color-...), #fff ${p}%)`;
+						const val = token
+							? `color-mix(in srgb, var(${token}), #fff ${p}%)`
+							: `color-mix(in srgb, ${hex}, #fff ${p}%)`;
 						document.getElementById('wus-shade-result').textContent = '→ ' + chip.title;
 						copy(val);
 					});
@@ -572,8 +607,7 @@ class WUS_TokenSheet
 				fsSection.style.marginBottom = '20px';
 				fsTokens.forEach(token => {
 					const val         = getVar(token);
-					const fontBase    = getVar('--t-font-base');
-					const fontHeading = getVar('--t-font-heading');
+
 					const row = document.createElement('div');
 					row.className = 'wus-fs-row';
 					row.innerHTML = `
@@ -582,26 +616,23 @@ class WUS_TokenSheet
 							<span class="wus-fs-px">${val}</span>
 						</div>
 						<div class="wus-fs-samples">
-							<div class="wus-fs-base"    style="font-size:${val}">Edition Muttern</div>
-							<div class="wus-fs-heading" style="font-size:${val};font-weight:400">Edition Muttern</div>
+							<div class="wus-fs-base"    style="font-size:${val}">Lorem ipsum dolor sit amet</div>
+							<div class="wus-fs-heading" style="font-size:${val};font-weight:400">Lorem ipsum dolor sit amet</div>
 						</div>`;
-					row.querySelector('.wus-fs-base').style.setProperty('font-family', 'var(--t-font-base)');
-					row.querySelector('.wus-fs-heading').style.setProperty('font-family', 'var(--t-font-heading)');
+					row.querySelector('.wus-fs-base').style.setProperty('font-family', 'var(--wp--preset--font-family--base)');
+					row.querySelector('.wus-fs-heading').style.setProperty('font-family', 'var(--wp--preset--font-family--heading)');
 					row.querySelector('.wus-fs-meta').addEventListener('click', () => copy(token));
 					fsSection.appendChild(row);
 				});
 				list.appendChild(fsSection);
-				[
-					{ token: '--t-font-base',    label: 'Base' },
-					{ token: '--t-font-heading', label: 'Heading' },
-				].forEach(f => {
+				wusTokens.fonts.map(t => ({ token: t, label: t.replace('--wp--preset--font-family--', '') })).forEach(f => {
 					const val   = getVar(f.token);
 					const block = document.createElement('div');
 					block.className = 'wus-font-block';
 					block.innerHTML = `
 						<span class="wus-font-label" style="cursor:pointer" title="Kopieren">${f.token}</span>
 						<div style="font-size:20px;color:#e8e4d4">
-							Edition Muttern — Aa Bb Cc 0123
+							Lorem ipsum dolor sit amet
 						</div>`;
 					block.querySelector('.wus-font-label').addEventListener('click', () => copy(f.token));
 					block.querySelector('div').style.setProperty('font-family', 'var(' + f.token + ')');

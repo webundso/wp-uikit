@@ -392,5 +392,5 @@ if (!defined('WUS_NAV_SEARCH')) {
  * - false = deaktiviert
  */
 if (!defined('WUS_TOKEN_SHEET')) {
-    define('WUS_TOKEN_SHEET', false);
+    define('WUS_TOKEN_SHEET', true);
 }

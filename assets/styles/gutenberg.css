@@ -57,174 +57,102 @@ Stylesheet: Gutenberg (im Backend)
   src: url("../fonts/adamina-v22-latin-regular.woff2") format("woff2"), url("../fonts/adamina-v22-latin-regular.woff") format("woff");
 }
 /*--------------------------------------------------------------*/
-/* Bridge mappt WP Presets auf eigene Tokens */
-/*--------------------------------------------------------------*/
-/* --------------------------------------------------
-COLOR TOKENS
-primary   = Hauptfarbe (Buttons, Links, Active)
-secondary = Sekundärfarbe (Akzente)
-danger    = Fehler, Warnungen
-muted     = Editor-Hilfen, Trennlinien
--------------------------------------------------- */
-:root {
-  --t-color-text: var(--wp--preset--color--text);
-  --t-color-bg: var(--wp--preset--color--background);
-  --t-color-primary: var(--wp--preset--color--primary);
-  --t-color-secondary: var(--wp--preset--color--secondary);
-  --t-color-muted: var(--wp--preset--color--muted);
-  --t-color-danger: var(--wp--preset--color--danger);
-  --t-font-base: var(--wp--preset--font-family--base);
-  --t-font-heading: var(--wp--preset--font-family--heading);
-  --t-space-xs: var(--wp--preset--spacing--xs);
-  --t-space-s:  var(--wp--preset--spacing--s);
-  --t-space-m:  var(--wp--preset--spacing--m);
-  --t-space-l:  var(--wp--preset--spacing--l);
-  --t-space-xl: var(--wp--preset--spacing--xl);
-  /* Fontsizes	*/
-  --t-fs-xs:  var(--wp--preset--font-size--xs);
-  --t-fs-s:   var(--wp--preset--font-size--s);
-  --t-fs-m:   var(--wp--preset--font-size--m);
-  --t-fs-l:   var(--wp--preset--font-size--l);
-  --t-fs-xl:  var(--wp--preset--font-size--xl);
-  --t-fs-xxl: var(--wp--preset--font-size--xxl);
-  --t-editor-outline: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 80%);
-  --t-editor-fill:    color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 90%);
-  /* ----------------------------------------------------------
-	 * State tokens (hybrid)
-	 * Wenn CI-Token existiert: wird genutzt
-	 * Sonst: fallback via color-mix()
-	 * ---------------------------------------------------------- */
-  --t-color-primary-hover: var(
-		--wp--preset--color--primary-hover,
-		color-mix(in srgb, var(--t-color-primary), #000 12%)
-	);
-  --t-color-primary-active: var(
-		--wp--preset--color--primary-active,
-		color-mix(in srgb, var(--t-color-primary), #000 18%)
-	);
-  --t-color-secondary-hover: var(
-		--wp--preset--color--secondary-hover,
-		color-mix(in srgb, var(--t-color-secondary), #000 12%)
-	);
-  --t-color-secondary-active: var(
-		--wp--preset--color--secondary-active,
-		color-mix(in srgb, var(--t-color-secondary), #000 18%)
-	);
-  --t-color-danger-hover: var(
-		--wp--preset--color--danger-hover,
-		color-mix(in srgb, var(--t-color-danger), #000 12%)
-	);
-  --t-color-danger-active: var(
-		--wp--preset--color--danger-active,
-		color-mix(in srgb, var(--t-color-danger), #000 18%)
-	);
-  /* Border / Surface (hybrid) */
-  --t-color-border: var(
-		--wp--preset--color--border,
-		color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%)
-	);
-  --t-color-surface: var(
-		--wp--preset--color--surface,
-		color-mix(in srgb, var(--t-color-bg), #000 3%)
-	);
-}
-/*--------------------------------------------------------------*/
 /* Utility classes for spacing in Gutenberg */
 /*--------------------------------------------------------------*/
 /* Margin Top */
 .mt-xs {
-  margin-top: var(--t-space-xs) !important;
+  margin-top: var(--wp--preset--spacing--xs) !important;
 }
 .mt-s {
-  margin-top: var(--t-space-s) !important;
+  margin-top: var(--wp--preset--spacing--s) !important;
 }
 .mt-m {
-  margin-top: var(--t-space-m) !important;
+  margin-top: var(--wp--preset--spacing--m) !important;
 }
 .mt-l {
-  margin-top: var(--t-space-l) !important;
+  margin-top: var(--wp--preset--spacing--l) !important;
 }
 .mt-xl {
-  margin-top: var(--t-space-xl) !important;
+  margin-top: var(--wp--preset--spacing--xl) !important;
 }
 /* Margin Bottom */
 .mb-xs {
-  margin-bottom: var(--t-space-xs) !important;
+  margin-bottom: var(--wp--preset--spacing--xs) !important;
 }
 .mb-s {
-  margin-bottom: var(--t-space-s) !important;
+  margin-bottom: var(--wp--preset--spacing--s) !important;
 }
 .mb-m {
-  margin-bottom: var(--t-space-m) !important;
+  margin-bottom: var(--wp--preset--spacing--m) !important;
 }
 .mb-l {
-  margin-bottom: var(--t-space-l) !important;
+  margin-bottom: var(--wp--preset--spacing--l) !important;
 }
 .mb-xl {
-  margin-bottom: var(--t-space-xl) !important;
+  margin-bottom: var(--wp--preset--spacing--xl) !important;
 }
 /* Padding Top */
 .pt-xs {
-  padding-top: var(--t-space-xs) !important;
+  padding-top: var(--wp--preset--spacing--xs) !important;
 }
 .pt-s {
-  padding-top: var(--t-space-s) !important;
+  padding-top: var(--wp--preset--spacing--s) !important;
 }
 .pt-m {
-  padding-top: var(--t-space-m) !important;
+  padding-top: var(--wp--preset--spacing--m) !important;
 }
 .pt-l {
-  padding-top: var(--t-space-l) !important;
+  padding-top: var(--wp--preset--spacing--l) !important;
 }
 .pt-xl {
-  padding-top: var(--t-space-xl) !important;
+  padding-top: var(--wp--preset--spacing--xl) !important;
 }
 /* Padding Bottom */
 .pb-xs {
-  padding-bottom: var(--t-space-xs) !important;
+  padding-bottom: var(--wp--preset--spacing--xs) !important;
 }
 .pb-s {
-  padding-bottom: var(--t-space-s) !important;
+  padding-bottom: var(--wp--preset--spacing--s) !important;
 }
 .pb-m {
-  padding-bottom: var(--t-space-m) !important;
+  padding-bottom: var(--wp--preset--spacing--m) !important;
 }
 .pb-l {
-  padding-bottom: var(--t-space-l) !important;
+  padding-bottom: var(--wp--preset--spacing--l) !important;
 }
 .pb-xl {
-  padding-bottom: var(--t-space-xl) !important;
+  padding-bottom: var(--wp--preset--spacing--xl) !important;
 }
 .editor-styles-wrapper {
-  font-family: var(--t-font-base);
-  color: var(--t-color-text);
+  font-family: var(--wp--preset--font-family--base);
+  color: var(--wp--preset--color--text);
 }
 .editor-styles-wrapper .content {
-  font-size: var(--t-fs-m);
+  font-size: var(--wp--preset--font-size--m);
   line-height: 1.6;
 }
 .editor-styles-wrapper .content > * + * {
-  margin-top: var(--t-space-m);
+  margin-top: var(--wp--preset--spacing--m);
 }
 .editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6 {
-  font-family: var(--t-font-heading);
+  font-family: var(--wp--preset--font-family--heading);
 }
 /* Deine Editor-UX Helfer bleiben erlaubt */
 .wp-block.is-selected {
-  background: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%);
+  background: color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 85%);
 }
 .wp-block-columns {
-  border: 1px dashed var(--t-editor-outline);
+  border: 1px dashed color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 80%);
   padding: 10px;
 }
 .wp-block-columns .wp-block-column {
-  border: 1px dashed var(--t-editor-outline);
+  border: 1px dashed color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 80%);
 }
 .wp-block-columns .wp-block-column.is-selected {
-  background: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 95%);
+  background: color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 95%);
 }
 .wp-block-spacer {
-  background: var(--t-editor-fill);
-  border: 2px dotted var(--t-color-text);
+  background: color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 90%);
+  border: 2px dotted var(--wp--preset--color--text);
   margin-bottom: 10px;
 }

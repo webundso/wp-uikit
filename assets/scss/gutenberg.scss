@@ -7,17 +7,16 @@ Stylesheet: Gutenberg (im Backend)
 
  @import "mixins";
  @import "fonts";
- @import "bridge";
  @import "utilities";
  
  .editor-styles-wrapper{
-	 font-family: var(--t-font-base);
-	 color: var(--t-color-text);
+	 font-family: var(--wp--preset--font-family--base);
+	 color: var(--wp--preset--color--text);
    .content {
-      font-size: var(--t-fs-m);
+      font-size: var(--wp--preset--font-size--m);
       line-height: 1.6;
       > * + * {
-        margin-top: var(--t-space-m);
+        margin-top: var(--wp--preset--spacing--m);
       }
    }   
  }
@@ -28,29 +27,29 @@ Stylesheet: Gutenberg (im Backend)
  .editor-styles-wrapper h4,
  .editor-styles-wrapper h5,
  .editor-styles-wrapper h6{
-	 font-family: var(--t-font-heading);
+	 font-family: var(--wp--preset--font-family--heading);
  }
  
  /* Deine Editor-UX Helfer bleiben erlaubt */
  .wp-block.is-selected{
-	 background: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%);
+	 background: color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 85%);
  }
 
 .wp-block-columns {
-	 border: 1px dashed var(--t-editor-outline);
+	 border: 1px dashed color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 80%);
 	 padding: 10px;
  
 	 .wp-block-column {
-		 border: 1px dashed var(--t-editor-outline);
+		 border: 1px dashed color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 80%);
      &.is-selected{
-       background:  color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 95%);
+       background:  color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 95%);
      }
 	 }
  }
  
  .wp-block-spacer {
-	 background: var(--t-editor-fill);
-	 border: 2px dotted var(--t-color-text);
+	 background: color-mix(in srgb, var(--wp--preset--color--text), var(--wp--preset--color--background) 90%);
+	 border: 2px dotted var(--wp--preset--color--text);
 	 margin-bottom: 10px;
  }
 

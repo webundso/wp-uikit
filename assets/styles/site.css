@@ -10142,101 +10142,29 @@ iframe[uk-cover], iframe[data-uk-cover] {
   }
 }
 /*--------------------------------------------------------------*/
-/* Bridge mappt WP Presets auf eigene Tokens */
-/*--------------------------------------------------------------*/
-/* --------------------------------------------------
-COLOR TOKENS
-primary   = Hauptfarbe (Buttons, Links, Active)
-secondary = Sekundärfarbe (Akzente)
-danger    = Fehler, Warnungen
-muted     = Editor-Hilfen, Trennlinien
--------------------------------------------------- */
-:root {
-  --t-color-text: var(--wp--preset--color--text);
-  --t-color-bg: var(--wp--preset--color--background);
-  --t-color-primary: var(--wp--preset--color--primary);
-  --t-color-secondary: var(--wp--preset--color--secondary);
-  --t-color-muted: var(--wp--preset--color--muted);
-  --t-color-danger: var(--wp--preset--color--danger);
-  --t-font-base: var(--wp--preset--font-family--base);
-  --t-font-heading: var(--wp--preset--font-family--heading);
-  --t-space-xs: var(--wp--preset--spacing--xs);
-  --t-space-s:  var(--wp--preset--spacing--s);
-  --t-space-m:  var(--wp--preset--spacing--m);
-  --t-space-l:  var(--wp--preset--spacing--l);
-  --t-space-xl: var(--wp--preset--spacing--xl);
-  /* Fontsizes	*/
-  --t-fs-xs:  var(--wp--preset--font-size--xs);
-  --t-fs-s:   var(--wp--preset--font-size--s);
-  --t-fs-m:   var(--wp--preset--font-size--m);
-  --t-fs-l:   var(--wp--preset--font-size--l);
-  --t-fs-xl:  var(--wp--preset--font-size--xl);
-  --t-fs-xxl: var(--wp--preset--font-size--xxl);
-  --t-editor-outline: color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 80%);
-  --t-editor-fill:    color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 90%);
-  /* ----------------------------------------------------------
-	 * State tokens (hybrid)
-	 * Wenn CI-Token existiert: wird genutzt
-	 * Sonst: fallback via color-mix()
-	 * ---------------------------------------------------------- */
-  --t-color-primary-hover: var(
-		--wp--preset--color--primary-hover,
-		color-mix(in srgb, var(--t-color-primary), #000 12%)
-	);
-  --t-color-primary-active: var(
-		--wp--preset--color--primary-active,
-		color-mix(in srgb, var(--t-color-primary), #000 18%)
-	);
-  --t-color-secondary-hover: var(
-		--wp--preset--color--secondary-hover,
-		color-mix(in srgb, var(--t-color-secondary), #000 12%)
-	);
-  --t-color-secondary-active: var(
-		--wp--preset--color--secondary-active,
-		color-mix(in srgb, var(--t-color-secondary), #000 18%)
-	);
-  --t-color-danger-hover: var(
-		--wp--preset--color--danger-hover,
-		color-mix(in srgb, var(--t-color-danger), #000 12%)
-	);
-  --t-color-danger-active: var(
-		--wp--preset--color--danger-active,
-		color-mix(in srgb, var(--t-color-danger), #000 18%)
-	);
-  /* Border / Surface (hybrid) */
-  --t-color-border: var(
-		--wp--preset--color--border,
-		color-mix(in srgb, var(--t-color-text), var(--t-color-bg) 85%)
-	);
-  --t-color-surface: var(
-		--wp--preset--color--surface,
-		color-mix(in srgb, var(--t-color-bg), #000 3%)
-	);
-}
-/*--------------------------------------------------------------*/
 /* Project Styles (token-based)                                 */
 /*--------------------------------------------------------------*/
 /*==============================================================*/
 /* 01) Base / Global                                             */
 /*===============================================================*/
 html, body {
-  color: var(--t-color-text);
-  background: var(--t-color-bg);
-  font-family: var(--t-font-base);
+  color: var(--wp--preset--color--text);
+  background: var(--wp--preset--color--background);
+  font-family: var(--wp--preset--font-family--base);
 }
 strong {
   font-weight: 700;
 }
 a, a:visited, .uk-link {
-  color: var(--t-color-primary);
+  color: var(--wp--preset--color--primary);
   text-decoration: none;
 }
 a:hover, a:active, .uk-link:hover {
-  color: var(--t-color-primary-hover);
+  color: var(--wp--preset--color--primary-hover);
   text-decoration: underline;
 }
 h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
-  font-family: var(--t-font-heading);
+  font-family: var(--wp--preset--font-family--heading);
 }
 .content p, .content ul li {
   -webkit-hyphens: auto;
@@ -10251,7 +10179,7 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 /* 01.5) Content Baseline                                       */
 /*==============================================================*/
 .content {
-  font-size: var(--t-fs-m);
+  font-size: var(--wp--preset--font-size--m);
   line-height: 1.6;
   /* Grundabstand zwischen direkten Content-Elementen */
   /* Paragraphs */
@@ -10263,50 +10191,50 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
   /* Blockquotes */
 }
 .content > * + * {
-  margin-top: var(--t-space-m);
+  margin-top: var(--wp--preset--spacing--m);
 }
 .content p {
   margin: 0;
 }
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
   margin: 0;
-  font-family: var(--t-font-heading);
+  font-family: var(--wp--preset--font-family--heading);
   line-height: 1.25;
 }
 .content h1 {
-  font-size: var(--t-fs-xxl);
+  font-size: var(--wp--preset--font-size--xxl);
 }
 .content h2 {
-  font-size: var(--t-fs-xl);
+  font-size: var(--wp--preset--font-size--xl);
 }
 .content h3 {
-  font-size: var(--t-fs-l);
+  font-size: var(--wp--preset--font-size--l);
 }
 .content h4 {
-  font-size: var(--t-fs-m);
+  font-size: var(--wp--preset--font-size--m);
 }
 .content h5 {
-  font-size: var(--t-fs-s);
+  font-size: var(--wp--preset--font-size--s);
 }
 .content h6 {
-  font-size: var(--t-fs-xs);
+  font-size: var(--wp--preset--font-size--xs);
 }
 .content h1, .content h2, .content h3 {
-  margin-top: var(--t-space-l);
+  margin-top: var(--wp--preset--spacing--l);
 }
 .content ul, .content ol {
   margin: 0;
   padding-left: 1.2em;
 }
 .content li + li {
-  margin-top: var(--t-space-xs);
+  margin-top: var(--wp--preset--spacing--xs);
 }
 .content a {
-  color: var(--t-color-primary);
+  color: var(--wp--preset--color--primary);
   text-decoration: underline;
 }
 .content a:hover {
-  color: var(--t-color-primary-hover);
+  color: var(--wp--preset--color--primary-hover);
 }
 .content img {
   max-width: 100%;
@@ -10314,8 +10242,8 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 }
 .content blockquote {
   margin: 0;
-  padding-left: var(--t-space-m);
-  border-left: 3px solid var(--t-color-border);
+  padding-left: var(--wp--preset--spacing--m);
+  border-left: 3px solid var(--wp--preset--color--border);
   font-style: italic;
 }
 /*==============================================================*/
@@ -10323,19 +10251,19 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 /*==============================================================*/
 /* Buttons */
 .uk-button-primary {
-  background-color: var(--t-color-primary);
-  color: var(--t-color-bg);
+  background-color: var(--wp--preset--color--primary);
+  color: var(--wp--preset--color--background);
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   will-change: transform;
 }
 .uk-button-primary:hover {
-  background-color: var(--t-color-primary-hover);
+  background-color: var(--wp--preset--color--primary-hover);
 }
 .uk-button-primary:active {
-  background-color: var(--t-color-primary-active);
+  background-color: var(--wp--preset--color--primary-active);
 }
 .uk-button-primary:hover {
-  background-color: color-mix(in srgb, var(--t-color-primary), #000 12%);
+  background-color: color-mix(in srgb, var(--wp--preset--color--primary), #000 12%);
   transform: translateY(-1px);
 }
 .uk-button-primary:active {
@@ -10347,14 +10275,14 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 }
 /* Navbar */
 .uk-navbar-nav {
-  margin-top: var(--t-space-s);
+  margin-top: var(--wp--preset--spacing--s);
 }
 .uk-navbar-nav > li > a {
-  font-size: var(--t-fs-m);
+  font-size: var(--wp--preset--font-size--m);
 }
 /* Offcanvas nav */
 .uk-offcanvas-bar {
-  color: var(--t-color-text);
+  color: var(--wp--preset--color--text);
 }
 .uk-offcanvas-bar #offcanvas-nav > li {
   overflow: hidden;
@@ -10394,16 +10322,16 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
   stroke-width: 1.5;
 }
 .uk-offcanvas-bar #offcanvas-nav > li.uk-active > a {
-  color: var(--t-color-primary);
+  color: var(--wp--preset--color--primary);
 }
 .uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-accordion-toggle span svg polyline {
-  stroke: var(--t-color-primary);
+  stroke: var(--wp--preset--color--primary);
 }
 .uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-nav-sub li a {
   color: inherit;
 }
 .uk-offcanvas-bar #offcanvas-nav > li.uk-active .uk-nav-sub li.is-active > a {
-  color: var(--t-color-primary);
+  color: var(--wp--preset--color--primary);
 }
 /*==============================================================*/
 /* 03) Theme Components                                         */
@@ -10411,19 +10339,19 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 /* Header */
 .mobileTrigger {
   position: absolute;
-  left: var(--t-space-m);
-  top: var(--t-space-m);
+  left: var(--wp--preset--spacing--m);
+  top: var(--wp--preset--spacing--m);
   height: 45px;
   width: 50px;
   cursor: pointer;
   z-index: 500;
-  background: color-mix(in srgb, var(--t-color-text), transparent 40%);
+  background: color-mix(in srgb, var(--wp--preset--color--text), transparent 40%);
   transition: opacity 0.25s ease;
 }
 @media (max-width: calc(40em - 0.0625em)) {
   .mobileTrigger {
     left: auto;
-    right: var(--t-space-s);
+    right: var(--wp--preset--spacing--s);
   }
 }
 .mobileTrigger.active .top {
@@ -10436,7 +10364,7 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
   transform: translateY(-12px) rotate(-45deg);
 }
 .mobileTrigger span {
-  background: var(--t-color-text);
+  background: var(--wp--preset--color--text);
   border: none;
   height: 2px;
   width: calc(100% - 10px);
@@ -10454,26 +10382,26 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
 }
 /* Footer */
 .footer {
-  padding-top: var(--t-space-l);
-  padding-bottom: var(--t-space-l);
+  padding-top: var(--wp--preset--spacing--l);
+  padding-bottom: var(--wp--preset--spacing--l);
 }
 .footer .uk-container > .uk-grid {
-  row-gap: var(--t-space-m);
+  row-gap: var(--wp--preset--spacing--m);
 }
 .footer-to-top {
-  background-color: color-mix(in srgb, var(--t-color-bg), transparent 25%);
+  background-color: color-mix(in srgb, var(--wp--preset--color--background), transparent 25%);
   display: none;
   z-index: 999;
   position: fixed;
-  right: var(--t-space-l);
-  bottom: var(--t-space-l);
+  right: var(--wp--preset--spacing--l);
+  bottom: var(--wp--preset--spacing--l);
   width: 50px;
   height: 50px;
   text-align: center;
   padding: 3px 5px;
   box-sizing: border-box;
   border-radius: 50%;
-  color: var(--t-color-text);
+  color: var(--wp--preset--color--text);
 }
 .footer-to-top .uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) {
   stroke: currentColor !important;
@@ -10500,97 +10428,97 @@ h1, h2, h3, h4, h5, h6, .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6 {
   display: block;
 }
 .block-inner__inner {
-  padding-top: var(--t-space-l);
-  padding-bottom: var(--t-space-l);
+  padding-top: var(--wp--preset--spacing--l);
+  padding-bottom: var(--wp--preset--spacing--l);
 }
 .block-inner--pad-none .block-inner__inner {
   padding-top: 0;
   padding-bottom: 0;
 }
 .block-inner--pad-s .block-inner__inner {
-  padding-top: var(--t-space-s);
-  padding-bottom: var(--t-space-s);
+  padding-top: var(--wp--preset--spacing--s);
+  padding-bottom: var(--wp--preset--spacing--s);
 }
 .block-inner--pad-m .block-inner__inner {
-  padding-top: var(--t-space-m);
-  padding-bottom: var(--t-space-m);
+  padding-top: var(--wp--preset--spacing--m);
+  padding-bottom: var(--wp--preset--spacing--m);
 }
 .block-inner--pad-l .block-inner__inner {
-  padding-top: var(--t-space-l);
-  padding-bottom: var(--t-space-l);
+  padding-top: var(--wp--preset--spacing--l);
+  padding-bottom: var(--wp--preset--spacing--l);
 }
 .block-inner--pad-xl .block-inner__inner {
-  padding-top: var(--t-space-xl);
-  padding-bottom: var(--t-space-xl);
+  padding-top: var(--wp--preset--spacing--xl);
+  padding-bottom: var(--wp--preset--spacing--xl);
 }
 .block-inner--full .block-inner__inner {
-  padding-left: var(--t-space-m);
-  padding-right: var(--t-space-m);
+  padding-left: var(--wp--preset--spacing--m);
+  padding-right: var(--wp--preset--spacing--m);
 }
 /*--------------------------------------------------------------*/
 /* Utility classes for spacing in Gutenberg */
 /*--------------------------------------------------------------*/
 /* Margin Top */
 .mt-xs {
-  margin-top: var(--t-space-xs) !important;
+  margin-top: var(--wp--preset--spacing--xs) !important;
 }
 .mt-s {
-  margin-top: var(--t-space-s) !important;
+  margin-top: var(--wp--preset--spacing--s) !important;
 }
 .mt-m {
-  margin-top: var(--t-space-m) !important;
+  margin-top: var(--wp--preset--spacing--m) !important;
 }
 .mt-l {
-  margin-top: var(--t-space-l) !important;
+  margin-top: var(--wp--preset--spacing--l) !important;
 }
 .mt-xl {
-  margin-top: var(--t-space-xl) !important;
+  margin-top: var(--wp--preset--spacing--xl) !important;
 }
 /* Margin Bottom */
 .mb-xs {
-  margin-bottom: var(--t-space-xs) !important;
+  margin-bottom: var(--wp--preset--spacing--xs) !important;
 }
 .mb-s {
-  margin-bottom: var(--t-space-s) !important;
+  margin-bottom: var(--wp--preset--spacing--s) !important;
 }
 .mb-m {
-  margin-bottom: var(--t-space-m) !important;
+  margin-bottom: var(--wp--preset--spacing--m) !important;
 }
 .mb-l {
-  margin-bottom: var(--t-space-l) !important;
+  margin-bottom: var(--wp--preset--spacing--l) !important;
 }
 .mb-xl {
-  margin-bottom: var(--t-space-xl) !important;
+  margin-bottom: var(--wp--preset--spacing--xl) !important;
 }
 /* Padding Top */
 .pt-xs {
-  padding-top: var(--t-space-xs) !important;
+  padding-top: var(--wp--preset--spacing--xs) !important;
 }
 .pt-s {
-  padding-top: var(--t-space-s) !important;
+  padding-top: var(--wp--preset--spacing--s) !important;
 }
 .pt-m {
-  padding-top: var(--t-space-m) !important;
+  padding-top: var(--wp--preset--spacing--m) !important;
 }
 .pt-l {
-  padding-top: var(--t-space-l) !important;
+  padding-top: var(--wp--preset--spacing--l) !important;
 }
 .pt-xl {
-  padding-top: var(--t-space-xl) !important;
+  padding-top: var(--wp--preset--spacing--xl) !important;
 }
 /* Padding Bottom */
 .pb-xs {
-  padding-bottom: var(--t-space-xs) !important;
+  padding-bottom: var(--wp--preset--spacing--xs) !important;
 }
 .pb-s {
-  padding-bottom: var(--t-space-s) !important;
+  padding-bottom: var(--wp--preset--spacing--s) !important;
 }
 .pb-m {
-  padding-bottom: var(--t-space-m) !important;
+  padding-bottom: var(--wp--preset--spacing--m) !important;
 }
 .pb-l {
-  padding-bottom: var(--t-space-l) !important;
+  padding-bottom: var(--wp--preset--spacing--l) !important;
 }
 .pb-xl {
-  padding-bottom: var(--t-space-xl) !important;
+  padding-bottom: var(--wp--preset--spacing--xl) !important;
 }
