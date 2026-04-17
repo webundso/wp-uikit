@@ -324,6 +324,11 @@ if (!defined('WUS_EDITOR_FORMATS_TO_REMOVE')) {
     ]);
 }
 
+/** Gutenberg Kontrastwarnung ausblenden: versteckt die Accessibility-Warnung. */
+if (!defined('WUS_HIDE_GUTENBERG_CONTRAST_WARNING')) {
+    define('WUS_HIDE_GUTENBERG_CONTRAST_WARNING', false);
+}
+
 
 /* -----------------------------------------------------------------------------
  * 10) Custom Block Kategorie + Icons
