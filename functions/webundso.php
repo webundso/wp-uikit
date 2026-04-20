@@ -143,8 +143,10 @@ if (!defined('WUS_DISABLE_COMMENTS')) {
 }
 
 /**
- * Admin-Bar deaktivieren: blendet die WP-Admin-Bar im Frontend aus.
- * Empfehlung: eher rollenbasiert lösen (Admins sehen sie, Kunden nicht).
+ * Admin-Bar deaktivieren:
+ * - false  = Admin-Bar für alle sichtbar (Standard)
+ * - true   = Admin-Bar nur für Nicht-Admins ausblenden (Admins behalten sie)
+ * - 'all'  = Admin-Bar für alle ausblenden, inkl. Admins
  */
 if (!defined('WUS_DISABLE_ADMIN_BAR')) {
     define('WUS_DISABLE_ADMIN_BAR', false);

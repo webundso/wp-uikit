@@ -11,7 +11,10 @@ defined('ABSPATH') || exit;
  * - Admin Footer Branding
  *
  * Schalter:
- * - WUS_DISABLE_ADMIN_BAR (bool): blendet Admin-Bar für Nicht-Admins aus (Admins behalten sie).
+ * - WUS_DISABLE_ADMIN_BAR (bool|string):
+ *     false  = Admin-Bar für alle sichtbar (Standard)
+ *     true   = Admin-Bar nur für Nicht-Admins ausblenden (Admins behalten sie)
+ *     'all'  = Admin-Bar für alle ausblenden, inkl. Admins
  */
 
 class WUS_Admin
@@ -55,11 +58,13 @@ class WUS_Admin
 
 		/**
 		 * Admin Bar Sichtbarkeit steuern.
-		 * Effekt: Admins sehen sie weiterhin, alle anderen nicht.
+		 * 'all' → niemand sieht sie; true → nur Nicht-Admins ausgeblendet.
 		 */
 		public static function maybe_hide_admin_bar($show): bool
 		{
-				// $show respektieren wir nicht, weil wir eine klare Policy wollen.
+				if (WUS_DISABLE_ADMIN_BAR === 'all') {
+						return false;
+				}
 				return current_user_can('manage_options');
 		}
 
