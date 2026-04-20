@@ -36,16 +36,7 @@ $theme_uri = get_stylesheet_directory_uri();
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-		<?php
-		/**
-		 * Mobile Toggle (UIkit Offcanvas)
-		 * - Button statt div (a11y)
-		 * - aria-controls/expanded für Screenreader
-		 *
-		 * Hinweis: aria-expanded wird durch UIkit nicht automatisch gepflegt.
-		 * Wenn du das sauber willst, kann man ein kleines JS anhängen.
-		 */
-		?>
+	
 		<button
 				type="button"
 				class="mobileTrigger uk-hidden@m"

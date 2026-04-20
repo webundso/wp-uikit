@@ -67,16 +67,35 @@ jQuery(document).ready(function ($) {
 		// Effekt: toggelt active + verhindert Scrollen im offenen Zustand.
 		// ---------------------------------------------------------------------
 
+		var isClosingOffcanvas = false;
+		
 		$('.mobileTrigger').on('click', function () {
-				var $btn = $(this);
-				$btn.toggleClass('active');
-				$btn.attr('aria-expanded', $btn.hasClass('active') ? 'true' : 'false');
-
-				if ($btn.hasClass('active')) {
-						$('html, body').css('overflow', 'hidden');
-				} else {
-						$('html, body').css('overflow', 'auto');
-				}
+			// Wenn UIkit gerade schliesst, ignorieren
+			if (isClosingOffcanvas) {
+				isClosingOffcanvas = false;
+				return;
+			}
+			
+			var $btn = $(this);
+			$btn.toggleClass('active');
+			$btn.attr('aria-expanded', $btn.hasClass('active') ? 'true' : 'false');
+			
+			if ($btn.hasClass('active')) {
+				$('html, body').css('overflow', 'hidden');
+			} else {
+				$('html, body').css('overflow', 'auto');
+			}
+		});
+		
+		// Wenn UIkit das Offcanvas schliesst (Overlay, ESC, etc.)
+		UIkit.util.on(document, 'hide', '#offcanvas-mobile', function () {
+			isClosingOffcanvas = true;
+			$('.mobileTrigger').removeClass('active').attr('aria-expanded', 'false');
+			$('html, body').css('overflow', 'auto');
+			// Flag nach kurzer Zeit zurücksetzen
+			setTimeout(function () {
+				isClosingOffcanvas = false;
+			}, 50);
 		});
 
 
