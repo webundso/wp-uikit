@@ -195,3 +195,15 @@ wp.domReady(() => {
 // 	);
 // } )( window.wp );
 
+// eigene Blockstyles
+// wp.blocks.registerBlockStyle( 'core/heading', [
+// 	{
+// 		name: 'default',
+// 		label: 'Default',
+// 		isDefault: true,
+// 	},
+// 	{
+// 		name: 'alt',
+// 		label: 'Alternate',
+// 	}
+// ]);
