@@ -29,13 +29,20 @@ jQuery(document).ready(function ($) {
 		$self.prop('disabled', true);
 		$self.text(wusAjax.loading);
 
+		var context    = $self.data('context')    || 'archive';
+		var perPage    = $self.data('per-page')   || null;
+		var categories = $self.data('categories') || '';
+
 		$.ajax({
 			url:    wusAjax.ajaxUrl,
 			method: 'POST',
 			data: {
-				action: 'wus_load_more',
-				nonce:  wusAjax.nonce,
-				paged:  currentPage + 1,
+				action:     'wus_load_more',
+				nonce:      wusAjax.nonce,
+				paged:      currentPage + 1,
+				context:    context,
+				per_page:   perPage,
+				categories: categories,
 			},
 			success: function (response) {
 				if (!response.success) {

@@ -33,6 +33,36 @@ class WUS_Assets
 		}
 
 		/**
+		 * Load More Script: enqueued on-demand von ACF Block (latest-posts).
+		 * Wird via wp_footer Hook aufgerufen, sobald Block vorhanden ist.
+		 */
+		public static function enqueue_load_more(): void
+		{
+				$ajax_rel = '/assets/js/wus-ajax.js';
+				$ajax_abs = get_stylesheet_directory() . $ajax_rel;
+				$ajax_uri = get_stylesheet_directory_uri() . $ajax_rel;
+
+				if (!file_exists($ajax_abs)) {
+						return;
+				}
+
+				wp_enqueue_script(
+						'wus-ajax',
+						$ajax_uri,
+						['jquery', 'uikit'],
+						filemtime($ajax_abs),
+						true
+				);
+
+				wp_localize_script('wus-ajax', 'wusAjax', [
+						'ajaxUrl' => admin_url('admin-ajax.php'),
+						'nonce'   => wp_create_nonce('wus_load_more'),
+						'loading' => esc_html__('Wird geladen…', 'webundso'),
+						'noMore'  => esc_html__('Keine weiteren Beiträge', 'webundso'),
+				]);
+		}
+
+		/**
 		 * UIkit Enqueue (lokale Library im Theme).
 		 * Effekt: UI-Komponenten + Icons verfügbar im Frontend.
 		 */

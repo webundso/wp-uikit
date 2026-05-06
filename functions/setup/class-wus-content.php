@@ -361,48 +361,71 @@ class WUS_Content
 
 	/**
 	 * AJAX Load More Handler.
-	 * Erwartet POST: paged, nonce
+	 * Erwartet POST: paged, nonce, [context, per_page, categories]
 	 * Gibt zurück: JSON { html, max_pages, paged }
 	 */
 	public static function ajax_load_more(): void
 	{
-		// Nonce prüfen
 		if (!check_ajax_referer('wus_load_more', 'nonce', false)) {
 			wp_send_json_error(['message' => 'Invalid nonce'], 403);
 		}
 
-		$paged    = isset($_POST['paged']) ? absint($_POST['paged']) : 2;
-		$per_page = defined('WUS_BLOG_POSTS_PER_PAGE') ? (int) WUS_BLOG_POSTS_PER_PAGE : 10;
-		$variant  = defined('WUS_BLOG_LOOP_VARIANT')   ? (string) WUS_BLOG_LOOP_VARIANT : 'grid';
+		$paged   = isset($_POST['paged'])   ? absint($_POST['paged'])        : 2;
+		$context = isset($_POST['context']) ? sanitize_key($_POST['context']) : 'archive';
 
-		$query = new WP_Query([
+		if ($context === 'block') {
+			$per_page = isset($_POST['per_page']) ? absint($_POST['per_page']) : 6;
+			$cat_ids  = [];
+			if (!empty($_POST['categories'])) {
+				$cat_ids = array_filter(array_map('absint', explode(',', $_POST['categories'])));
+			}
+		} else {
+			$per_page = defined('WUS_BLOG_POSTS_PER_PAGE') ? (int) WUS_BLOG_POSTS_PER_PAGE : 10;
+			$cat_ids  = [];
+		}
+
+		$args = [
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
 			'posts_per_page' => $per_page,
 			'paged'          => $paged,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
 			'no_found_rows'  => false,
-		]);
+		];
 
-		ob_start();
-
-		if ($query->have_posts()) {
-			$is_grid   = ($variant !== 'list');
-			$loop_slug = $is_grid ? 'blog-grid' : 'blog';
-
-			while ($query->have_posts()) {
-				$query->the_post();
-				get_template_part('parts/loop', $loop_slug);
-			}
-
-			wp_reset_postdata();
+		if (!empty($cat_ids)) {
+			$args['tax_query'] = [[
+				'taxonomy' => 'category',
+				'field'    => 'term_id',
+				'terms'    => $cat_ids,
+				'operator' => 'IN',
+			]];
 		}
 
-		$html      = ob_get_clean();
-		$max_pages = (int) $query->max_num_pages;
+		$query = new WP_Query($args);
+
+		ob_start();
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
+				if ($context === 'block') {
+					echo '<div>';
+					get_template_part('assets/blocks/latest-posts/post-card');
+					echo '</div>';
+				} else {
+					$variant   = defined('WUS_BLOG_LOOP_VARIANT') ? (string) WUS_BLOG_LOOP_VARIANT : 'grid';
+					$loop_slug = ($variant !== 'list') ? 'blog-grid' : 'blog';
+					get_template_part('parts/loop', $loop_slug);
+				}
+			}
+			wp_reset_postdata();
+		}
+		$html = ob_get_clean();
 
 		wp_send_json_success([
 			'html'      => $html,
-			'max_pages' => $max_pages,
+			'max_pages' => (int) $query->max_num_pages,
 			'paged'     => $paged,
 		]);
 	}

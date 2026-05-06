@@ -1,0 +1,20 @@
+{
+  "name": "latest-posts",
+  "title": "Letzte Beiträge",
+  "description": "Zeigt die letzten Beiträge als Kacheln mit optionalem «Mehr laden»-Button.",
+  "category": "webundso-spezial",
+  "icon": "grid-view",
+  "keywords": [
+    "posts",
+    "beiträge",
+    "kacheln",
+    "blog",
+    "latest"
+  ],
+  "mode": "preview",
+  "supports": {
+    "align": false,
+    "mode": false,
+    "jsx": false
+  }
+}

@@ -319,6 +319,7 @@ add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context
         'acf/hero', 'acf/acf-hero',
         'acf/accordion', 'acf/acf-accordion',
         'acf/innerblock', 'acf/acf-innerblock',
+        'acf/latest-posts', 'acf/acf-latest-posts',
     ];
 
     foreach ($project_blocks as $slug) {
