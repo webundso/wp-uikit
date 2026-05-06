@@ -1,0 +1,93 @@
+{
+    "key": "group_67360bbc73e42",
+    "title": "Block: Letzte Beiträge",
+    "fields": [
+        {
+            "key": "field_67360bbc8a1a1",
+            "label": "Anzahl Beiträge",
+            "name": "posts_count",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Wie viele Beiträge sollen initial angezeigt werden?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 6,
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_67360bbc8a1a2",
+            "label": "Kategorien",
+            "name": "categories",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Beiträge nach bestimmten Kategorien filtern (optional). Wenn leer, werden alle Kategorien angezeigt.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "field_type": "multi_select",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "allow_null": 1,
+            "multiple": 1
+        },
+        {
+            "key": "field_67360bbc8a1a3",
+            "label": "»Ältere Beiträge laden«-Button anzeigen",
+            "name": "show_more",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Zeigt den Load-More-Button an, wenn weitere Beiträge verfügbar sind.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Ja",
+            "ui_off_text": "Nein"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/latest-posts"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1778065818
+}
