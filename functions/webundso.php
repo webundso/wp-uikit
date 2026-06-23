@@ -18,9 +18,10 @@ defined('ABSPATH') || exit;
  * 1) Environment
  * -------------------------------------------------------------------------- */
 
-/** Umgebung: steuert z.B. Debug-Verhalten/Logging (local|development|staging|production). */
+/** Umgebung: spiegelt WP_ENVIRONMENT_TYPE (local|development|staging|production).
+ *  In wp-config.php via WP_ENVIRONMENT_TYPE setzen — WUS_ENV wird automatisch übernommen. */
 if (!defined('WUS_ENV')) {
-    define('WUS_ENV', 'production');
+    define('WUS_ENV', defined('WP_ENVIRONMENT_TYPE') ? WP_ENVIRONMENT_TYPE : 'production');
 }
 
 

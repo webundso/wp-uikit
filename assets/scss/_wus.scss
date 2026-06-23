@@ -76,12 +76,29 @@ h1,h2,h3,h4,h5,h6,
 		line-height: 1.25;
 	}
 
-	h1 { font-size: var(--wp--preset--font-size--xxl); }
-	h2 { font-size: var(--wp--preset--font-size--xl); }
-	h3 { font-size: var(--wp--preset--font-size--l); }
-	h4 { font-size: var(--wp--preset--font-size--m); }
-	h5 { font-size: var(--wp--preset--font-size--s); }
-	h6 { font-size: var(--wp--preset--font-size--xs); }
+	h1 {
+	font-size: var(--wp--preset--font-size--xxl);
+	}
+	
+	h2 {
+		font-size: var(--wp--preset--font-size--xl);
+	}
+	
+	h3 {
+		font-size: var(--wp--preset--font-size--l);
+	}
+	
+	h4 {
+		font-size: var(--wp--preset--font-size--m);
+	}
+	
+	h5 {
+		font-size: var(--wp--preset--font-size--s);
+	}
+	
+	h6 {
+		font-size: var(--wp--preset--font-size--xs);
+	}
 
 	/* Extra Abstand vor Überschriften */
 	h1, h2, h3 {
@@ -100,12 +117,19 @@ h1,h2,h3,h4,h5,h6,
 
 	/* Links innerhalb Content */
 	a {
-		color: var(--wp--preset--color--primary);
-		text-decoration: underline;
-	}
+		&:where(:not(.uk-button, .uk-button-primary, .uk-button-secondary, .uk-button-danger, .uk-button-default, .uk-button-text, .uk-button-link)) {
+			color: var(--wp--preset--color--primary);
+			text-decoration: underline;
 
-	a:hover {
-		color: var(--wp--preset--color--primary-hover);
+			&:visited {
+				color: var(--wp--preset--color--primary);
+				text-decoration: underline;
+			}
+
+			&:hover {
+				color: var(--wp--preset--color--primary-hover);
+			}
+		}
 	}
 
 	/* Bilder */
@@ -235,6 +259,15 @@ h1,h2,h3,h4,h5,h6,
 /*==============================================================*/
 
 /* Header */
+
+.header {
+	.uk-logo{
+		img{
+			
+		}
+	}
+}
+
 .mobileTrigger {
 	position: absolute;
 	left: var(--wp--preset--spacing--m);

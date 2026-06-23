@@ -25,6 +25,9 @@
  * - via Server-Env setzen (z.B. WP_ENVIRONMENT_TYPE)
  * - Fallback hier auf production
  */
+ 
+ // define('WP_ENVIRONMENT_TYPE', 'local'); 
+ 
 if (!defined('WP_ENVIRONMENT_TYPE')) {
   define('WP_ENVIRONMENT_TYPE', getenv('WP_ENVIRONMENT_TYPE') ?: 'production');
 }
@@ -159,5 +162,53 @@ define('EMPTY_TRASH_DAYS', 14);
  */
 // define('WP_MAX_UPLOAD_SIZE', 64 * 1024 * 1024); // 64 MB
 
+/* =============================================================
+ * WUS Theme Konfiguration
+ * Alle Werte hier setzen — webundso.php greift nur als Fallback.
+ * =========================================================== */
 
+// ── 1) Branding ───────────────────────────────────────────────
+define('WUS_BRAND_NAME',          'Projektname GmbH');
+define('WUS_BRAND_URL',           'https://www.example.ch');
+define('WUS_BRAND_SUPPORT_EMAIL', 'info@example.ch');
+define('WUS_LOGO_ASSET',          '/assets/images/logo.svg');
+
+// ── 2) Navigation ─────────────────────────────────────────────
+define('WUS_TOPNAV_MODE', 'dropdown'); // 'dropdown' | 'mega'
+define('WUS_NAV_SEARCH',  true);
+
+// ── 3) Footer ─────────────────────────────────────────────────
+define('WUS_FOOTER_COL1', 'auto'); // 'auto' | 'widgets' | 'html'
+define('WUS_FOOTER_COL2', 'auto');
+define('WUS_FOOTER_COL3', 'auto');
+
+// ── 4) Blog ───────────────────────────────────────────────────
+define('WUS_BLOG_LOOP_VARIANT',   'grid'); // 'grid' | 'list'
+define('WUS_BLOG_POSTS_PER_PAGE', 10);
+define('WUS_BLOG_LOAD_MORE',      true);
+
+// ── 5) Feature Toggles ────────────────────────────────────────
+define('WUS_DISABLE_FEEDS',    true);
+define('WUS_DISABLE_COMMENTS', true);
+define('WUS_DISABLE_ADMIN_BAR', false); // false | true (Nicht-Admins) | 'all'
+define('WUS_DISABLE_WPAUTOP',  false);
+define('WUS_PAGE_SHOW_TITLE',  true);
+
+// ── 6) Uploads ────────────────────────────────────────────────
+define('WUS_ALLOW_VCF_UPLOAD', true);
+define('WUS_ALLOW_SVG_UPLOAD', false); // lieber Plugin "Safe SVG" nutzen
+
+// ── 7) Editor / Gutenberg ─────────────────────────────────────
+define('WUS_DISABLE_REMOTE_PATTERNS', true);
+define('WUS_DISABLE_CORE_PATTERNS',   true);
+define('WUS_EDITOR_DISABLE_FULLSCREEN', true);
+define('WUS_EDITOR_REMOVE_FORMATS',   true);
+define('WUS_EDITOR_REMOVE_BLOCK_STYLES', true);
+
+// ── 8) Dev Tools ──────────────────────────────────────────────
+define('WUS_TOKEN_SHEET',        $is_local); // Design Token Sheet nur lokal
+define('WUS_DEBUG_BLOCK_REGISTER', false);
+
+// ── 9) UIkit ──────────────────────────────────────────────────
+define('WUS_UIKIT_VERSION', '3.17.11');
 
