@@ -1,4 +1,4 @@
-  <?php
+<?php
   defined('ABSPATH') || exit;
   
   /**
@@ -61,3 +61,62 @@
   		</style>';
   	});
   }
+
+// ============================================================
+// ACF WYSIWYG Toolbar: Zwei Spalten RTE
+// ============================================================
+    
+  
+  add_filter( 'acf/fields/wysiwyg/toolbars', function( $toolbars ) {
+      $toolbars['Name Toolbar'] = array(
+          1 => array(
+              'formatselect',
+              'styleselect',
+              'bold',
+              'italic',
+              'bullist',
+              'outdent',
+              'indent',
+              'link',
+              'blockquote',
+          ),
+      );
+      return $toolbars;
+  } );
+  
+  /**
+   * TinyMCE: Button-Style und H2/H3 als einzige Formate
+   */
+add_filter( 'tiny_mce_before_init', function( $settings ) {
+     $style_formats = array(
+       array(
+         'title'   => 'Button',
+         'inline'  => 'a',
+         'classes' => 'uk-button uk-button-primary',
+         'wrapper' => false,
+       ),
+       array(
+         'title'   => 'Button Stern',
+         'inline'  => 'a',
+         'classes' => 'uk-button uk-button-primary star',
+         'wrapper' => false,
+       ),
+       array(
+         'title'   => 'Preis',
+         'inline'  => 'span',
+         'classes' => 'preis',
+         'wrapper' => false,
+       ),
+       array(
+         'title'    => 'Preisliste eingerückt',
+         'selector' => 'li',
+         'classes'  => 'wus-preisliste--indent',
+       ),
+     );
+   
+     $settings['style_formats'] = wp_json_encode( $style_formats );
+     $settings['block_formats'] = 'Paragraph=p;H2=h2;H3=h3';
+   
+     return $settings;
+   } );
+   

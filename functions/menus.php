@@ -287,98 +287,87 @@ class WUS_UikitWalker extends Walker_Nav_Menu
  * -------------------------------------------------------------------------- */
 
 class WUS_UikitWalkerAkk extends Walker_Nav_Menu
-{
-    /**
-     * Submenu öffnen.
-     * Default: hidden, wird via UIkit Toggle/JS geöffnet.
-     */
-    public function start_lvl(&$output, $depth = 0, $args = null): void
-    {
-        $indent = str_repeat("\t", $depth);
-        $output .= "\n{$indent}<ul class=\"uk-nav-sub\" hidden>\n";
-    }
-
-    /**
-     * Submenu schliessen.
-     */
-    public function end_lvl(&$output, $depth = 0, $args = null): void
-    {
-        $indent = str_repeat("\t", $depth);
-        $output .= "{$indent}</ul>\n";
-    }
-
-    /**
-     * Element-Ausgabe.
-     */
-    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0): void
-    {
-        $indent = $depth ? str_repeat("\t", $depth) : '';
-        $classes = empty($item->classes) ? [] : (array) $item->classes;
-
-        $has_children = !empty($args->has_children);
-
-        $classes[] = 'menu-item-' . $item->ID;
-
-        if ($has_children) {
-            $classes[] = 'uk-parent';
-        }
-
-        $class_names = implode(' ', array_filter($classes));
-        $item_id = 'menu-item-' . $item->ID;
-
-        $output .= "{$indent}<li id=\"" . esc_attr($item_id) . "\" class=\"" . esc_attr($class_names) . "\">";
-
-        // Link Attribute sauber über WP Filter (inkl. noopener via globalem Filter)
-        $atts = [
-            'title'  => !empty($item->attr_title) ? $item->attr_title : '',
-            'target' => !empty($item->target) ? $item->target : '',
-            'rel'    => !empty($item->xfn) ? $item->xfn : '',
-            'href'   => !empty($item->url) ? $item->url : '',
-        ];
-        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args);
-
-        $attributes = '';
-        foreach ($atts as $attr => $value) {
-            if ($value === '') {
-                continue;
-            }
-            $value = ($attr === 'href') ? esc_url($value) : esc_attr($value);
-            $attributes .= " {$attr}=\"{$value}\"";
-        }
-
-        $title = esc_html($item->title);
-
-        $output .= "<a{$attributes}>{$title}</a>";
-
-        // Toggle Button für Parents
-        if ($has_children) {
-            $sub_selector = '#' . $item_id . ' > .uk-nav-sub';
-
-            $output .= '<button'
-                . ' type="button"'
-                . ' class="uk-accordion-toggle"'
-                . ' aria-controls="' . esc_attr($item_id . '-sub') . '"'
-                . ' aria-expanded="false"'
-                . ' uk-toggle="target: ' . esc_attr($sub_selector) . '; animation: uk-animation-slide-top-small">'
-                . '<span uk-icon="icon: chevron-down"></span>'
-                . '</button>';
-        }
-    }
-
-    /**
-     * Element schliessen.
-     */
-    public function end_el(&$output, $item, $depth = 0, $args = null): void
-    {
-        $output .= "</li>\n";
-    }
-
-    /**
-     * Optional: Submenu UL bekommt eine ID für aria-controls.
-     * (Walker_Nav_Menu gibt uns dafür keinen direkten Hook pro UL-ID; wenn du das exakt willst,
-     * machst du es über start_lvl mit depth+parent id tracking. Für jetzt: ok.)
-     */
-}
+ {
+     /**
+      * Submenu öffnen.
+      * Default: hidden, wird via UIkit Toggle/JS geöffnet.
+      */
+     public function start_lvl(&$output, $depth = 0, $args = null): void
+     {
+         $indent = str_repeat("\t", $depth);
+         $output .= "\n{$indent}<ul class=\"uk-nav-sub\" hidden>\n";
+     }
+     /**
+      * Submenu schliessen.
+      */
+     public function end_lvl(&$output, $depth = 0, $args = null): void
+     {
+         $indent = str_repeat("\t", $depth);
+         $output .= "{$indent}</ul>\n";
+     }
+     /**
+      * Element-Ausgabe.
+      */
+     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0): void
+     {
+         $indent = $depth ? str_repeat("\t", $depth) : '';
+         $classes = empty($item->classes) ? [] : (array) $item->classes;
+ 
+         // Robust: direkt aus den vorhandenen Item-Klassen ableiten,
+         // statt auf $args->has_children zu vertrauen (unzuverlässig bei Custom-Walkern)
+         $has_children = in_array('menu-item-has-children', $classes, true);
+ 
+         $classes[] = 'menu-item-' . $item->ID;
+         if ($has_children) {
+             $classes[] = 'uk-parent';
+         }
+         $class_names = implode(' ', array_filter($classes));
+         $item_id = 'menu-item-' . $item->ID;
+         $output .= "{$indent}<li id=\"" . esc_attr($item_id) . "\" class=\"" . esc_attr($class_names) . "\">";
+         // Link Attribute sauber über WP Filter (inkl. noopener via globalem Filter)
+         $atts = [
+             'title'  => !empty($item->attr_title) ? $item->attr_title : '',
+             'target' => !empty($item->target) ? $item->target : '',
+             'rel'    => !empty($item->xfn) ? $item->xfn : '',
+             'href'   => !empty($item->url) ? $item->url : '',
+         ];
+         $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args);
+         $attributes = '';
+         foreach ($atts as $attr => $value) {
+             if ($value === '') {
+                 continue;
+             }
+             $value = ($attr === 'href') ? esc_url($value) : esc_attr($value);
+             $attributes .= " {$attr}=\"{$value}\"";
+         }
+         $title = esc_html($item->title);
+         $output .= "<a{$attributes}>{$title}</a>";
+         // Toggle Button für Parents
+         if ($has_children) {
+             $sub_selector = '#' . $item_id . ' > .uk-nav-sub';
+             $output .= '<button'
+                 . ' type="button"'
+                 . ' class="uk-accordion-toggle"'
+                 . ' aria-controls="' . esc_attr($item_id . '-sub') . '"'
+                 . ' aria-expanded="false"'
+                 . ' uk-toggle="target: ' . esc_attr($sub_selector) . '; animation: uk-animation-slide-top-small">'
+                 . '<span uk-icon="icon: chevron-down"></span>'
+                 . '</button>';
+         }
+     }
+     /**
+      * Element schliessen.
+      */
+     public function end_el(&$output, $item, $depth = 0, $args = null): void
+     {
+         $output .= "</li>\n";
+     }
+     /**
+      * Optional: Submenu UL bekommt eine ID für aria-controls.
+      * (Walker_Nav_Menu gibt uns dafür keinen direkten Hook pro UL-ID; wenn du das exakt willst,
+      * machst du es über start_lvl mit depth+parent id tracking. Für jetzt: ok.)
+      */
+ }
 
 
 /* -----------------------------------------------------------------------------

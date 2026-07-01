@@ -1,6 +1,6 @@
 {
     "key": "group_6985bcf733e31",
-    "title": "Block",
+    "title": "Block Inner",
     "fields": [
         {
             "key": "field_6985bcf793475",
@@ -83,5 +83,7 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1770374455
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1778065818
 }
