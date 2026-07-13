@@ -8,6 +8,7 @@
 @mixin dev-border($color: red) {
   border: 1px solid $color;
 }
+
 // @include dev-border();           // rote Debug-Umrandung
 // @include dev-border(blue);       // blaue Debug-Umrandung
 
@@ -19,31 +20,26 @@
   $index: str-index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1)
-      + $replace
-      + str-replace(
-          str-slice($string, $index + str-length($search)),
-          $search,
-          $replace
-        );
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)),
+      $search,
+      $replace );
   }
 
   @return $string;
 }
+
 // str-replace("Source Serif 4", " ", "_"); // → "Source_Serif_4"
 
 
 /* --------------------------------------------------------------- */
 /* FONT FACE                                                       */
 /* --------------------------------------------------------------- */
-@mixin font-face(
-  $name,
+@mixin font-face($name,
   $path,
   $weight: null,
   $style: normal,
   $exts: woff2 woff,
-  $display: swap
-) {
+  $display: swap) {
   $src: null;
 
   $formats: (
@@ -53,19 +49,20 @@
     ttf: "truetype"
   );
 
-  @each $ext in $exts {
-    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
-    $src: append($src, url("#{$path}.#{$ext}") format("#{$format}"), comma);
-  }
-
-  @font-face {
-    font-family: quote($name);
-    font-style: $style;
-    font-weight: $weight;
-    font-display: $display;
-    src: $src;
-  }
+@each $ext in $exts {
+  $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+  $src: append($src, url("#{$path}.#{$ext}") format("#{$format}"), comma);
 }
+
+@font-face {
+  font-family: quote($name);
+  font-style: $style;
+  font-weight: $weight;
+  font-display: $display;
+  src: $src;
+}
+}
+
 // @include font-face("Inter", "../fonts/inter-variable", "100 900", normal);
 // @include font-face("Inter", "../fonts/inter-regular", 400, normal);
 
@@ -77,7 +74,7 @@ $rem-fallback: false !default;
 $rem-px-only: false !default;
 
 @function rem-separator($list, $separator: false) {
-  @if $separator == comma or $separator == space {
+  @if $separator ==comma or $separator ==space {
     @return append($list, null, $separator);
   }
 
@@ -85,28 +82,36 @@ $rem-px-only: false !default;
     @return list-separator($list);
   }
 
-  $test: ();
-  @each $item in $list {
-    $test: append($test, $item, space);
-  }
-  @return if($test == $list, space, comma);
+  $test: (
+  );
+
+@each $item in $list {
+  $test: append($test, $item, space);
+}
+
+@return if($test ==$list, space, comma);
 }
 
 @function rem-convert($to, $values...) {
-  $result: ();
-  $sep: rem-separator($values);
+  $result: (
+  );
+$sep: rem-separator($values);
 
-  @each $value in $values {
-    @if type-of($value) == number and unit($value) == px and $to == rem {
-      $result: append($result, $value / $rem-baseline * 1rem, $sep);
-    } @else if type-of($value) == number and unit($value) == rem and $to == px {
-      $result: append($result, $value / 1rem * $rem-baseline, $sep);
-    } @else {
-      $result: append($result, $value, $sep);
-    }
+@each $value in $values {
+  @if type-of($value)==number and unit($value)==px and $to ==rem {
+    $result: append($result, $value / $rem-baseline * 1rem, $sep);
   }
 
-  @return if(length($result) == 1, nth($result, 1), $result);
+  @else if type-of($value)==number and unit($value)==rem and $to ==px {
+    $result: append($result, $value / 1rem * $rem-baseline, $sep);
+  }
+
+  @else {
+    $result: append($result, $value, $sep);
+  }
+}
+
+@return if(length($result)==1, nth($result, 1), $result);
 }
 
 @function rem($values...) {
@@ -118,11 +123,13 @@ $rem-px-only: false !default;
     @if $rem-fallback or $rem-px-only {
       #{$prop}: rem-convert(px, $values...);
     }
+
     @if not $rem-px-only {
       #{$prop}: rem-convert(rem, $values...);
     }
   }
 }
+
 // font-size: rem(24px);
 // @include rem(margin padding, 16px 24px);
 
@@ -130,31 +137,72 @@ $rem-px-only: false !default;
 /* --------------------------------------------------------------- */
 /* BREAKPOINTS – UIkit defaults                                   */
 /* --------------------------------------------------------------- */
-$bp-s: 40em !default;    // 640px
-$bp-m: 60em !default;    // 960px
-$bp-l: 75em !default;    // 1200px
-$bp-xl: 100em !default;  // 1600px
+$bp-s: 40em !default; // 640px
+$bp-m: 60em !default; // 960px
+$bp-l: 75em !default; // 1200px
+$bp-xl: 100em !default; // 1600px
 
 @mixin bp-up($bp) {
-  @media (min-width: $bp) { @content; }
+  @media (min-width: $bp) {
+    @content;
+  }
 }
+
 // @include bp-up($bp-m) { ... }
 
 @mixin bp-down($bp) {
-  @media (max-width: calc(#{$bp} - 0.0625em)) { @content; }
+  @media (max-width: calc(#{$bp} - 0.0625em)) {
+    @content;
+  }
 }
+
 // @include bp-down($bp-m) { ... }
 
-@mixin bp-small-up   { @include bp-up($bp-s)  { @content; } }
-@mixin bp-medium-up  { @include bp-up($bp-m)  { @content; } }
-@mixin bp-large-up   { @include bp-up($bp-l)  { @content; } }
-@mixin bp-xlarge-up  { @include bp-up($bp-xl) { @content; } }
+@mixin bp-small-up {
+  @include bp-up($bp-s) {
+    @content;
+  }
+}
+
+@mixin bp-medium-up {
+  @include bp-up($bp-m) {
+    @content;
+  }
+}
+
+@mixin bp-large-up {
+  @include bp-up($bp-l) {
+    @content;
+  }
+}
+
+@mixin bp-xlarge-up {
+  @include bp-up($bp-xl) {
+    @content;
+  }
+}
+
 // @include bp-large-up { ... }
 
-@mixin bp-small-down  { @include bp-down($bp-s)  { @content; } }
-@mixin bp-medium-down { @include bp-down($bp-m)  { @content; } }
-@mixin bp-large-down  { @include bp-down($bp-l)  { @content; } }
-// @include bp-small-down { ... }
+@mixin bp-small-down {
+  @include bp-down($bp-s) {
+    @content;
+  }
+}
+
+@mixin bp-medium-down {
+  @include bp-down($bp-m) {
+    @content;
+  }
+}
+
+@mixin bp-large-down {
+  @include bp-down($bp-l) {
+    @content;
+  }
+}
+
+// @include bp-small-down { }
 
 
 /* --------------------------------------------------------------- */
@@ -165,23 +213,29 @@ $bp-xl: 100em !default;  // 1600px
   margin: 0;
   padding: 0;
 }
+
 // @include list-reset;
 
 @mixin center($mode: both) {
   position: absolute;
 
-  @if $mode == vertical {
+  @if $mode ==vertical {
     top: 50%;
     transform: translateY(-50%);
-  } @else if $mode == horizontal {
+  }
+
+  @else if $mode ==horizontal {
     left: 50%;
     transform: translateX(-50%);
-  } @else {
+  }
+
+  @else {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 }
+
 // @include center(both);
 
 
@@ -196,16 +250,14 @@ $bp-xl: 100em !default;  // 1600px
   font-size: $min-size;
 
   @media (min-width: $min-vw) {
-    font-size: calc(
-      #{$min-size} + #{strip-unit($max-size - $min-size)}
-      * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
-    );
+    font-size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
   }
 
   @media (min-width: $max-vw) {
     font-size: $max-size;
   }
 }
+
 // @include fluid-type(320px, 1200px, 16px, 24px);
 
 
@@ -213,6 +265,9 @@ $bp-xl: 100em !default;  // 1600px
 /* PLACEHOLDER                                                     */
 /* --------------------------------------------------------------- */
 @mixin placeholder {
-  &::placeholder { @content; }
+  &::placeholder {
+    @content;
+  }
 }
+
 // @include placeholder { color: #999; }

@@ -23,6 +23,9 @@ require_once __DIR__ . '/setup/class-wus-core.php';
 /** Cleanup: deaktiviert unnötigen WP-Ballast (feeds, emojis, comments, etc.) je nach Flags. */
 require_once __DIR__ . '/setup/class-wus-cleanup.php';
 
+/** MediaSeo: verhindert Indexierung unverlinkter Mediathek-Dateien (Attachment-Pages, Sitemap, robots.txt). */
+require_once __DIR__ . '/setup/class-wus-media-seo.php';
+
 /** Admin: Backend UX, Admin-Bar-Regeln, Admin-spezifische Anpassungen. */
 require_once __DIR__ . '/setup/class-wus-admin.php';
 
@@ -92,6 +95,13 @@ add_action('after_setup_theme', function (): void {
 		 */
 		if (class_exists('WUS_Cleanup')) {
 				WUS_Cleanup::init();
+		}
+
+		/**
+		 * MediaSeo: Attachment-Pages/Sitemap/robots.txt, unabhängig von Cleanup.
+		 */
+		if (class_exists('WUS_MediaSeo')) {
+				WUS_MediaSeo::init();
 		}
 
 		/**

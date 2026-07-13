@@ -169,6 +169,35 @@ if (!defined('WUS_DISABLE_WPAUTOP')) {
 //     define('WUS_DISABLE_REST_API', false);
 // }
 
+/**
+ * Mediathek-SEO: Indexierung unverlinkter Uploads-Dateien verhindern.
+ * - Attachment-Pages: Redirect statt eigener HTML-Seite
+ * - Core-Sitemap: Attachments ausschliessen
+ * - robots.txt: Disallow für definierte Dateitypen (siehe WUS_NOINDEX_FILE_TYPES)
+ * Wichtig: ersetzt NICHT den X-Robots-Tag-Header auf Server-Ebene (.htaccess/nginx),
+ * siehe README.md, Abschnitt "Deployment / Server-Config".
+ */
+if (!defined('WUS_NOINDEX_ATTACHMENTS')) {
+    define('WUS_NOINDEX_ATTACHMENTS', true);
+}
+
+/**
+ * Redirect-Ziel für Attachment-Pages:
+ * - 'parent' = Elternbeitrag (Default), fällt auf Startseite zurück falls keiner vorhanden
+ * - 'home'   = immer Startseite
+ */
+if (!defined('WUS_ATTACHMENT_REDIRECT_TARGET')) {
+    define('WUS_ATTACHMENT_REDIRECT_TARGET', 'parent');
+}
+
+/**
+ * Dateitypen für robots.txt-Disallow (Uploads-Verzeichnis).
+ * Projektspezifisch erweiterbar, z.B. um 'rar', 'csv'.
+ */
+if (!defined('WUS_NOINDEX_FILE_TYPES')) {
+    define('WUS_NOINDEX_FILE_TYPES', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip']);
+}
+
 
 /* -----------------------------------------------------------------------------
  * 5) Search Defaults

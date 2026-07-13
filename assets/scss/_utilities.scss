@@ -1,21 +1,117 @@
 /*--------------------------------------------------------------*/
 /* Utility classes for spacing in Gutenberg */
 /*--------------------------------------------------------------*/
+$sizes: (
+  xs,
+  s,
+  m,
+  l,
+  xl,
+  xxl
+);
 
-$sizes: (xs, s, m, l, xl);
+$breakpoints: (
+  s: 640px,
+  m: 960px,
+  l: 1200px,
+  xl: 1600px
+);
 
-@each $size in $sizes {
-  /* Margin */
-  .mt-#{$size} { margin-top:    var(--wp--preset--spacing--#{$size}) !important; }
-  .mb-#{$size} { margin-bottom: var(--wp--preset--spacing--#{$size}) !important; }
-  .ml-#{$size} { margin-left:   var(--wp--preset--spacing--#{$size}) !important; }
-  .mr-#{$size} { margin-right:  var(--wp--preset--spacing--#{$size}) !important; }
-  .m-#{$size}  { margin:        var(--wp--preset--spacing--#{$size}) !important; }
+@mixin wus-spacing-utilities {
+  @each $size in $sizes {
 
-  /* Padding */
-  .pt-#{$size} { padding-top:    var(--wp--preset--spacing--#{$size}) !important; }
-  .pb-#{$size} { padding-bottom: var(--wp--preset--spacing--#{$size}) !important; }
-  .pl-#{$size} { padding-left:   var(--wp--preset--spacing--#{$size}) !important; }
-  .pr-#{$size} { padding-right:  var(--wp--preset--spacing--#{$size}) !important; }
-  .p-#{$size}  { padding:        var(--wp--preset--spacing--#{$size}) !important; }
+    /* Margin */
+    .mt-#{$size} {
+      margin-top: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .mb-#{$size} {
+      margin-bottom: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .ml-#{$size} {
+      margin-left: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .mr-#{$size} {
+      margin-right: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .m-#{$size} {
+      margin: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    /* Padding */
+    .pt-#{$size} {
+      padding-top: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .pb-#{$size} {
+      padding-bottom: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .pl-#{$size} {
+      padding-left: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .pr-#{$size} {
+      padding-right: var(--wp--preset--spacing--#{$size}) !important;
+    }
+
+    .p-#{$size} {
+      padding: var(--wp--preset--spacing--#{$size}) !important;
+    }
+  }
 }
+
+/* Basis (ohne Breakpoint) */
+@include wus-spacing-utilities;
+
+/* Breakpoint-Varianten, z.B. .mt-xl@m */
+@each $bp-name, $bp-value in $breakpoints {
+  @media (min-width: $bp-value) {
+    @each $size in $sizes {
+      .mt-#{$size}\@#{$bp-name} {
+        margin-top: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .mb-#{$size}\@#{$bp-name} {
+        margin-bottom: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .ml-#{$size}\@#{$bp-name} {
+        margin-left: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .mr-#{$size}\@#{$bp-name} {
+        margin-right: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .m-#{$size}\@#{$bp-name} {
+        margin: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .pt-#{$size}\@#{$bp-name} {
+        padding-top: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .pb-#{$size}\@#{$bp-name} {
+        padding-bottom: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .pl-#{$size}\@#{$bp-name} {
+        padding-left: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .pr-#{$size}\@#{$bp-name} {
+        padding-right: var(--wp--preset--spacing--#{$size}) !important;
+      }
+
+      .p-#{$size}\@#{$bp-name} {
+        padding: var(--wp--preset--spacing--#{$size}) !important;
+      }
+    }
+  }
+}
+
+// mt-xl@m
