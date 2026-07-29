@@ -4,14 +4,9 @@
 // 2) Fonts
 @import "fonts";
 
-// 3) UIkit Sass overrides (nur $variablen!)
-@import "uikit-vars";   // <- NEU, nur Sass-Variablen
+// 3) UIkit Overrides (CSS, wirkt nach uikit/dist/css/uikit.css)
+@import "uikit-overrides";
 
-// 4) UIkit Build
-@import "../../uikit/src/scss/variables-theme.scss";
-@import "../../uikit/src/scss/mixins-theme.scss";
-@import "../../uikit/src/scss/uikit-theme.scss";
-
-// 5) Theme Layer (CSS)
+// 4) Theme Layer (CSS)
 @import "wus";
 @import "utilities";

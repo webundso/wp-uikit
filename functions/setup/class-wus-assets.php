@@ -29,6 +29,7 @@ class WUS_Assets
 		public static function enqueue(): void
 		{
 				self::enqueue_uikit();
+				self::enqueue_uikit_css();
 				self::enqueue_project_assets();
 		}
 
@@ -114,6 +115,36 @@ class WUS_Assets
 		}
 
 		/**
+		 * UIkit CSS Enqueue (vorkompilierte Distribution, /uikit/dist/css/).
+		 * Effekt: Basis-Styles vor site.css geladen, damit Theme-Overrides greifen.
+		 */
+		private static function enqueue_uikit_css(): void
+		{
+				$uikit_version = defined('WUS_UIKIT_VERSION') ? (string) WUS_UIKIT_VERSION : null;
+
+				$debug = defined('WUS_SCRIPT_DEBUG') && WUS_SCRIPT_DEBUG;
+				$suffix = $debug ? '' : '.min';
+
+				$base_uri = get_template_directory_uri() . '/uikit/dist/css/';
+				$base_dir = get_template_directory() . '/uikit/dist/css/';
+
+				$uikit_css_file = "uikit{$suffix}.css";
+
+				if (!file_exists($base_dir . $uikit_css_file)) {
+						return;
+				}
+
+				wp_register_style(
+						'uikit',
+						$base_uri . $uikit_css_file,
+						[],
+						$uikit_version
+				);
+
+				wp_enqueue_style('uikit');
+		}
+
+		/**
 		 * Projekt-Assets (Child Theme / Stylesheet).
 		 * Effekt: site.css + scripts.js geladen, mit Cache-Busting über filemtime.
 		 */
@@ -185,7 +216,7 @@ class WUS_Assets
 						wp_enqueue_style(
 								'wus-site',
 								$css_uri,
-								[],
+								wp_style_is('uikit', 'registered') ? ['uikit'] : [],
 								$css_ver,
 								'all'
 						);

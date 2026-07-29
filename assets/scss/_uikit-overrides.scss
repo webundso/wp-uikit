@@ -1,0 +1,53 @@
+/*==============================================================*/
+/* UIkit CSS Overrides – reproduziert die frueheren Sass-Var-    */
+/* Overrides, jetzt als reine CSS-Regeln nach uikit/dist/css.    */
+/*==============================================================*/
+
+/* Layout: Container (Default 1200px -> 1100px) */
+.uk-container {
+	max-width: 1100px;
+}
+
+/* Grid Gutter (Default 30px/40px ab 1200px -> einheitlich 20px) */
+.uk-grid {
+	margin-left: -20px;
+}
+.uk-grid > * {
+	padding-left: 20px;
+}
+.uk-grid + .uk-grid,
+.uk-grid > .uk-grid-margin,
+* + .uk-grid-margin {
+	margin-top: 20px;
+}
+@media (min-width: 1200px) {
+	.uk-grid {
+		margin-left: -20px;
+	}
+	.uk-grid > * {
+		padding-left: 20px;
+	}
+	.uk-grid + .uk-grid,
+	.uk-grid > .uk-grid-margin,
+	* + .uk-grid-margin {
+		margin-top: 20px;
+	}
+}
+
+/* Buttons (Default padding 0 30px, radius 0 -> 0 20px, radius 3px) */
+.uk-button {
+	padding: 0 20px;
+	border-radius: 3px;
+}
+
+/* Navbar Item-Hoehe (Default 80px -> 60px) */
+.uk-navbar-nav > li > a,
+.uk-navbar-item,
+.uk-navbar-toggle {
+	min-height: 60px;
+}
+
+/* Accordion Content-Abstand (Default 20px -> 10px) */
+.uk-accordion-default .uk-accordion-content {
+	margin-top: 10px;
+}

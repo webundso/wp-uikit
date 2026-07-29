@@ -17,6 +17,7 @@ html, body {
 	color: var(--wp--preset--color--text);
 	background: var(--wp--preset--color--background);
 	font-family: var(--wp--preset--font-family--base);
+	line-height: 1.6;
 }
 
 strong { font-weight: 700; }
@@ -38,6 +39,7 @@ a:active,
 h1,h2,h3,h4,h5,h6,
 .uk-h1,.uk-h2,.uk-h3,.uk-h4,.uk-h5,.uk-h6 {
 	font-family: var(--wp--preset--font-family--heading);
+	line-height: 1.25;
 }
 
 .content p,

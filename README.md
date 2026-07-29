@@ -52,15 +52,27 @@ Wichtig:
 
 ## Setup: 3) UIkit Build Strategie
 
-Dieses Theme nutzt UIkit via SCSS-Import (nicht fertiges dist CSS), damit Metriken/Mechanik über Sass-Variablen angepasst werden können.
+**Seit UIkit 3.21+ nutzt das Theme die vorkompilierte Distribution** (`uikit/dist/css/uikit.css`,
+per `WUS_Assets::enqueue_uikit_css()` eingebunden), **nicht** mehr den SCSS-Import der
+UIkit-Quelle. Grund: UIkit-Core-SCSS nutzt seit 3.21 das Dart-Sass-Modulsystem
+(`@use`/`@forward`, inkl. Built-in-Module wie `sass:string`), das WP-SCSS (basiert auf
+`scssphp`) nicht unterstützt und laut Projekt-Roadmap auch erst mit einem geplanten
+2.x-Rewrite unterstützen wird (Stand 2026, kein Termin).
+
+Mechanik-Anpassungen (Container-Breite, Grid-Gutter, Button-Padding/Radius, Navbar-Höhe,
+Accordion-Spacing), die vorher über Sass-Variablen liefen, sind jetzt reine CSS-Overrides
+in `assets/scss/_uikit-overrides.scss` (lädt nach `uikit.css`, per `wp_enqueue_style`-Dependency
+garantiert in der richtigen Reihenfolge).
 
 Empfohlene Reihenfolge in `site.scss`:
 
 1) Tools / Mixins  
 2) Fonts (lokal, pro Projekt)  
-3) UIkit Sass Overrides (nur Mechanik)  
-4) UIkit Build  
-5) Token-Bridge + Theme Layer
+3) UIkit CSS Overrides (Mechanik, wirkt gegen `uikit/dist/css/uikit.css`)  
+4) Token-Bridge + Theme Layer
+
+Bei neuen Projekten mit älterem UIkit (<3.21) kann weiterhin klassisch per SCSS-Import
++ Sass-Variablen gearbeitet werden — dann WP-SCSS wie gehabt auf `uikit/src/scss` zeigen lassen.
 
 ## wp-config.php Vorlage
 
