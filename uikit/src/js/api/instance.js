@@ -11,7 +11,7 @@ export default function (App) {
 
         instance.$options.el = el;
 
-        if (document.contains(el)) {
+        if (el.isConnected) {
             callConnected(instance);
         }
     };
@@ -26,10 +26,12 @@ export default function (App) {
 
         callHook(instance, 'destroy');
 
-        detachFromElement(el, instance);
+        if (el) {
+            detachFromElement(el, instance);
 
-        if (removeEl) {
-            remove(instance.$el);
+            if (removeEl) {
+                remove(el);
+            }
         }
     };
 

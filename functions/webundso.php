@@ -120,7 +120,7 @@ if (!defined('WUS_BLOG_LOAD_MORE')) {
 
 /** UIkit Version: dient als zentrales Single-Source-of-Truth für Enqueue/CDN-Pfade. */
 if (!defined('WUS_UIKIT_VERSION')) {
-    define('WUS_UIKIT_VERSION', '3.17.11');
+    define('WUS_UIKIT_VERSION', '3.25.20');
 }
 
 /** Script Debug: true = unminified Assets bevorzugen (Dev/Debug). */

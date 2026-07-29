@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Slideshow
 // Description:     Component to create slideshows
 //
@@ -21,7 +23,7 @@
 .uk-slideshow {
     /* 1 */
     -webkit-tap-highlight-color: transparent;
-    @if(mixin-exists(hook-slideshow)) {@include hook-slideshow();}
+    @if(meta.mixin-exists(hook-slideshow)) {@include hook-slideshow();}
 }
 
 
@@ -83,11 +85,16 @@
 
 .uk-slideshow-items > :not(.uk-active) { display: none; }
 
+/*
+ * Reset animations on hidden slides so the Ken Burns effect restarts in Safari.
+ */
+.uk-slideshow-items > :not(.uk-active) [class*="uk-animation-"] { animation-name: none; }
+
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-slideshow-misc)) {@include hook-slideshow-misc();}
+@if(meta.mixin-exists(hook-slideshow-misc)) {@include hook-slideshow-misc();}
 
 // @mixin hook-slideshow(){}
 // @mixin hook-slideshow-misc(){}
