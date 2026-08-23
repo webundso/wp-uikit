@@ -123,9 +123,10 @@ if (!defined('WUS_UIKIT_VERSION')) {
     define('WUS_UIKIT_VERSION', '3.25.20');
 }
 
-/** Script Debug: true = unminified Assets bevorzugen (Dev/Debug). */
+/** Script Debug: true = unminified Assets bevorzugen (Dev/Debug).
+ *  Default folgt WordPress' eigener SCRIPT_DEBUG-Konstante. */
 if (!defined('WUS_SCRIPT_DEBUG')) {
-    define('WUS_SCRIPT_DEBUG', false);
+    define('WUS_SCRIPT_DEBUG', defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
 }
 
 
@@ -393,7 +394,7 @@ if (!defined('WUS_BLOCK_ICON_FG')) {
 
 
 if (!defined('WUS_DEBUG_BLOCK_REGISTER')) {
-    define('WUS_DEBUG_BLOCK_REGISTER', false);
+    define('WUS_DEBUG_BLOCK_REGISTER', defined('WP_DEBUG') && WP_DEBUG);
 }
 
 /* -----------------------------------------------------------------------------
@@ -429,5 +430,5 @@ if (!defined('WUS_NAV_SEARCH')) {
  * - false = deaktiviert
  */
 if (!defined('WUS_TOKEN_SHEET')) {
-    define('WUS_TOKEN_SHEET', true);
+    define('WUS_TOKEN_SHEET', defined('WP_DEBUG') && WP_DEBUG);
 }

@@ -257,11 +257,9 @@ add_action('acf/init', function (): void {
             $args['hide_fields_in_sidebar'] = (bool) $acf_meta['hideFieldsInSidebar'];
         }
 
-        // Debug-Ausgabe (optional)
-        $debug = defined('WUS_DEBUG_BLOCK_REGISTER') 
-            ? (bool) WUS_DEBUG_BLOCK_REGISTER 
-            : (defined('WP_DEBUG') && WP_DEBUG);
-            
+        // Debug-Ausgabe (optional; WUS_DEBUG_BLOCK_REGISTER wird immer von webundso.php vordefiniert)
+        $debug = defined('WUS_DEBUG_BLOCK_REGISTER') && WUS_DEBUG_BLOCK_REGISTER;
+
         if ($debug) {
             error_log('WUS registering block: acf/' . $args['name'] . ' from ' . $json_file);
         }

@@ -83,8 +83,6 @@ class WUS_Assets
 
 				// Fail-soft: nur registrieren, wenn File existiert
 				if (!file_exists($base_dir . $uikit_file)) {
-						// Optional debug log
-						// if (defined('WP_DEBUG') && WP_DEBUG) error_log('WUS: UIkit missing: ' . $base_dir . $uikit_file);
 						return;
 				}
 

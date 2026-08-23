@@ -18,24 +18,22 @@
  * =========================================================== */
 
 /**
- * Möglich:
- * local | development | staging | production
+ * Nur zwei Environments: development | production
  *
  * Empfehlung:
  * - via Server-Env setzen (z.B. WP_ENVIRONMENT_TYPE)
  * - Fallback hier auf production
  */
  
- // define('WP_ENVIRONMENT_TYPE', 'local'); 
+// define( 'WP_ENVIRONMENT_TYPE', 'development' );
+
  
 if (!defined('WP_ENVIRONMENT_TYPE')) {
   define('WP_ENVIRONMENT_TYPE', getenv('WP_ENVIRONMENT_TYPE') ?: 'production');
 }
 
-$is_local = WP_ENVIRONMENT_TYPE === 'local';
-$is_dev   = WP_ENVIRONMENT_TYPE === 'development';
-$is_stage = WP_ENVIRONMENT_TYPE === 'staging';
-$is_prod  = WP_ENVIRONMENT_TYPE === 'production';
+$is_dev  = WP_ENVIRONMENT_TYPE !== 'production';
+$is_prod = !$is_dev;
 
 
 /* =============================================================
@@ -43,30 +41,35 @@ $is_prod  = WP_ENVIRONMENT_TYPE === 'production';
  * =========================================================== */
 
 /**
- * Debug nur lokal / dev aktiv
+ * Manueller Override: Error-Log gezielt auf Live aktivieren, OHNE die ganze
+ * Seite in den Dev-Modus zu schalten (z.B. akuten Bug eingrenzen).
+ * Schreibt NUR ins Log, zeigt NICHTS im Browser. Nach Gebrauch wieder
+ * auskommentieren.
  */
-define('WP_DEBUG', $is_local || $is_dev);
+// define('WUS_FORCE_DEBUG_LOG', true);
+
+$force_debug_log = defined('WUS_FORCE_DEBUG_LOG') && WUS_FORCE_DEBUG_LOG;
 
 /**
- * Debug-Log:
- * - local/dev: an
- * - staging: optional (standard: aus)
- * - prod: aus
+ * Debug: an bei development, oder wenn WUS_FORCE_DEBUG_LOG gesetzt ist
  */
-define('WP_DEBUG_LOG', $is_local || $is_dev ? true : false);
+define('WP_DEBUG', $is_dev || $force_debug_log);
 
 /**
- * Debug-Ausgabe im Browser:
- * - local: an
- * - sonst: aus (kein Leak)
+ * Debug-Log (Datei): gleiche Bedingung wie WP_DEBUG
  */
-define('WP_DEBUG_DISPLAY', $is_local ? true : false);
-@ini_set('display_errors', $is_local ? '1' : '0');
+define('WP_DEBUG_LOG', $is_dev || $force_debug_log);
+
+/**
+ * Debug-Ausgabe im Browser: NIE bei force_debug_log, Live bleibt visuell sauber
+ */
+define('WP_DEBUG_DISPLAY', $is_dev);
+@ini_set('display_errors', $is_dev ? '1' : '0');
 
 /**
  * Unminified Assets (hilfreich beim Debugging)
  */
-define('SCRIPT_DEBUG', $is_local || $is_dev);
+define('SCRIPT_DEBUG', $is_dev);
 
 /**
  * Query Debug (nur bei gezielter Analyse aktivieren)
@@ -100,7 +103,7 @@ define('WP_AUTO_UPDATE_CORE', 'minor');
 /**
  * Admin immer über HTTPS (nur wenn sicher vorhanden)
  */
-if ($is_prod || $is_stage) {
+if ($is_prod) {
   define('FORCE_SSL_ADMIN', true);
 }
 
@@ -206,9 +209,10 @@ define('WUS_EDITOR_REMOVE_FORMATS',   true);
 define('WUS_EDITOR_REMOVE_BLOCK_STYLES', true);
 
 // ── 8) Dev Tools ──────────────────────────────────────────────
-define('WUS_TOKEN_SHEET',        $is_local); // Design Token Sheet nur lokal
-define('WUS_DEBUG_BLOCK_REGISTER', false);
+define('WUS_TOKEN_SHEET',          $is_dev); // Design Token Sheet nur in Dev
+define('WUS_DEBUG_BLOCK_REGISTER', $is_dev); // Block-Registrierung ins Log
+define('WUS_SCRIPT_DEBUG',         $is_dev); // Unminified UIkit Assets in Dev
 
 // ── 9) UIkit ──────────────────────────────────────────────────
-define('WUS_UIKIT_VERSION', '3.17.11');
+define('WUS_UIKIT_VERSION', '3.25.20');
 
