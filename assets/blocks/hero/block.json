@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "hero",
 	"title": "Hero",
 	"description": "Hero-Bereich mit Titel, Text, Bild und Button",
@@ -11,6 +12,9 @@
 	},
 	"acf": {
 		"mode": "preview",
-		"renderTemplate": "render.php"
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"autoInlineEditing": true,
+		"hideFieldsInSidebar": true
 	}
 }

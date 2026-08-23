@@ -186,20 +186,17 @@ add_action('acf/init', function (): void {
         }
 
         /**
-         * Name normalisieren:
-         * - "hero" -> "acf/hero"
-         * - "acf-hero" -> "acf/hero"
-         * - "acf/hero" bleibt unverändert
+         * Name normalisieren zu einem BAREN Slug, OHNE "acf/"-Prefix:
+         * acf_register_block_type() haengt den Prefix selbst an (via
+         * acf_slugify() in acf_validate_block_type()), und diese Funktion
+         * wandelt "/" dabei zu "-" um. Wird hier schon "acf/hero" uebergeben,
+         * entsteht dadurch "acf/acf-hero" (doppelter Prefix). Deshalb: nur
+         * der bereinigte Slug wird an $args['name'] uebergeben.
+         * - "hero" -> "hero"
+         * - "acf-hero" -> "hero"
+         * - "acf/hero" -> "hero"
          */
-        $name = (string) $data['name'];
-        if (strpos($name, '/') === false) {
-            $name = 'acf/' . $name;
-        }
-        $name = str_replace('acf-', '', $name);
-        if (strpos($name, 'acf/') !== 0) {
-            $name = 'acf/' . ltrim($name, '/');
-        }
-        $name = preg_replace('#^acf/acf-#', 'acf/', $name);
+        $name = ltrim(preg_replace('#^acf[-/]#', '', (string) $data['name']), '/');
 
         // Prüfe auf render.php Template
         $render_template = trailingslashit($dir) . 'render.php';
@@ -237,13 +234,36 @@ add_action('acf/init', function (): void {
             'render_template' => $render_template,
         ];
 
+        /**
+         * ACF Block API/Version-Keys: nur durchreichen, wenn in block.json gesetzt.
+         * Kein erzwungener Default hier - api_version wird sonst von ACF selbst
+         * korrekt aus acf_block_version abgeleitet (siehe acf_register_block_type()).
+         * WICHTIG: api_version (WP Gutenberg Block-API) und acf_block_version
+         * (ACF's eigenes "Blocks V3"-Feature-Level, u.a. für hideFieldsInSidebar/
+         * autoInlineEditing) sind zwei unabhängige Werte - nicht verwechseln.
+         */
+        $acf_meta = (array) ($data['acf'] ?? []);
+
+        if (isset($data['apiVersion'])) {
+            $args['api_version'] = (int) $data['apiVersion'];
+        }
+        if (isset($acf_meta['blockVersion'])) {
+            $args['acf_block_version'] = (int) $acf_meta['blockVersion'];
+        }
+        if (isset($acf_meta['autoInlineEditing'])) {
+            $args['auto_inline_editing'] = (bool) $acf_meta['autoInlineEditing'];
+        }
+        if (isset($acf_meta['hideFieldsInSidebar'])) {
+            $args['hide_fields_in_sidebar'] = (bool) $acf_meta['hideFieldsInSidebar'];
+        }
+
         // Debug-Ausgabe (optional)
         $debug = defined('WUS_DEBUG_BLOCK_REGISTER') 
             ? (bool) WUS_DEBUG_BLOCK_REGISTER 
             : (defined('WP_DEBUG') && WP_DEBUG);
             
         if ($debug) {
-            error_log('WUS registering block: ' . $args['name'] . ' from ' . $json_file);
+            error_log('WUS registering block: acf/' . $args['name'] . ' from ' . $json_file);
         }
 
         // Block registrieren
@@ -314,12 +334,12 @@ add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context
         ];
     }
 
-    // Deine Projekt-Blocks: beide Varianten erlauben (falls irgendwo Altlasten existieren)
+    // Deine Projekt-Blocks (Namen entsprechen der Normalisierung im acf/init-Loop oben)
     $project_blocks = [
-        'acf/hero', 'acf/acf-hero',
-        'acf/accordion', 'acf/acf-accordion',
-        'acf/innerblock', 'acf/acf-innerblock',
-        'acf/latest-posts', 'acf/acf-latest-posts',
+        'acf/hero',
+        'acf/accordion',
+        'acf/innerblock',
+        'acf/latest-posts',
     ];
 
     foreach ($project_blocks as $slug) {

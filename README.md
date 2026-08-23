@@ -74,6 +74,48 @@ Empfohlene Reihenfolge in `site.scss`:
 Bei neuen Projekten mit älterem UIkit (<3.21) kann weiterhin klassisch per SCSS-Import
 + Sass-Variablen gearbeitet werden — dann WP-SCSS wie gehabt auf `uikit/src/scss` zeigen lassen.
 
+## Setup: 4) ACF Blocks (Registrierung & Namenskonvention)
+
+Custom Blocks liegen unter `assets/blocks/<name>/` (`block.json` + `render.php`) und
+werden über den `acf/init`-Hook in `functions/gutenberg.php` automatisch eingelesen —
+kein manuelles `acf_register_block_type()` pro Block nötig.
+
+**Namenskonvention — wichtig, sonst doppelter Prefix:** `acf_register_block_type()`
+prefixt den übergebenen Namen selbst nochmal via `acf_slugify()`, das dabei jedes `/`
+zu `-` umwandelt. Wird bereits ein prefixter Name wie `"acf/hero"` übergeben, wird
+daraus real `acf/acf-hero` (verifiziert per Test gegen die ACF-Pro-Quelle). Deshalb
+baut `gutenberg.php` **keinen** `acf/`-Prefix mehr selbst — `block.json` → `"name"`
+darf `hero`, `acf-hero` oder `acf/hero` sein, wird immer zu einem bereinigten Slug
+normalisiert (`hero`), und ACF hängt den Prefix danach genau einmal an
+(`acf/hero`). Feldgruppen-Location-Regeln (`assets/acf-json/*.json`, `"param":
+"block"`) müssen exakt diesen einfach-prefixten Namen referenzieren, z.B.
+`"value": "acf\/innerblock"`.
+
+**ACF Blocks V3 (Inline-Editing statt Sidebar):** Seit ACF Pro 6.8 ist die Anzeige der
+Bearbeitungsfelder direkt im Block (statt nur in der Editor-Sidebar) ein Opt-in-Feature
+("Blocks V3"). Jede `block.json` deklariert dafür im `"acf"`-Objekt:
+
+```json
+"acf": {
+    "blockVersion": 3,
+    "autoInlineEditing": true,
+    "hideFieldsInSidebar": true
+}
+```
+
+`gutenberg.php` liest diese Keys aus `data.acf` und reicht sie 1:1 an
+`acf_register_block_type()` durch (`acf_block_version`, `auto_inline_editing`,
+`hide_fields_in_sidebar`) — kein erzwungener Default, nur was in der JSON steht.
+`api_version` (WP-Gutenberg-Block-API) ist ein **unabhängiger** Wert von
+`acf_block_version` (ACF's eigenes Feature-Level) — beide werden separat gelesen
+(`apiVersion` top-level bzw. `acf.blockVersion`), nicht verwechseln.
+
+**Bei Umbenennung eines Blocks/Namens-Fix:** Bereits gespeicherter Content referenziert
+den alten Blocknamen im Post-Content (`<!-- wp:acf/alter-name -->`). Nach einer
+Namensänderung in der Registrierung per `wp search-replace '<alter-name>'
+'<neuer-name>'` migrieren, sonst zeigt der Editor „nicht unterstützter Block" für
+bestehende Seiten. Vorher immer `--dry-run` gegenchecken.
+
 ## wp-config.php Vorlage
 
 Im Theme liegt eine Vorlage:

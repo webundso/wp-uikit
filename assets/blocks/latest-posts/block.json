@@ -1,4 +1,5 @@
 {
+  "apiVersion": 3,
   "name": "latest-posts",
   "title": "Letzte Beiträge",
   "description": "Zeigt die letzten Beiträge als Kacheln mit optionalem «Mehr laden»-Button.",
@@ -16,5 +17,10 @@
     "align": false,
     "mode": false,
     "jsx": false
+  },
+  "acf": {
+    "blockVersion": 3,
+    "autoInlineEditing": true,
+    "hideFieldsInSidebar": true
   }
 }

@@ -69,7 +69,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/acf-innerblock"
+                "value": "acf\/innerblock"
             }
         ]
     ],
@@ -85,5 +85,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1778065818
+    "modified": 1787477881
 }
