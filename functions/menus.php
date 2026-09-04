@@ -196,7 +196,7 @@ class WUS_UikitWalker extends Walker_Nav_Menu
         $classes = empty($item->classes) ? [] : (array) $item->classes;
 
         // has_children korrekt (WP setzt das pro Item)
-        $has_children = !empty($args->has_children);
+        $has_children = !empty($this->has_children) || !empty($args->has_children);
 
         if ($has_children) {
             $classes[] = 'uk-parent';
@@ -422,7 +422,7 @@ class WUS_Megamenu_Walker extends Walker_Nav_Menu
      */
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0): void
     {
-        $has_children = !empty($args->has_children);
+       $has_children = !empty($this->has_children) || !empty($args->has_children);
         $classes = empty($item->classes) ? [] : (array) $item->classes;
 
         if ($has_children) {
